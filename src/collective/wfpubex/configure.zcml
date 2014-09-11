@@ -1,0 +1,25 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="collective.pubex">
+
+    <includeDependencies package="."/>
+    <include package="plone.resource" file="meta.zcml"/>
+    <include package="plone.app.theming" />
+    <include package=".browser"/>
+    <include package="Products.GenericSetup" file="meta.zcml"/>
+
+	<genericsetup:registerProfile
+	  name="default"
+	  title="workflow based publication and expiration"
+	  directory="profiles"
+	  description="Extension profile for collective.wfpubex"
+	  provides="Products.GenericSetup.interfaces.EXTENSION"
+	/>
+
+</configure>

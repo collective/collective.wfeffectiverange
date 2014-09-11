@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:cache="http://namespaces.zope.org/cache"
+    i18n_domain="collective.wfpubex">
+
+    <browser:page
+        for="*"
+        name="collective.wfpubex"
+        class=".views.PubexView"
+        permission="zope2.View"
+        />
+
+</configure>
