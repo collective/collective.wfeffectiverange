@@ -70,6 +70,22 @@ The user selects a workflow from the plone default workflow menu, or invokes it 
 other way. The workflow transition will be aborted and an error message is shown.
 
 
+usecase 5
+---------
+
+user edits content created by usecase 1 after the publication date and the
+transition was executed.
+Now the publication transition field is empty and can not be set because the
+publication date is in the past.
+
+
+usecase 6
+---------
+user edits content created by usecase 1 after the publication date and the
+transition was executed.
+Then the user can follow usecase 2.
+
+
 realization
 ===========
 
