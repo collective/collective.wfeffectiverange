@@ -10,16 +10,24 @@
 
     <includeDependencies package="."/>
     <include package="plone.resource" file="meta.zcml"/>
-    <include package="plone.app.theming" />
+    <include package="plone.app.theming"/>
     <include package=".browser"/>
     <include package="Products.GenericSetup" file="meta.zcml"/>
 
-	<genericsetup:registerProfile
-	  name="default"
-	  title="workflow based publication and expiration"
-	  directory="profiles"
-	  description="Extension profile for collective.wfpubex"
-	  provides="Products.GenericSetup.interfaces.EXTENSION"
-	/>
+    <genericsetup:registerProfile
+        name="default"
+        title="A_workflow based publication and expiration"
+        directory="profiles/default"
+        description="Extension profile for collective.wfpubex"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
+    <plone:behavior
+        title="workflow based publication and expiration"
+        description="Provides Pubex"
+        provides=".behaviors.IPubexBehavior"
+        for="plone.dexterity.interfaces.IDexterityContent"
+        />
+
 
 </configure>
