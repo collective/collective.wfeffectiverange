@@ -88,4 +88,4 @@ In order to make it work, you have to configure a cron job to check if the desir
 limitations
 ===========
 
-no support if a content type has two workflows
+No support if a content type has two workflows.
