@@ -82,7 +82,7 @@ This behavior will replace publication/expiration fields within the dates tab an
 
 A serverside json view delivers the transitions for the expiration date after a publishing date is set, in order to provide a proper vocabulary.
 
-In order to make it work, you have to configure a cron job to check if the desired workflow transitions date has been met.
+In order to make it work, you have to configure a cron job to check if the desired workflow transition date has been met.
 
 
 limitations
