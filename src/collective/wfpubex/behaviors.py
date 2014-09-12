@@ -109,52 +109,6 @@ class IPubexBehavior(model.Schema):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-@provider(IFormFieldProvider)
-class IPubexBehavior(model.Schema):
-    """
-    workflow based publication and expiration
-    """
-
-    model.fieldset(
-        'dates',
-        label=_PMF(u'label_schema_dates', default=u'Dates'),
-        fields=['eff_transition', 'exp_transition'],
-    )
-
-    form.order_after(eff_transition='IPublication.effective')
-    eff_transition = schema.Choice(
-        title=_(u"Publication Transition"),
-        description=_(u"Required if a publishing date is set"),
-        # vocabulary="plone.app.vocabularies.SupportedContentLanguages",
-        values=['publish', 'submit for pub', 'nochwas'],
-        required=False
-    )
-
-    form.order_after(exp_transition='IPublication.expires')
-    exp_transition = schema.Choice(
-        title=_(u"Expiration Transition"),
-        description=_(u"Required if a expiration date is set"),
-        values=['private', 'retreat', 'regret'],
-        required=False
-    )
-
-    form.omitted('eff_transition', 'exp_transition')
-    form.no_omit(IEditForm, 'eff_transition', 'exp_transition')
-    form.no_omit(IAddForm, 'eff_transition', 'exp_transition')
-
-
-
 # class IPublication(model.Schema):
 # # dates fieldset
 #     model.fieldset(
