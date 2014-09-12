@@ -30,4 +30,11 @@
         />
 
 
+
+     <utility
+        component=".vocabulary.PossibleTransitionsVocabularyFactory"
+        name="collective.wfpubex.vocabulary.PossibleTransitionsVocabulary"
+    />
+
+
 </configure>

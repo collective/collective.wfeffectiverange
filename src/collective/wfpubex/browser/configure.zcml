@@ -6,7 +6,7 @@
     i18n_domain="collective.wfpubex">
 
     <browser:page
-        for="*"
+        for="collective.wfpubex.behaviors.IPubexBehavior"
         name="collective.wfpubex"
         class=".views.PubexView"
         permission="zope2.View"

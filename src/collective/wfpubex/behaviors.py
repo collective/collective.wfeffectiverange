@@ -10,8 +10,113 @@ from zope.interface import invariant
 from zope.interface import provider
 from plone.app.dexterity.behaviors.metadata import IPublication
 from plone.app.dexterity import PloneMessageFactory as _PMF
+from plone.autoform import directives as form
+from z3c.form.interfaces import IEditForm, IAddForm
+from plone.autoform.form import AutoExtensibleForm
+from zope.interface import alsoProvides
+from plone.fieldsets.fieldsets import FormFieldsets
 
-from utils import fieldset
+
+@provider(IFormFieldProvider)
+class IPubexBehavior(model.Schema):
+    """
+    workflow based publication and expiration
+    """
+
+    model.fieldset(
+        'dates',
+        label=_PMF(u'label_schema_dates', default=u'Dates'),
+        fields=['eff_transition', 'exp_transition'],
+    )
+
+    form.order_after(eff_transition='IPublication.effective')
+    eff_transition = schema.Choice(
+        title=_(u"Publication Transition"),
+        description=_(u"Required if a publishing date is set"),
+        vocabulary='collective.wfpubex.vocabulary.PossibleTransitionsVocabulary',
+        required=False
+    )
+
+    form.order_after(exp_transition='IPublication.expires')
+    exp_transition = schema.Choice(
+        title=_(u"Expiration Transition"),
+        description=_(u"Required if a expiration date is set"),
+        values=['private', 'retreat', 'regret'],
+        required=False
+    )
+
+    # form.omitted('eff_transition', 'exp_transition')
+    # form.no_omit(IEditForm, 'eff_transition', 'exp_transition')
+    # form.no_omit(IAddForm, 'eff_transition', 'exp_transition')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+# @provider(IFormFieldProvider)
+# class IPubexBehavior(IPublication):
+#     """
+#     workflow based publication and expiration
+#     """
+#
+#     model.fieldset(
+#             'dates',
+#             label=_PMF(u'label_schema_dates', default=u'Dates'),
+#             fields=['eff_transition', 'exp_transition'],
+#         )
+#
+#     form.order_after(eff_transition='IPublication.effective')
+#     eff_transition = schema.Choice(
+#         title=_(u"Publication Transition"),
+#         description=_(u"Required if a publishing date is set"),
+#         # vocabulary="plone.app.vocabularies.SupportedContentLanguages",
+#         values=['publish', 'submit for pub', 'nochwas'],
+#         required=False
+#     )
+#
+#     form.order_after(exp_transition='IPublication.expires')
+#     exp_transition = schema.Choice(
+#         title=_(u"Expiration Transition"),
+#         description=_(u"Required if a expiration date is set"),
+#         values=['private', 'retreat', 'regret'],
+#         required=False
+#     )
+#
+#     form.omitted('eff_transition', 'exp_transition')
+#     form.no_omit(IEditForm, 'eff_transition', 'exp_transition')
+#     form.no_omit(IAddForm, 'eff_transition', 'exp_transition')
+#     model.fieldset('dates','dat')
+# #
+# # class MySimpleForm:
+# #     form_fields = FormFieldsets(IPubexBehavior, IPublication)
+#
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -21,42 +126,22 @@ class IPubexBehavior(model.Schema):
     workflow based publication and expiration
     """
 
-    # dates fieldset
-    fieldset(
-        'pubex dates',
-        label=(u'pubex testing'),
-        fields=['publication', 'pub_transition', 'expiration', 'exp_transition'],
+    model.fieldset(
+        'dates',
+        label=_PMF(u'label_schema_dates', default=u'Dates'),
+        fields=['eff_transition', 'exp_transition'],
     )
 
-
-
-    publication = schema.Datetime(
-            title=(u'label_effective_date', u'Publishing Date'),
-            description=(u'help_effective_date'),
-            required=False
-        )
-
-    pub_transition = schema.Choice(
-        title=u"Publication Transition"),
-        description = _(u"Required if a publishing date is set"),
+    form.order_after(eff_transition='IPublication.effective')
+    eff_transition = schema.Choice(
+        title=_(u"Publication Transition"),
+        description=_(u"Required if a publishing date is set"),
         # vocabulary="plone.app.vocabularies.SupportedContentLanguages",
-        values = ['publish', 'submit for pub', 'nochwas'],
-        required = False
-
-    )
-
-
-    expiration = schema.Datetime(
-        title=(u'label_expiration_date', u'Expiration Date'),
-        description=( u'help_expiration_date'),
+        values=['publish', 'submit for pub', 'nochwas'],
         required=False
     )
 
-    form.omitted('effective', 'expires')
-    form.no_omit(IEditForm, 'effective', 'expires')
-    form.no_omit(IAddForm, 'effective', 'expires')
-
-
+    form.order_after(exp_transition='IPublication.expires')
     exp_transition = schema.Choice(
         title=_(u"Expiration Transition"),
         description=_(u"Required if a expiration date is set"),
@@ -64,12 +149,14 @@ class IPubexBehavior(model.Schema):
         required=False
     )
 
-
+    form.omitted('eff_transition', 'exp_transition')
+    form.no_omit(IEditForm, 'eff_transition', 'exp_transition')
+    form.no_omit(IAddForm, 'eff_transition', 'exp_transition')
 
 
 
 # class IPublication(model.Schema):
-#     # dates fieldset
+# # dates fieldset
 #     model.fieldset(
 #         'dates',
 #         label=_PMF(u'label_schema_dates', default=u'Dates'),

@@ -30,6 +30,9 @@ setup(name='collective.wfpubex',
           'setuptools',
           'Plone',
           'plone.api',
+          #for local testing
+          'plone.app.contenttypes',
+          # 'plone.app.vocabularies',
       ],
       extras_require={
       },
