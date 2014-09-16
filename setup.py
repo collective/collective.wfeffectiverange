@@ -30,11 +30,19 @@ setup(name='collective.wfpubex',
           'setuptools',
           'Plone',
           'plone.api',
+          'z3c.form >= 3.2.1',
+          'plone.app.vocabularies',
           #for local testing
           'plone.app.contenttypes',
-          # 'plone.app.vocabularies',
+
       ],
       extras_require={
+          'test': [
+              'interlude[ipython]>=1.3.1',
+              'ipdb',
+              'plone.app.testing',
+              'plone.app.robotframework [debug]',
+          ],
       },
 
       entry_points="""

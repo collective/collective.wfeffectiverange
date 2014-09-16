@@ -30,12 +30,17 @@ im behavior a transition dropdown bauen mit daten vom vocab
 
 validation bauen das wenn pub und oder exp date set, muss jeweils a transition
 selected sein
-test schreibn
+#todo: test schreibn
 
 
 so dann mehr validation und logic
 bei pubtrans nur transitions die aktuell möglich sind auf den state
-dito bei exptrans
+#dito bei exptrans
+
+
+hm wenn pubtrans gesetzt dürfen bei exp trans nur die trans vom zukünftigen(pubtrans state)
+daherkommen
+
 
 
 
@@ -65,16 +70,7 @@ wenn pub oder exp transition gesetzt ist und irgnd eine workflow transition dann
 i18n strings in plone domain und messagestríngs baun
 
 
+ipubex dublincore machen??
+
 behavior hübsch machen
-
-
-
-
-
-
-
-
-
-
-
 

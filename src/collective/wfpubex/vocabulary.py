@@ -16,37 +16,43 @@ from Acquisition import aq_get
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Acquisition import aq_get
+import re
+from persistent import Persistent
 
 
 _ = MessageFactory('plone')
 
 
-
 @implementer(IVocabularyFactory)
-class PossibleTransitionsVocabulary(object):
-
+class Transitions(object):
     def __call__(self, context):
-
-        portal = api.portal.get()
-
         # workflowtool
-
-        import ipdb;
-
-        ipdb.set_trace()
         wftool = api.portal.get_tool('portal_workflow')
 
-        # da spinnts no rum
-        context = aq_get(wftool, 'REQUEST', None)
+        url = context.REQUEST.getURL()
 
-        # get current state for context
-        state = api.content.get_state(context)
+        # get workflow for already created content /on creating get workflow for this type
+
+        #new content
+        if '++add++' in url:
+            # get the portal type from the url, because initial, self context is the vocab obj ;/
+            # the part after the ++add++ is our portal_type aka context
+            portal_type = re.split('.*\+{2}add\+{2}', url)[1]
+
+            # get current state for portal_type
+            # If it is given as a string it returns the default state. see PLIP 217 Workflow by adaptation
+            state = api.content.get_state(portal_type)
+
+        #editing content
+        else:
+            #import ipdb; ipdb.set_trace()
+            state = api.content.get_state(context)
+            portal_type = context.portal_type
 
         # get workflow for context.
+        # TODO: if no workflow abfangen, und im behavior transitions ausschalten
         # we always get the first worklow - no implementation for multiple wfs
-
-
-        wf = wftool.getWorkflowsFor(context)[0]
+        wf = wftool.getWorkflowsFor(portal_type)[0]
 
         # get possible transitions for this state
         transitions = wf.states[state].transitions
@@ -54,20 +60,18 @@ class PossibleTransitionsVocabulary(object):
         terms = []
 
         for transition in transitions:
-            # import ipdb;ipdb.set_trace()
             trans_id = wf.transitions[transition].id
             trans_title = wf.transitions[transition].title
 
             terms.append(SimpleVocabulary.createTerm(trans_id, trans_title))
 
-
         return SimpleVocabulary(terms)
 
-PossibleTransitionsVocabularyFactory = PossibleTransitionsVocabulary()
+TransitionsFactory = Transitions()
 
 
 
-#     def __call__(self, context):
+# def __call__(self, context):
 #         site = getSite()
 #         wtool = getToolByName(site, 'portal_workflow', None)
 #
@@ -100,4 +104,4 @@ PossibleTransitionsVocabularyFactory = PossibleTransitionsVocabulary()
 #         return SimpleVocabulary(items)
 #
 #
-# PossibleTransitionsVocabularyFactory = PossibleTransitionsVocabulary()
+# TransitionsFactory = Transitions()

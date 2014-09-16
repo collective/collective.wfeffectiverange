@@ -17,8 +17,10 @@ from zope.interface import alsoProvides
 from plone.fieldsets.fieldsets import FormFieldsets
 
 
+
+
 @provider(IFormFieldProvider)
-class IPubexBehavior(model.Schema):
+class IPubexBehavior(IPublication):
     """
     workflow based publication and expiration
     """
@@ -29,25 +31,38 @@ class IPubexBehavior(model.Schema):
         fields=['eff_transition', 'exp_transition'],
     )
 
-    form.order_after(eff_transition='IPublication.effective')
+    form.order_after(eff_transition='effective')
     eff_transition = schema.Choice(
         title=_(u"Publication Transition"),
         description=_(u"Required if a publishing date is set"),
-        vocabulary='collective.wfpubex.vocabulary.PossibleTransitionsVocabulary',
+        vocabulary='collective.wfpubex.vocabulary.Transitions',
         required=False
     )
 
-    form.order_after(exp_transition='IPublication.expires')
+    form.order_after(exp_transition='expires')
     exp_transition = schema.Choice(
         title=_(u"Expiration Transition"),
         description=_(u"Required if a expiration date is set"),
-        values=['private', 'retreat', 'regret'],
+        vocabulary='collective.wfpubex.vocabulary.Transitions',
         required=False
     )
 
-    # form.omitted('eff_transition', 'exp_transition')
-    # form.no_omit(IEditForm, 'eff_transition', 'exp_transition')
-    # form.no_omit(IAddForm, 'eff_transition', 'exp_transition')
+    form.omitted('eff_transition', 'exp_transition')
+    form.no_omit(IEditForm, 'eff_transition', 'exp_transition')
+    form.no_omit(IAddForm, 'eff_transition', 'exp_transition')
+
+    @invariant
+    def effectiveInvariant(data):
+        #import ipdb; ipdb.set_trace()
+        if data.effective is not None and data.eff_transition is None:
+            raise Invalid(_(u"If a publication date is set, "
+                            u"a publication transition is needed."))
+
+    @invariant
+    def expiresInvariant(data):
+        if data.expires is not None and data.exp_transition is None:
+            raise Invalid(_(u"If a expiration date is set, "
+                            u"a expiration transition is needed."))
 
 
 
@@ -55,19 +70,6 @@ class IPubexBehavior(model.Schema):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-#
 # @provider(IFormFieldProvider)
 # class IPubexBehavior(IPublication):
 #     """

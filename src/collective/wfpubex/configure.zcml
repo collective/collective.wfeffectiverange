@@ -29,11 +29,9 @@
         for="plone.dexterity.interfaces.IDexterityContent"
         />
 
-
-
      <utility
-        component=".vocabulary.PossibleTransitionsVocabularyFactory"
-        name="collective.wfpubex.vocabulary.PossibleTransitionsVocabulary"
+        component=".vocabulary.TransitionsFactory"
+        name="collective.wfpubex.vocabulary.Transitions"
     />
 
 
