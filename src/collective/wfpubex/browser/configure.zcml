@@ -6,10 +6,17 @@
     i18n_domain="collective.wfpubex">
 
     <browser:page
-        for="collective.wfpubex.behaviors.IPubexBehavior"
-        name="collective.wfpubex"
+        for="*"
+        name="wfpubex_vocab"
         class=".views.PubexView"
-        permission="zope2.View"
+        permission="cmf.ModifyPortalContent"
         />
+
+    <!-- resources -->
+    <browser:resourceDirectory
+       name="collective.wfpubex"
+       directory="resources"
+        />
+
 
 </configure>

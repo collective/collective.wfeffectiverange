@@ -17,14 +17,11 @@ from zope.interface import alsoProvides
 from plone.fieldsets.fieldsets import FormFieldsets
 from collective.wfpubex.vocabulary import TransitionsSource
 
-
-
 @provider(IFormFieldProvider)
 class IPubexBehavior(IPublication):
     """
     workflow based publication and expiration
     """
-
     model.fieldset(
         'dates',
         label=_PMF(u'label_schema_dates', default=u'Dates'),
