@@ -15,7 +15,7 @@ from z3c.form.interfaces import IEditForm, IAddForm
 from plone.autoform.form import AutoExtensibleForm
 from zope.interface import alsoProvides
 from plone.fieldsets.fieldsets import FormFieldsets
-
+from collective.wfpubex.vocabulary import TransitionsSource
 
 
 
@@ -35,7 +35,7 @@ class IPubexBehavior(IPublication):
     eff_transition = schema.Choice(
         title=_(u"Publication Transition"),
         description=_(u"Required if a publishing date is set"),
-        vocabulary='collective.wfpubex.vocabulary.Transitions',
+        source=TransitionsSource('eff_transition'),
         required=False
     )
 
@@ -43,7 +43,7 @@ class IPubexBehavior(IPublication):
     exp_transition = schema.Choice(
         title=_(u"Expiration Transition"),
         description=_(u"Required if a expiration date is set"),
-        vocabulary='collective.wfpubex.vocabulary.Transitions',
+        source=TransitionsSource('exp_transition'),
         required=False
     )
 
@@ -52,22 +52,28 @@ class IPubexBehavior(IPublication):
     form.no_omit(IAddForm, 'eff_transition', 'exp_transition')
 
     @invariant
-    def effectiveInvariant(data):
-        #import ipdb; ipdb.set_trace()
+    def effective_and_eff_transition(data):
         if data.effective is not None and data.eff_transition is None:
             raise Invalid(_(u"If a publication date is set, "
                             u"a publication transition is needed."))
 
     @invariant
-    def expiresInvariant(data):
+    def expires_and_exp_transition(data):
         if data.expires is not None and data.exp_transition is None:
             raise Invalid(_(u"If a expiration date is set, "
                             u"a expiration transition is needed."))
 
+    @invariant
+    def eff_transition_without_effective(data):
+        if data.effective is None and data.eff_transition is not None:
+            raise Invalid(_(u"If a publication transition is set, "
+                            u"a publication date is needed."))
 
-
-
-
+    @invariant
+    def exp_transition_without_expires(data):
+        if data.expires is None and data.exp_transition is not None:
+            raise Invalid(_(u"If a expiration date is set, "
+                            u"a expiration transition is needed."))
 
 
 # @provider(IFormFieldProvider)

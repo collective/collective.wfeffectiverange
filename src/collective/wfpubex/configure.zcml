@@ -29,10 +29,6 @@
         for="plone.dexterity.interfaces.IDexterityContent"
         />
 
-     <utility
-        component=".vocabulary.TransitionsFactory"
-        name="collective.wfpubex.vocabulary.Transitions"
-    />
 
 
 </configure>

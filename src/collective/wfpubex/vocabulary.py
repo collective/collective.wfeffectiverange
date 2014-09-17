@@ -23,51 +23,67 @@ from persistent import Persistent
 _ = MessageFactory('plone')
 
 
-@implementer(IVocabularyFactory)
-class Transitions(object):
+@implementer(IContextSourceBinder)
+class TransitionsSource(object):
+    def __init__(self, fieldname, cur_transition=None):
+        self.fieldname = fieldname
+        self.cur_transition = cur_transition
+
     def __call__(self, context):
         # workflowtool
         wftool = api.portal.get_tool('portal_workflow')
-
         url = context.REQUEST.getURL()
+        addform = '++add++' in url
 
-        # get workflow for already created content /on creating get workflow for this type
-
-        #new content
-        if '++add++' in url:
+        # first get current portal type
+        if addform:
             # get the portal type from the url, because initial, self context is the vocab obj ;/
             # the part after the ++add++ is our portal_type aka context
             portal_type = re.split('.*\+{2}add\+{2}', url)[1]
-
-            # get current state for portal_type
-            # If it is given as a string it returns the default state. see PLIP 217 Workflow by adaptation
-            state = api.content.get_state(portal_type)
-
-        #editing content
         else:
-            #import ipdb; ipdb.set_trace()
-            state = api.content.get_state(context)
             portal_type = context.portal_type
 
         # get workflow for context.
-        # TODO: if no workflow abfangen, und im behavior transitions ausschalten
+        #  TODO: if no workflow abfangen, und im behavior transitions ausschalten
         # we always get the first worklow - no implementation for multiple wfs
         wf = wftool.getWorkflowsFor(portal_type)[0]
 
+        # if no eff_transition is set get all possible transitions for exp_transition
+        # if an eff_transition is set, only get the allowed transitions for that
+        if self.cur_transition is None\
+           and not addform \
+           and context.eff_transition is not None \
+           and self.fieldname == 'exp_transition':
+            self.cur_transition = context.eff_transition
+
+        if self.cur_transition:
+            state = wf.transitions[self.cur_transition].new_state_id
+            # get current state for portal_type
+            # If it is given as a string it returns the default state. see PLIP 217 Workflow by adaptation
+        elif addform:
+            state = api.content.get_state(portal_type)
+        else:
+            state = api.content.get_state(context)
+
+            #future state, for the exp_transitions dropdown
+
+
         # get possible transitions for this state
         transitions = wf.states[state].transitions
+
 
         terms = []
 
         for transition in transitions:
             trans_id = wf.transitions[transition].id
+            #todo shortname
             trans_title = wf.transitions[transition].title
 
-            terms.append(SimpleVocabulary.createTerm(trans_id, trans_title))
+            terms.append(SimpleVocabulary.createTerm(trans_id, trans_id, trans_title))
 
         return SimpleVocabulary(terms)
 
-TransitionsFactory = Transitions()
+
 
 
 

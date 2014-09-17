@@ -15,13 +15,3 @@ class PubexView(BrowserView):
 
 
 
-        # for trans in state.transitions:
-        # state_to_trans.append((state.getId(), trans))
-
-        # evtl für später
-        #
-        # uuid = api.content.get_uuid(self.context)
-        # states = wf.states.values()
-        #
-        # do_trans = api.content.transition(obj=portal['about'],
-        #                                transition='publish')
