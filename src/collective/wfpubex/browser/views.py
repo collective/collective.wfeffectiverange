@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
+from collective.wfpubex.vocabulary import TransitionsSource
 from Products.Five.browser import BrowserView
 import json
-from collective.wfpubex.vocabulary import TransitionsSource
+
 
 class PubexView(BrowserView):
-
     def __call__(self):
         transitions = TransitionsSource(
             'eff_transition',

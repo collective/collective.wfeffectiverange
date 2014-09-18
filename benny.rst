@@ -1,58 +1,54 @@
 
-collective.wfpubex
++ collective.wfpubex
 
-self contained buildout mit 4.3 und dex
++ self contained buildout mit 4.3 und dex
 
-behavior mit allem drum und dran bauen. und mal die fields/fieldsets abschauen
-und nachbauen bzw erben is gscheida.
++ behavior mit allem drum und dran bauen. und mal die fields/fieldsets abschauen
+  und nachbauen bzw erben is gscheida.
 
- evtl check das datums für pub und exp date nur in zukunft sein fürfen
++ äh das datum von expiration muss größer sein als das pub date??
+  mit invariant gelößt
 
-äh das datum von expiration muss größer sein als das pub date??
++ von collective.wf autodoc und portal_workflow mal schauen wie man den workflow
+  und die states mit transitions rausbekommt. alles in 1 vocab mtransitions
+  weil dann später per js gecheckt wird: wenn pubtrans set dann
+  dürfen bei exp trans nur transitions gewählt werden die dazu passen bzw nicht beißen
 
++ vocabulary bauen immer nur für aktuellencontext seinen jetzigen state,
 
-von collective.wf autodoc und portal_workflow mal schauen wie man den workflow
-und die states mit transitions rausbekommt. alles in 1 vocab mtransitions
-weil dann später per js gecheckt wird: wenn pubtrans set dann
-dürfen bei exp trans nur transitions gewählt werden die dazu passen bzw nicht beißen
++ die daten fürs vocabulary sollen vom punkt oben befüllt werden
 
-vocabulary bauen immer nur für aktuellencontext seinen jetzigen state,
-ala kupsite evtl mit sourcebinder:
-transition1
-transition2
-..
++ im behavior a transition dropdown bauen mit daten vom vocab
 
++ validation bauen das wenn pub und oder exp date set, muss jeweils a transition
+  selected sein
 
++ bei pubtrans nur transitions die aktuell möglich sind auf den state
++ bei exptrans
 
-die daten fürs vocabulary sollen vom punkt oben befüllt werden
++ hm wenn pubtrans gesetzt dürfen bei exp trans nur die trans vom zukünftigen(pubtrans state)
+  daherkommen
 
-im behavior a transition dropdown bauen mit daten vom vocab
++ wenn pubtrans und exptrans, per js checken ob pub changed dann mit jsonview vocab für exp nachladen dürfen bei der exptrans
+  wie gesagt nur transitions kommen die sich dann mit dem pubtrans bzw pubstate? nicht beißen
 
-validation bauen das wenn pub und oder exp date set, muss jeweils a transition
-selected sein
-#todo: test schreibn
-
-
-so dann mehr validation und logic
-bei pubtrans nur transitions die aktuell möglich sind auf den state
-#dito bei exptrans
-
-
-hm wenn pubtrans gesetzt dürfen bei exp trans nur die trans vom zukünftigen(pubtrans state)
-daherkommen
++ todo trans title durch trans shortname tauschen
 
 
 
 
-wenn pubtrans und exptrans, per js checken ob pub changed dann mit jsonview vocab für exp nachladen dürfen bei der exptrans
-wie gesagt nur transitions kommen die sich dann mit dem pubtrans bzw pubstate? nicht beißen
-inlinevalidation test schreiben
+TODO: if no workflow abfangen, und im behavior transitions ausschalten
+todo wenn schon published dann republish möglich?? bzw felder ein ausblenden oder
+a warning/infotext?
+
+todo: testing
 
 
-nochmal genauer testen ob ok
 
 
 
+
+http://stackoverflow.com/questions/10947163/what-is-the-best-task-scheduling-approach-in-plone-4
 
 zope chronjob anschauen und behavior mit dem chronjob verdrahten, so das
 er die transition dann wirklich setzt. inkl gscheid gorillatesten :P
@@ -66,6 +62,7 @@ wenn pub oder exp transition gesetzt ist und irgnd eine workflow transition dann
 (redirect auf sich selber mit fehlermeldungstatusmessage error), auser die kommt vom cronjob
 
 
+logging clockserver wenn schon clockserver läuft
 
 i18n strings in plone domain und messagestríngs baun
 
