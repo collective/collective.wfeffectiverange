@@ -32,6 +32,7 @@ setup(name='collective.wfpubex',
           'plone.api',
           'z3c.form >= 3.2.1',
           'plone.app.vocabularies',
+          'Products.cron4plone',
           #for local testing
           'plone.app.contenttypes',
 

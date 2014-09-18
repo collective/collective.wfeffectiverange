@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from plone.autoform.directives import widget
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.supermodel import model
-from z3c.form.browser.checkbox import CheckBoxFieldWidget
 from collective.wfpubex import _
 from zope import schema
 from zope.interface import Invalid
@@ -12,9 +10,6 @@ from plone.app.dexterity.behaviors.metadata import IPublication
 from plone.app.dexterity import PloneMessageFactory as _PMF
 from plone.autoform import directives as form
 from z3c.form.interfaces import IEditForm, IAddForm
-from plone.autoform.form import AutoExtensibleForm
-from zope.interface import alsoProvides
-from plone.fieldsets.fieldsets import FormFieldsets
 from collective.wfpubex.vocabulary import TransitionsSource
 
 @provider(IFormFieldProvider)

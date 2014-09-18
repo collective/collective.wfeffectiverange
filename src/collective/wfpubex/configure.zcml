@@ -29,4 +29,14 @@
         for="plone.dexterity.interfaces.IDexterityContent"
         />
 
+    <adapter
+        name="has_eff_transition"
+        factory=".indexers.has_eff_transition"
+        />
+
+    <adapter
+        name="has_exp_transition"
+        factory=".indexers.has_exp_transition"
+        />
+
 </configure>

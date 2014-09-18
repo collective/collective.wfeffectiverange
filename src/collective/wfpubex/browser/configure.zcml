@@ -18,4 +18,11 @@
        directory="resources"
         />
 
+  <browser:page
+      for="*"
+      name="pubex-ticker"
+      class=".views.PubexTicker"
+      permission="zope.Public"
+      />
+
 </configure>
