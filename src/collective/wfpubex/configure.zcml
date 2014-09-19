@@ -22,6 +22,14 @@
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
 
+    <genericsetup:registerProfile
+        name="testing"
+        title="A_workflow based publication and expiration - TESTTYPE"
+        directory="profiles/testing"
+        description="Extension profile for collective.wfpubex - testing"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
     <plone:behavior
         title="workflow based publication and expiration"
         description="Provides Pubex"

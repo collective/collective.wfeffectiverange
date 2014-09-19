@@ -3,7 +3,6 @@ from zope.i18nmessageid import MessageFactory
 from zope.interface import implementer
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary
-from zope.schema.vocabulary import SimpleVocabulary
 import re
 
 _ = MessageFactory('plone')
@@ -30,14 +29,20 @@ class TransitionsSource(object):
         else:
             portal_type = context.portal_type
 
-        # get workflow for context.
-        # TODO: if no workflow abfangen, und im behavior transitions ausschalten
-        # we always get the first worklow - no implementation for multiple wfs
-        wf = wftool.getWorkflowsFor(portal_type)[0]
+        wfs = wftool.getWorkflowsFor(portal_type)
+        if len(wfs) == 0:
+            return SimpleVocabulary([])
+        elif len(wfs) > 1:
+            raise ValueError(
+                'Multiple Workflow are not supported.'
+            )
+
+        wf = wfs[0]
 
         # if no eff_transition is set get all possible transitions
         # for the exp_transition
-        # if an eff_transition is set, only get the allowed transitions for that
+        # if an eff_transition is set, only get the allowed transitions for
+        # that
         if self.cur_transition is None \
                 and not addform \
                 and context.eff_transition is not None \
