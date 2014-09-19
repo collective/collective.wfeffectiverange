@@ -14,7 +14,8 @@ class PubexView(BrowserView):
     def __call__(self):
         transitions = TransitionsSource(
             'eff_transition',
-            cur_transition=self.request.get('current')
+            cur_transition=self.request.get('current'),
+            cur_contenttype=self.request.get('contenttype'),
         )
         vocab = transitions(self.context)
         data = []

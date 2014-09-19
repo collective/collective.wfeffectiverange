@@ -10,9 +10,10 @@ _ = MessageFactory('plone')
 
 @implementer(IContextSourceBinder)
 class TransitionsSource(object):
-    def __init__(self, fieldname, cur_transition=None):
+    def __init__(self, fieldname, cur_transition=None, cur_contenttype=None):
         self.fieldname = fieldname
         self.cur_transition = cur_transition
+        self.cur_contenttype = cur_contenttype
 
     def __call__(self, context):
         # workflowtool
@@ -20,18 +21,31 @@ class TransitionsSource(object):
         url = context.REQUEST.getURL()
         addform = '++add++' in url
 
-        # first get current portal type
-        if addform:
+        #first get current portal type
+        # if addform and not bool(self.cur_contenttype):
+        if addform and self.cur_contenttype == None:
+            #Todo: also in der view und im javascript bekomme ich den wert
+            #cur_contenttype noch zurück, hier aber ist er kurz da dann nicht mehr :/
+            #steh hier voll an sry
+
             # get the portal type from the url, because initial, self context
             # is the vocab obj
             # the part after the ++add++ is our portal_type
+
+            #strip the /@@validate_field
+            url = re.sub('\/@{2}.*', '', url)
             portal_type = re.split('.*\+{2}add\+{2}', url)[1]
+            import ipdb;ipdb.set_trace()
+            #da dazubaun?
+
+        if addform and self.cur_contenttype != None:
+            'blub'
+
         else:
             portal_type = context.portal_type
 
         wfs = wftool.getWorkflowsFor(portal_type)
         if len(wfs) == 0:
-            import ipdb; ipdb.set_trace()
             return SimpleVocabulary([])
         elif len(wfs) > 1:
             raise ValueError(

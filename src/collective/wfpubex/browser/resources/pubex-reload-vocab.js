@@ -1,6 +1,7 @@
+
 $(document).ready(function () {
 
-    function reload_vocab(current) {
+    function reload_vocab(current, contenttype) {
 //        this function reloads the possible values for exp_transition, each time
 //        eff_transition has changed
 
@@ -11,9 +12,10 @@ $(document).ready(function () {
             // remove old options
             selector.empty();
 
-        $.getJSON("@@wfpubex_vocab?current=" + current, function (result) {
+        $.getJSON("@@wfpubex_vocab?current=" + current + "&contenttype=" + contenttype, function (result) {
             //the first option is always 'no-value'
             selector.append(options[0]);
+
             //set new options
             $.each(result, function (idx, term) {
                 var new_option = $("<option></option>")
@@ -24,7 +26,10 @@ $(document).ready(function () {
     }
 
     $("#form-widgets-IPubexBehavior-eff_transition").change(function () {
-        reload_vocab($(this).val());
+        //extra geht the portaltype from the url
+        var path = window.location.pathname;
+        var contenttype = path.replace(/.*\+{2}add\+{2}/, "");
+        reload_vocab($(this).val(), contenttype);
     });
 });
 
