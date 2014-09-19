@@ -11,6 +11,7 @@ from plone.app.dexterity import PloneMessageFactory as _PMF
 from plone.autoform import directives as form
 from z3c.form.interfaces import IEditForm, IAddForm
 from collective.wfpubex.vocabulary import TransitionsSource
+from datetime import datetime
 
 @provider(IFormFieldProvider)
 class IPubexBehavior(IPublication):
@@ -45,13 +46,17 @@ class IPubexBehavior(IPublication):
 
     @invariant
     def effective_and_eff_transition(data):
-        if data.effective is not None and data.eff_transition is None:
+        if data.effective is not None \
+           and data.effective > datetime.now() \
+           and data.eff_transition is None:
             raise Invalid(_(u"If a publication date is set, "
                             u"a publication transition is needed."))
 
     @invariant
     def expires_and_exp_transition(data):
-        if data.expires is not None and data.exp_transition is None:
+        if data.expires is not None \
+           and data.expires > datetime.now()\
+           and data.exp_transition is None:
             raise Invalid(_(u"If a expiration date is set, "
                             u"a expiration transition is needed."))
 

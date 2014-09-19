@@ -50,24 +50,26 @@ todo: testing
 
 http://stackoverflow.com/questions/10947163/what-is-the-best-task-scheduling-approach-in-plone-4
 
-zope chronjob anschauen und behavior mit dem chronjob verdrahten, so das
++ zope chronjob anschauen und behavior mit dem chronjob verdrahten, so das
 er die transition dann wirklich setzt. inkl gscheid gorillatesten :P
-wenn cronjob ausgeführt dann auf das transition feld auf leer/erledigt default iwas waaaaaaaaaah setzen
-extra workflow automatisierte commentare
 
-index bauen  für content der das field mal gesetzt hatte true /false
++ wenn cronjob ausgeführt dann auf das transition feld auf leer/erledigt default iwas waaaaaaaaaah setzen
 
-before workflow subsriber hei darf ich der cronjobdude das ändern?
+- extra workflow automatisierte commentare
+
++ index bauen  für content der das field mal gesetzt hatte true /false
+
+- before workflow subsriber hei darf ich der cronjobdude das ändern?
 wenn pub oder exp transition gesetzt ist und irgnd eine workflow transition dann fehler
 (redirect auf sich selber mit fehlermeldungstatusmessage error), auser die kommt vom cronjob
 
 
-logging clockserver wenn schon clockserver läuft
-
-i18n strings in plone domain und messagestríngs baun
++ logging clockserver wenn schon clockserver läuft
 
 
-ipubex dublincore machen??
+- i18n strings in plone domain und messagestríngs baun
+
++ evtl ipubex dublincore machen?? fleißarbeit
 
 behavior hübsch machen
 

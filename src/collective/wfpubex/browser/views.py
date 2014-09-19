@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
+from collective.wfpubex.behaviors import IPubexBehavior
 from collective.wfpubex.vocabulary import TransitionsSource
+from datetime import datetime
+from logging import getLogger
+from plone import api
 from Products.Five.browser import BrowserView
 import json
-from plone import api
-from logging import getLogger
+
 logger = getLogger('pubex')
-from  datetime import datetime
+
 
 class PubexView(BrowserView):
     def __call__(self):
@@ -26,25 +29,40 @@ class PubexView(BrowserView):
         return json.dumps(data)
 
 
-#>>> client.set_workflow('publish', 'weblion')
-#>> > client.get_workflow('weblion')
-#{'state': 'published', 'transitions': ['retract', 'reject']}
-
 # vocabulary hohlen alle mit pub date in vergangenheit und has(pub_transition)
 class PubexTicker(BrowserView):
     def __call__(self):
         catalog = api.portal.get_tool('portal_catalog')
-        wftool = api.portal.get_tool('portal_workflow')
 
-        query = {'effective': {'query': [datetime.now,],'range':'max'},
-                 'has_eff_transition': 'True',
-                 'object_provides': 'IPubexBehavior.__identifier__',}
+        # for effective transition
+        query = {'effective': {'query': datetime.now(), 'range': 'max'},
+                 'has_eff_transition': True,
+                 'object_provides': IPubexBehavior.__identifier__}
 
-        import ipdb; ipdb.set_trace()
         results = catalog.searchResults(query)
 
         for brain in results:
-            'foo'
+            obj = brain.getObject()
+            new_transition = obj.eff_transition
+            obj.eff_transition = None
+            api.content.transition(obj=obj, transition=new_transition)
+            obj.reindexObject()
+            logger.info(
+                'autotransition effective for {0}'.format(obj.absolute_url()))
 
 
-        logger.info('foo')
+        #for expires transition
+        query = {'expires': {'query': datetime.now(), 'range': 'max'},
+                 'has_exp_transition': True,
+                 'object_provides': IPubexBehavior.__identifier__}
+
+        results = catalog.searchResults(query)
+
+        for brain in results:
+            obj = brain.getObject()
+            new_transition = obj.exp_transition
+            obj.exp_transition = None
+            api.content.transition(obj=obj, transition=new_transition)
+            obj.reindexObject()
+            logger.info(
+                'autotransition expires for {0}'.format(obj.absolute_url()))
