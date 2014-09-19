@@ -31,6 +31,7 @@ class TransitionsSource(object):
 
         wfs = wftool.getWorkflowsFor(portal_type)
         if len(wfs) == 0:
+            import ipdb; ipdb.set_trace()
             return SimpleVocabulary([])
         elif len(wfs) > 1:
             raise ValueError(
