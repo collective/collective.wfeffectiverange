@@ -53,7 +53,7 @@ Usecase 4
 ---------
 
 - The user has set an publication or expiration date like in the usecase 1, 2 or 3.
-- The user selects a workflow from the plone default workflow menu, or invokes it in any other way. 
+- The user selects a workflow from the plone default workflow menu, or invokes it in any other way.
 - The workflow transition will be aborted and an error message is shown.
 
 
@@ -73,7 +73,7 @@ Usecase 6
 Implementation
 ==============
 
-The usecases are implemented by providing a dexterity behavior, zope cronjob and a workflow subscriber.
+The usecases are implemented by providing a dexterity behavior, zope cronjob (cron4plone) and a workflow subscriber.
 
 For each content type where this behavior is set, it will lookup the workflow gets the possible transitions and provides them as a zope vocabulary. It will also check that the selected transitions dont interfer with each other.
 
@@ -82,10 +82,24 @@ This behavior will replace publication/expiration fields within the dates tab an
 
 A serverside json view delivers the transitions for the expiration date after a publishing date is set, in order to provide a proper vocabulary.
 
-In order to make it work, you have to configure a cron job to check if the desired workflow transition date has been met.
+In order to make it work, you have to configure a cron job to check if the desired workflow transition date has been met. See install section
 
 
-limitations
+Limitations
 ===========
 
 No support if a content type has two workflows.
+
+
+Install
+=======
+
+Enable the ``workflow based publication and expiration`` behavior for the contenttypes where this feature should be enabled.
+
+Configure the cronjob, via the site settings in the cron4plone configuration.
+Enter ``* * * * portal/@@pubex-ticker``and save.
+
+In the buildout section is also a clock-server entry which has it's interval set to execute every hour.
+
+If desired, the cock-server and cronjob can be modified.
+See cron4plone documentation: https://github.com/collective/Products.cron4plone

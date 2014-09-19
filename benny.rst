@@ -34,42 +34,39 @@
 
 + todo trans title durch trans shortname tauschen
 
-
-
-
-TODO: if no workflow abfangen, und im behavior transitions ausschalten
-todo wenn schon published dann republish möglich?? bzw felder ein ausblenden oder
-a warning/infotext?
-
-todo: testing
-
-
-
-
-
-
-http://stackoverflow.com/questions/10947163/what-is-the-best-task-scheduling-approach-in-plone-4
-
 + zope chronjob anschauen und behavior mit dem chronjob verdrahten, so das
-er die transition dann wirklich setzt. inkl gscheid gorillatesten :P
+  er die transition dann wirklich setzt. inkl gscheid gorillatesten :P
 
-+ wenn cronjob ausgeführt dann auf das transition feld auf leer/erledigt default iwas waaaaaaaaaah setzen
-
-- extra workflow automatisierte commentare
++ wenn cronjob ausgeführt dann auf das transition feld auf leer/setzen
 
 + index bauen  für content der das field mal gesetzt hatte true /false
 
-- before workflow subsriber hei darf ich der cronjobdude das ändern?
-wenn pub oder exp transition gesetzt ist und irgnd eine workflow transition dann fehler
-(redirect auf sich selber mit fehlermeldungstatusmessage error), auser die kommt vom cronjob
-
-
 + logging clockserver wenn schon clockserver läuft
 
++ before workflow subsriber hei darf ich der cronjobdude das ändern?
+  wenn pub oder exp transition gesetzt ist und irgnd eine workflow transition dann fehler
+  (redirect auf sich selber mit fehlermeldungstatusmessage error), auser die kommt vom cronjob
 
-- i18n strings in plone domain und messagestríngs baun
 
-+ evtl ipubex dublincore machen?? fleißarbeit
+
+
+TODO
+
+if no workflow abfangen, und im behavior transitions ausschalten
+todo wenn schon published dann republish möglich?? bzw felder ein ausblenden oder
+a warning/infotext?
+
+testing
+
+extra workflow automatisierte commentare
+
+
+i18n strings in plone domain und messagestríngs baun
+
+evtl ipubex dublincore machen?? fleißarbeit
 
 behavior hübsch machen
 
+
+doku den buildout zope conf
+und im zmi den timer

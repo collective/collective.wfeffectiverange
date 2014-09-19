@@ -24,7 +24,7 @@
 
     <plone:behavior
         title="workflow based publication and expiration"
-        description="Provides Pubex"
+        description="Provides Pubex transitions."
         provides=".behaviors.IPubexBehavior"
         for="plone.dexterity.interfaces.IDexterityContent"
         />
@@ -37,6 +37,11 @@
     <adapter
         name="has_exp_transition"
         factory=".indexers.has_exp_transition"
+        />
+
+    <subscriber
+        for="Products.CMFCore.WorkflowCore.ActionWillBeInvokedEvent"
+        handler=".subscribers.handle_workflow_change_before"
         />
 
 </configure>
