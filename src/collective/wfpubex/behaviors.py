@@ -13,6 +13,7 @@ from z3c.form.interfaces import IEditForm, IAddForm
 from collective.wfpubex.vocabulary import TransitionsSource
 from datetime import datetime
 
+
 @provider(IFormFieldProvider)
 class IPubexBehavior(IPublication):
     """
