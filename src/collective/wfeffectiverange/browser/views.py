@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
+from Products.Five.browser import BrowserView
 from collective.wfeffectiverange.behaviors import IPubexBehavior
 from collective.wfeffectiverange.vocabulary import TransitionsSource
 from datetime import datetime
 from logging import getLogger
 from plone import api
-from Products.Five.browser import BrowserView
 import json
 
 logger = getLogger('pubex')
@@ -53,7 +53,7 @@ class PubexTicker(BrowserView):
             logger.info(
                 'autotransition effective for {0}'.format(obj.absolute_url()))
 
-        #for expires transition
+        # for expires transition
         query = {'expires': {'query': datetime.now(), 'range': 'max'},
                  'has_expires_transition': True,
                  'object_provides': IPubexBehavior.__identifier__}

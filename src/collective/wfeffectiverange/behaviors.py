@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
+from collective.wfeffectiverange import _
+from collective.wfeffectiverange.vocabulary import TransitionsSource
+from datetime import datetime
+from plone.app.dexterity import PloneMessageFactory as _PMF
+from plone.app.dexterity.behaviors import metadata
+from plone.autoform import directives as form
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.supermodel import model
-from collective.wfeffectiverange import _
+from z3c.form.interfaces import IEditForm, IAddForm
 from zope import schema
 from zope.interface import Invalid
 from zope.interface import invariant
 from zope.interface import provider
-from plone.app.dexterity.behaviors import metadata
-from plone.app.dexterity import PloneMessageFactory as _PMF
-from plone.autoform import directives as form
-from z3c.form.interfaces import IEditForm, IAddForm
-from collective.wfeffectiverange.vocabulary import TransitionsSource
-from datetime import datetime
 
 
 @provider(IFormFieldProvider)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from plone.indexer import indexer
 from .behaviors import IPubexBehavior
 from Acquisition import aq_base
+from plone.indexer import indexer
 
 
 @indexer(IPubexBehavior)
