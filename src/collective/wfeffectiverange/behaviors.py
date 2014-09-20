@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.supermodel import model
-from collective.wfpubex import _
+from collective.wfeffectiverange import _
 from zope import schema
 from zope.interface import Invalid
 from zope.interface import invariant
@@ -10,7 +10,7 @@ from plone.app.dexterity.behaviors import metadata
 from plone.app.dexterity import PloneMessageFactory as _PMF
 from plone.autoform import directives as form
 from z3c.form.interfaces import IEditForm, IAddForm
-from collective.wfpubex.vocabulary import TransitionsSource
+from collective.wfeffectiverange.vocabulary import TransitionsSource
 from datetime import datetime
 
 

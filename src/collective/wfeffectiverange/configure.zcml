@@ -6,7 +6,7 @@
     xmlns:five="http://namespaces.zope.org/five"
     xmlns:cmf="http://namespaces.zope.org/cmf"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-    i18n_domain="collective.pubex">
+    i18n_domain="collective.wfeffectiverange">
 
     <includeDependencies package="."/>
     <include package="plone.resource" file="meta.zcml"/>
@@ -18,15 +18,16 @@
         name="default"
         title="A Timed workflow based publication and expiration"
         directory="profiles/default"
-        description="Extension profile for collective.wfpubex"
+        description="Extension profile for collective.wfeffectiverange"
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
 
     <genericsetup:registerProfile
+        zcml:condition="installed: plone.app.contenttypes"
         name="testing"
         title="A Timed workflow based publication and expiration - WITH TEST TYPE"
         directory="profiles/testing"
-        description="Extension profile for collective.wfpubex - testing type provided"
+        description="Extension profile for collective.wfeffectiverange - testing type provided"
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
 

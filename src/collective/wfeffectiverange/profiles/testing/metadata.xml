@@ -2,7 +2,7 @@
 <metadata>
     <version>1</version>
     <dependencies>
-        <dependency>profile-collective.wfpubex:default</dependency>
+        <dependency>profile-collective.wfeffectiverange:default</dependency>
         <dependency>profile-plone.app.contenttypes:default</dependency>
     </dependencies>
 </metadata>

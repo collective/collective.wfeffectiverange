@@ -3,18 +3,18 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:plone="http://namespaces.plone.org/plone"
     xmlns:cache="http://namespaces.zope.org/cache"
-    i18n_domain="collective.wfpubex">
+    i18n_domain="collective.wfeffectiverange">
 
     <browser:page
         for="*"
-        name="wfpubex_vocab"
+        name="wfeffectiverange_vocab"
         class=".views.PubexView"
         permission="cmf.ModifyPortalContent"
         />
 
     <!-- resources -->
     <browser:resourceDirectory
-       name="collective.wfpubex"
+       name="collective.wfeffectiverange"
        directory="resources"
         />
 

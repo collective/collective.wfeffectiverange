@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from collective.wfpubex.behaviors import IPubexBehavior
-from collective.wfpubex.vocabulary import TransitionsSource
+from collective.wfeffectiverange.behaviors import IPubexBehavior
+from collective.wfeffectiverange.vocabulary import TransitionsSource
 from datetime import datetime
 from logging import getLogger
 from plone import api

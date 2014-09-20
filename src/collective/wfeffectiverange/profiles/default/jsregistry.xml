@@ -2,7 +2,7 @@
 <object name="portal_javascripts" meta_type="JavaScripts Registry">
 
     <javascript cacheable="True" compression="none" cookable="True"
-        enabled="True" expression="" id="++resource++collective.wfpubex/pubex-reload-vocab.js"
+        enabled="True" expression="" id="++resource++collective.wfeffectiverange/pubex-reload-vocab.js"
         inline="False"/>
 
 </object>

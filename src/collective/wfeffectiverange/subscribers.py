@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from collective.wfpubex import _
+from collective.wfeffectiverange import _
 from plone import api
 from zExceptions import Redirect
 

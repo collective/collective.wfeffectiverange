@@ -12,7 +12,7 @@ $(document).ready(function () {
             // remove old options
             selector.empty();
 
-        $.getJSON("@@wfpubex_vocab?current=" + current + "&contenttype=" + contenttype, function (result) {
+        $.getJSON("@@wfeffectiverange_vocab?current=" + current + "&contenttype=" + contenttype, function (result) {
             //the first option is always 'no-value'
             selector.append(options[0]);
 
