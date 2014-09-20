@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <object name="PubExpTest" meta_type="Dexterity FTI" i18n:domain="plone"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
- <property name="title" i18n:translate="">Publication Expirantion Test</property>
+ <property name="title" i18n:translate="">Test Workflowed Effective Range </property>
  <property name="description" i18n:translate=""></property>
  <property name="icon_expr"></property>
  <property name="factory">PubExpTest</property>

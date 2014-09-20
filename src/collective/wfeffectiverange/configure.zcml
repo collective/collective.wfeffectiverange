@@ -23,7 +23,7 @@
         />
 
     <genericsetup:registerProfile
-        zcml:condition="installed: plone.app.contenttypes"
+        zcml:condition="installed plone.app.contenttypes"
         name="testing"
         title="A Timed workflow based publication and expiration - WITH TEST TYPE"
         directory="profiles/testing"
@@ -42,8 +42,8 @@
     <plone:behavior
         title="Dublin Core metadata (with timed workflows)"
         description="Adds standard metadata fields (equals Basic metadata + Categorization + timed Effective range + Ownership. Executes workflow transition when date was reached."
-        provides=".behaviors.IPubexBehavior"
-        factory=".behaviors.Pubex"
+        provides=".behaviors.IPubexDublinCore"
+        factory=".behaviors.PubexDublinCore"
         for="plone.dexterity.interfaces.IDexterityContent"
         />
 

@@ -87,8 +87,8 @@ class Pubex(metadata.Publication):
     pass
 
 
-class PubexDublingCore(metadata.Basic,
-                       metadata.Categorization,
-                       Pubex,
-                       metadata.Ownership):
+class PubexDublinCore(metadata.Basic,
+                      metadata.Categorization,
+                      Pubex,
+                      metadata.Ownership):
     pass
