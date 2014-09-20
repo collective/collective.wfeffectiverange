@@ -5,7 +5,7 @@ version = '1.0'
 shortdesc = 'Workflows timed by effective range (Plone/Dexterity)'
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 longdesc = open(os.path.join(os.path.dirname(__file__), 'HISTORY.rst')).read()
-longdesc += open(os.path.join(os.path.dirname(__file__), 'LICENSE.rst')).read()
+longdesc += open(os.path.join(os.path.dirname(__file__), 'LICENCE.rst')).read()
 
 setup(
     name='collective.wfeffectiverange',
@@ -36,7 +36,6 @@ setup(
         'z3c.form >= 3.2.1',
         'plone.app.vocabularies',
         'Products.cron4plone',
-        ,
     ],
     extras_require={
         'test': [
