@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone import api
 from zope.i18nmessageid import MessageFactory
 from zope.interface import implementer
@@ -10,10 +11,11 @@ _ = MessageFactory('plone')
 
 @implementer(IContextSourceBinder)
 class TransitionsSource(object):
-    def __init__(self, fieldname, cur_transition=None, cur_contenttype=None):
+
+    def __init__(self, fieldname, transition=None, portal_type=None):
         self.fieldname = fieldname
-        self.cur_transition = cur_transition
-        self.cur_contenttype = cur_contenttype
+        self.transition = transition
+        self.portal_type = portal_type
 
     def __call__(self, context):
         # workflowtool
@@ -21,56 +23,43 @@ class TransitionsSource(object):
         url = context.REQUEST.getURL()
         addform = '++add++' in url
 
-        #first get current portal type
-        # if addform and not bool(self.cur_contenttype):
-        if addform and self.cur_contenttype == None:
-            #Todo: also in der view und im javascript bekomme ich den wert
-            #cur_contenttype noch zurück, hier aber ist er kurz da dann nicht mehr :/
-            #steh hier voll an sry
+        if self.portal_type is None:
+            if addform:
+                # todo: could be done in one step with re.match.
+                # strip the /@@validate_field!
+                url = re.sub('\/@{2}.*', '', url)
+                # get portal_type from addform
+                self.portal_type = re.split('.*\+{2}add\+{2}', url)[1]
+            else:
+                self.portal_type = context.portal_type
 
-            # get the portal type from the url, because initial, self context
-            # is the vocab obj
-            # the part after the ++add++ is our portal_type
-
-            #strip the /@@validate_field
-            url = re.sub('\/@{2}.*', '', url)
-            portal_type = re.split('.*\+{2}add\+{2}', url)[1]
-            import ipdb;ipdb.set_trace()
-            #da dazubaun?
-
-        if addform and self.cur_contenttype != None:
-            'blub'
-
-        else:
-            portal_type = context.portal_type
-
-        wfs = wftool.getWorkflowsFor(portal_type)
+        wfs = wftool.getWorkflowsFor(self.portal_type)
         if len(wfs) == 0:
             return SimpleVocabulary([])
         elif len(wfs) > 1:
             raise ValueError(
-                'Multiple Workflow are not supported.'
+                _(u'Multiple workflows are not supported.')
             )
 
         wf = wfs[0]
 
-        # if no eff_transition is set get all possible transitions
-        # for the exp_transition
-        # if an eff_transition is set, only get the allowed transitions for
-        # that
-        if self.cur_transition is None \
+        # if no effective_transition is set get all possible transitions
+        # for the expires_transition
+        # if an effective_transition is set, only get the allowed
+        # transitions for that
+        if self.transition is None \
                 and not addform \
-                and context.eff_transition is not None \
-                and self.fieldname == 'exp_transition':
-            self.cur_transition = context.eff_transition
+                and context.effective_transition is not None \
+                and self.fieldname == 'expires_transition':
+            self.transition = context.effective_transition
 
-        if self.cur_transition and self.cur_transition != '--NOVALUE--':
-            state = wf.transitions[self.cur_transition].new_state_id
+        if self.transition and self.transition != '--NOVALUE--':
+            state = wf.transitions[self.transition].new_state_id
             # get current state for portal_type
             # If it is given as a string it returns the default state.
             # see PLIP 217 Workflow by adaptation
         elif addform:
-            state = api.content.get_state(portal_type)
+            state = api.content.get_state(self.portal_type)
         else:
             state = api.content.get_state(context)
 

@@ -2,13 +2,13 @@
 $(document).ready(function () {
 
     function reload_vocab(current, contenttype) {
-//        this function reloads the possible values for exp_transition, each time
-//        eff_transition has changed
+//        this function reloads the possible values for expires_transition, each time
+//        effective_transition has changed
 
         // get current options
-        var options = $("#form-widgets-IPubexBehavior-exp_transition option");
+        var options = $("#form-widgets-IPubexBehavior-expires_transition option");
         //get expires selector
-        var selector =  $("#form-widgets-IPubexBehavior-exp_transition");
+        var selector =  $("#form-widgets-IPubexBehavior-expires_transition");
             // remove old options
             selector.empty();
 
@@ -25,7 +25,7 @@ $(document).ready(function () {
         });
     }
 
-    $("#form-widgets-IPubexBehavior-eff_transition").change(function () {
+    $("#form-widgets-IPubexBehavior-effective_transition").change(function () {
         //extra geht the portaltype from the url
         var path = window.location.pathname;
         var contenttype = path.replace(/.*\+{2}add\+{2}/, "");

@@ -11,9 +11,10 @@ logger = getLogger('pubex')
 
 
 class PubexView(BrowserView):
+
     def __call__(self):
         transitions = TransitionsSource(
-            'eff_transition',
+            'effective_transition',
             cur_transition=self.request.get('current'),
             cur_contenttype=self.request.get('contenttype'),
         )
@@ -32,37 +33,37 @@ class PubexView(BrowserView):
 
 # vocabulary hohlen alle mit pub date in vergangenheit und has(pub_transition)
 class PubexTicker(BrowserView):
+
     def __call__(self):
         catalog = api.portal.get_tool('portal_catalog')
 
         # for effective transition
         query = {'effective': {'query': datetime.now(), 'range': 'max'},
-                 'has_eff_transition': True,
+                 'has_effective_transition': True,
                  'object_provides': IPubexBehavior.__identifier__}
 
         results = catalog.searchResults(query)
 
         for brain in results:
             obj = brain.getObject()
-            new_transition = obj.eff_transition
-            obj.eff_transition = None
+            new_transition = obj.effective_transition
+            obj.effective_transition = None
             api.content.transition(obj=obj, transition=new_transition)
             obj.reindexObject()
             logger.info(
                 'autotransition effective for {0}'.format(obj.absolute_url()))
 
-
         #for expires transition
         query = {'expires': {'query': datetime.now(), 'range': 'max'},
-                 'has_exp_transition': True,
+                 'has_expires_transition': True,
                  'object_provides': IPubexBehavior.__identifier__}
 
         results = catalog.searchResults(query)
 
         for brain in results:
             obj = brain.getObject()
-            new_transition = obj.exp_transition
-            obj.exp_transition = None
+            new_transition = obj.expires_transition
+            obj.expires_transition = None
             api.content.transition(obj=obj, transition=new_transition)
             obj.reindexObject()
             logger.info(

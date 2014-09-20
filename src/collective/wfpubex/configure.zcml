@@ -16,7 +16,7 @@
 
     <genericsetup:registerProfile
         name="default"
-        title="A_workflow based publication and expiration"
+        title="A Timed workflow based publication and expiration"
         directory="profiles/default"
         description="Extension profile for collective.wfpubex"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -24,27 +24,36 @@
 
     <genericsetup:registerProfile
         name="testing"
-        title="A_workflow based publication and expiration - TESTTYPE"
+        title="A Timed workflow based publication and expiration - WITH TEST TYPE"
         directory="profiles/testing"
-        description="Extension profile for collective.wfpubex - testing"
+        description="Extension profile for collective.wfpubex - testing type provided"
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
 
     <plone:behavior
-        title="workflow based publication and expiration"
-        description="Provides Pubex transitions."
+        title="Date range (with timed workflows)"
+        description="Adds effective date and expiration date fields. Executes workflow transition when date was reached."
         provides=".behaviors.IPubexBehavior"
+        factory=".behaviors.Pubex"
+        for="plone.dexterity.interfaces.IDexterityContent"
+        />
+
+    <plone:behavior
+        title="Dublin Core metadata (with timed workflows)"
+        description="Adds standard metadata fields (equals Basic metadata + Categorization + timed Effective range + Ownership. Executes workflow transition when date was reached."
+        provides=".behaviors.IPubexBehavior"
+        factory=".behaviors.Pubex"
         for="plone.dexterity.interfaces.IDexterityContent"
         />
 
     <adapter
-        name="has_eff_transition"
-        factory=".indexers.has_eff_transition"
+        name="has_effective_transition"
+        factory=".indexers.has_effective_transition"
         />
 
     <adapter
-        name="has_exp_transition"
-        factory=".indexers.has_exp_transition"
+        name="has_expires_transition"
+        factory=".indexers.has_expires_transition"
         />
 
     <subscriber
