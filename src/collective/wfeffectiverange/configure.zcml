@@ -34,16 +34,16 @@
     <plone:behavior
         title="Date range (with timed workflows)"
         description="Adds effective date and expiration date fields. Executes workflow transition when date was reached."
-        provides=".behaviors.IPubexBehavior"
-        factory=".behaviors.Pubex"
+        provides=".behaviors.IWFEffectiveRange"
+        factory=".behaviors.WFEffectiveRange"
         for="plone.dexterity.interfaces.IDexterityContent"
         />
 
     <plone:behavior
         title="Dublin Core metadata (with timed workflows)"
         description="Adds standard metadata fields (equals Basic metadata + Categorization + timed Effective range + Ownership. Executes workflow transition when date was reached."
-        provides=".behaviors.IPubexDublinCore"
-        factory=".behaviors.PubexDublinCore"
+        provides=".behaviors.IWFEffectiveRangeDublinCore"
+        factory=".behaviors.WFEffectiveRangeDublinCore"
         for="plone.dexterity.interfaces.IDexterityContent"
         />
 

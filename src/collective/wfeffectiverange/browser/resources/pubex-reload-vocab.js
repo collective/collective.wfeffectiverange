@@ -6,9 +6,9 @@ $(document).ready(function () {
 //        effective_transition has changed
 
         // get current options
-        var options = $("#form-widgets-IPubexBehavior-expires_transition option");
+        var options = $("#form-widgets-IWFEffectiveRange-expires_transition option");
         //get expires selector
-        var selector =  $("#form-widgets-IPubexBehavior-expires_transition");
+        var selector =  $("#form-widgets-IWFEffectiveRange-expires_transition");
             // remove old options
             selector.empty();
 
@@ -25,7 +25,7 @@ $(document).ready(function () {
         });
     }
 
-    $("#form-widgets-IPubexBehavior-effective_transition").change(function () {
+    $("#form-widgets-IWFEffectiveRange-effective_transition").change(function () {
         //extra geht the portaltype from the url
         var path = window.location.pathname;
         var contenttype = path.replace(/.*\+{2}add\+{2}/, "");

@@ -16,7 +16,7 @@ from zope.interface import provider
 
 
 @provider(IFormFieldProvider)
-class IPubexBehavior(metadata.IPublication):
+class IWFEffectiveRange(metadata.IPublication):
     """
     workflow based publication and expiration
     """
@@ -75,20 +75,20 @@ class IPubexBehavior(metadata.IPublication):
                             u"a expiration transition is needed."))
 
 
-class IPubexDublinCore(metadata.IBasic,
+class IWFEffectiveRangeDublinCore(metadata.IBasic,
                        metadata.ICategorization,
-                       IPubexBehavior,
+                       IWFEffectiveRange,
                        metadata.IOwnership):
     pass
 
 
 # factories:
-class Pubex(metadata.Publication):
+class WFEffectiveRange(metadata.Publication):
     pass
 
 
-class PubexDublinCore(metadata.Basic,
+class WFEffectiveRangeDublinCore(metadata.Basic,
                       metadata.Categorization,
-                      Pubex,
+                      WFEffectiveRange,
                       metadata.Ownership):
     pass

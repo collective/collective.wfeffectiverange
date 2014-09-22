@@ -8,7 +8,7 @@
     <browser:page
         for="*"
         name="wfeffectiverange_vocab"
-        class=".views.PubexView"
+        class=".views.WFEffectiveRangeView"
         permission="cmf.ModifyPortalContent"
         />
 
@@ -21,7 +21,7 @@
   <browser:page
       for="*"
       name="pubex-ticker"
-      class=".views.PubexTicker"
+      class=".views.WFEffectiveRangeTicker"
       permission="zope.Public"
       />
 

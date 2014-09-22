@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from Products.Five.browser import BrowserView
-from collective.wfeffectiverange.behaviors import IPubexBehavior
+from collective.wfeffectiverange.behaviors import IWFEffectiveRange
 from collective.wfeffectiverange.vocabulary import TransitionsSource
 from datetime import datetime
 from logging import getLogger
@@ -10,7 +10,7 @@ import json
 logger = getLogger('pubex')
 
 
-class PubexView(BrowserView):
+class WFEffectiveRangeView(BrowserView):
 
     def __call__(self):
         transitions = TransitionsSource(
@@ -32,7 +32,7 @@ class PubexView(BrowserView):
 
 
 # vocabulary hohlen alle mit pub date in vergangenheit und has(pub_transition)
-class PubexTicker(BrowserView):
+class WFEffectiveRangeTicker(BrowserView):
 
     def __call__(self):
         catalog = api.portal.get_tool('portal_catalog')
@@ -40,7 +40,7 @@ class PubexTicker(BrowserView):
         # for effective transition
         query = {'effective': {'query': datetime.now(), 'range': 'max'},
                  'has_effective_transition': True,
-                 'object_provides': IPubexBehavior.__identifier__}
+                 'object_provides': IWFEffectiveRange.__identifier__}
 
         results = catalog.searchResults(query)
 
@@ -56,7 +56,7 @@ class PubexTicker(BrowserView):
         # for expires transition
         query = {'expires': {'query': datetime.now(), 'range': 'max'},
                  'has_expires_transition': True,
-                 'object_provides': IPubexBehavior.__identifier__}
+                 'object_provides': IWFEffectiveRange.__identifier__}
 
         results = catalog.searchResults(query)
 
