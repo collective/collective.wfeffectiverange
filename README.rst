@@ -21,8 +21,8 @@ For contents that need more security, we want proper security handling using zop
 Usecases
 ========
 
-Usecase 1
----------
+On Publish
+----------
 
 - The user creates an unpublished content item.
 - The user sets a publication date and time in the future. With this date he has to select a valid workflow transition.
@@ -30,8 +30,8 @@ Usecase 1
 - The selected transition will be automatically executed at the given date and time.
 
 
-Usecase 2
----------
+On Expiration
+-------------
 
 - First the user creates and publishes the content.
 - Then the user edits again and sets a expiration date and time in the future. With this date he has to select a valid workflow transition.
@@ -39,8 +39,8 @@ Usecase 2
 - The selected transition will be automatically executed at the given date and time.
 
 
-Usecase 3
----------
+On Both
+-------
 
 - The user created an unpublished content.
 - Then the user sets a publication date and time in the future. With this date he has to select a valid workflow transition.
@@ -51,23 +51,24 @@ Usecase 3
 - The selected transitions are automatically executed at the given date and time.
 
 
-Usecase 4
----------
+Abort manual set transition
+---------------------------
 
 - The user has set an publication or expiration date like in the usecase 1, 2 or 3.
 - The user selects a workflow from the plone default workflow menu, or invokes it in any other way.
 - The workflow transition will be aborted and an error message is shown.
 
 
-Usecase 5
----------
+Publication date in past
+------------------------
 
 - The user edits content created by usecase 1 after the publication date and the transition was executed.
 - Now the publication transition field is empty and can not be set because the publication date is in the past.
 
 
-Usecase 6
----------
+Re-Editing
+----------
+
 - The user edits content created by usecase 1 after the publication date and the transition was executed.
 - Then the user can follow usecase 2.
 
