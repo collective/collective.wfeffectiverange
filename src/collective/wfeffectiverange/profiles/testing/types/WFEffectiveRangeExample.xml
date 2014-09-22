@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<object name="PubExpTest" meta_type="Dexterity FTI" i18n:domain="plone"
+<object name="WFEffectiveRangeExample" meta_type="Dexterity FTI" i18n:domain="plone"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  <property name="title" i18n:translate="">Test Workflowed Effective Range </property>
  <property name="description" i18n:translate=""></property>
  <property name="icon_expr"></property>
- <property name="factory">PubExpTest</property>
- <property name="add_view_expr">string:${folder_url}/++add++PubExpTest</property>
+ <property name="factory">WFEffectiveRangeExample</property>
+ <property name="add_view_expr">string:${folder_url}/++add++WFEffectiveRangeExample</property>
  <property name="link_target"></property>
  <property name="immediate_view">view</property>
  <property name="global_allow">True</property>
@@ -20,10 +20,16 @@
  <property name="add_permission">plone.app.contenttypes.addDocument</property>
  <property name="klass">plone.app.contenttypes.content.Document</property>
  <property name="behaviors">
+  <element value="plone.app.dexterity.behaviors.metadata.IBasic"/>
+  <element value="collective.wfeffectiverange.behaviors.IWFEffectiveRange"/>
+  <element value="plone.app.dexterity.behaviors.metadata.ICategorization"/>
+  <element value="plone.app.dexterity.behaviors.metadata.IOwnership"/>
   <element value="plone.app.content.interfaces.INameFromTitle"/>
   <element value="plone.app.dexterity.behaviors.discussion.IAllowDiscussion"/>
   <element value="plone.appdexterity.behaviors.exclfromnav.IExcludeFromNavigation"/>
+<!-- This does not work due to inheritance problems with dx behaviour.
   <element value="collective.wfeffectiverange.behaviors.IWFEffectiveRangeDublinCore"/>
+-->
   <element value="plone.app.contenttypes.behaviors.richtext.IRichText"/>
   <element value="plone.app.relationfield.behavior.IRelatedItems"/>
   <element value="plone.app.versioningbehavior.behaviors.IVersionable" />

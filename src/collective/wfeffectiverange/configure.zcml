@@ -16,7 +16,7 @@
 
     <genericsetup:registerProfile
         name="default"
-        title="A Timed workflow based publication and expiration"
+        title="Workflowed effective range"
         directory="profiles/default"
         description="Extension profile for collective.wfeffectiverange"
         provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -25,27 +25,28 @@
     <genericsetup:registerProfile
         zcml:condition="installed plone.app.contenttypes"
         name="testing"
-        title="A Timed workflow based publication and expiration - WITH TEST TYPE"
+        title="Workflowed effective range - WITH TEST TYPE"
         directory="profiles/testing"
-        description="Extension profile for collective.wfeffectiverange - testing type provided"
+        description="Extension profile for collective.wfeffectiverange - testing content type provided"
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
 
     <plone:behavior
-        title="Date range (with timed workflows)"
+        title="Date range (with workflowed effective range)"
         description="Adds effective date and expiration date fields. Executes workflow transition when date was reached."
         provides=".behaviors.IWFEffectiveRange"
         factory=".behaviors.WFEffectiveRange"
         for="plone.dexterity.interfaces.IDexterityContent"
         />
 
+<!-- This does not work due to inheritance problems with dx behaviour.
     <plone:behavior
-        title="Dublin Core metadata (with timed workflows)"
+        title="Dublin Core metadata (with workflowed effective range)"
         description="Adds standard metadata fields (equals Basic metadata + Categorization + timed Effective range + Ownership. Executes workflow transition when date was reached."
         provides=".behaviors.IWFEffectiveRangeDublinCore"
         factory=".behaviors.WFEffectiveRangeDublinCore"
         for="plone.dexterity.interfaces.IDexterityContent"
-        />
+        /> -->
 
     <adapter
         name="has_effective_transition"

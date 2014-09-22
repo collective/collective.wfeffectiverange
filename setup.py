@@ -30,21 +30,21 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'setuptools',
         'Plone',
-        'plone.api',
-        'z3c.form >= 3.2.1',
-        'plone.app.vocabularies',
         'Products.cron4plone',
+        'plone.api',
+        'plone.app.vocabularies',
+        'plone.autoform > 1.6.0',
+        'setuptools',
+        'z3c.form >= 3.2.1',
     ],
     extras_require={
         'test': [
             'interlude[ipython]>=1.3.1',
             'ipdb',
-            'plone.app.testing',
+            'plone.app.contenttypes',  # for local testing
             'plone.app.robotframework [debug]',
-            #for local testing
-            'plone.app.contenttypes',
+            'plone.app.testing',
         ],
     },
     entry_points="""

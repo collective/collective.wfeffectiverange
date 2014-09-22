@@ -10,7 +10,7 @@ import json
 logger = getLogger('pubex')
 
 
-class WFEffectiveRangeView(BrowserView):
+class WFEffectiveRangeVocabReloadView(BrowserView):
 
     def __call__(self):
         transitions = TransitionsSource(

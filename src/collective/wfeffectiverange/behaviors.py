@@ -75,17 +75,18 @@ class IWFEffectiveRange(metadata.IPublication):
                             u"a expiration transition is needed."))
 
 
+# factories:
+class WFEffectiveRange(metadata.Publication):
+    pass
+
+
+# XXX: This does not work due to inheritance problems with dx behaviour.
 class IWFEffectiveRangeDublinCore(
     metadata.IBasic,
     metadata.ICategorization,
     IWFEffectiveRange,
     metadata.IOwnership
 ):
-    pass
-
-
-# factories:
-class WFEffectiveRange(metadata.Publication):
     pass
 
 
