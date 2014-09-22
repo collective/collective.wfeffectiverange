@@ -2,19 +2,19 @@
 Workflow transition based on publication and expiration date
 ============================================================
 
-This is intended as an alternative implemention of the dexterity IPublication behavior.
+Once one of the both dates was reached an automatic workflow transition is executed.
 
+This is intended as an alternative implemention of the `Dexterity <http://docs.plone.org/external/plone.app.dexterity/docs/index.html>`_ IPublication behavior.
 
-Background
+Motivation
 ==========
 
-Because the Plone default publication and expiration functionality lacks in terms of security we decided to write this addon.
+Because the Plone default publication and expiration functionality lacks in terms of security we decided to create this addon.
 
-For instance: If a contents publication date is not reached, it does not show up in the navigation, the search and so on.
-But it can still be accessed directly, by a json request, or in many other ways. The same is true for expired content.
+For instance: In default Plone if a contents publication date is not reached, it does not show up in the navigation, the search and so on.
+But it can still be accessed directly, by entering its URL, by a json request, or in many other ways. The same is true for expired content.
 
 For contents that need more security, we want proper security handling using zopes access control mechanism and CMF/plones workflow functionality.
-
 
 Usecases
 ========
@@ -94,12 +94,47 @@ No support if a content type has two workflows.
 Install
 =======
 
-Enable the ``workflow based publication and expiration`` behavior for the contenttypes where this feature should be enabled.
 
-Configure the cronjob, via the site settings in the cron4plone configuration.
-Enter ``* * * * portal/@@pubex-ticker``and save.
+In your buildout or ``setup.py`` depend on ``collective.wfeffectiverange``.
 
-In the buildout section is also a clock-server entry which has it's interval set to execute every hour.
+Properly configure `Products.cron4plone as described here <https://pypi.python.org/pypi/Products.cron4plone/1.1.10>`_.
 
-If desired, the cock-server and cronjob can be modified.
-See cron4plone documentation: https://github.com/collective/Products.cron4plone
+Run buildout.
+
+In your profiles ``metadata.xml`` depend on ``profile-collective.wfeffectiverange:default`` or manually activate it in Plone control panels addon section.
+
+In your content types GenericSetup XML file replace ``<element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>`` by::
+
+  <element value="plone.app.dexterity.behaviors.metadata.IBasic"/>
+  <element value="collective.wfeffectiverange.behaviors.IWFEffectiveRange"/>
+  <element value="plone.app.dexterity.behaviors.metadata.ICategorization"/>
+  <element value="plone.app.dexterity.behaviors.metadata.IOwnership"/>
+
+Alternativly - when working TTW - do the same in the ``Dexterity content types`` control panel under the Behavior tab.
+
+Configure the cronjob in the Plone control panel cron4plone section.
+Enter ``* * * * portal/@@wfeffectiverange-ticker``and save.
+
+Source Code and Contributions
+=============================
+
+If you want to help with the development (improvement, update, bug-fixing, ...) of ``collective.wfeffectiverange`` this is a great idea!
+
+The code is located in the `github collective <https://github.com/collective/collective.wfeffectiverange>`_.
+
+Please file any issues or ideas for enhancement at the `issue tracker <https://github.com/collective/collective.wfeffectiverange/issues>`_.
+
+You can clone it or `get access to the github-collective <http://collective.github.com/>`_ and work directly on the project.
+
+Maintainer is Jens Klein and the BlueDynamics Alliance developer team. We appreciate any contribution and if a release is needed to be done on pypi,
+please just contact one of us `dev@bluedynamics dot com <mailto:dev@bluedynamics.com>`_
+
+Contributors
+============
+
+- Benjamin Stefaner <bs@kleinundpartner.at> - development
+
+- Jens W. Klein <jens@bluedynamics.com> - development
+
+- Peter Holzer <hpeter@agitator.com> - use case
+

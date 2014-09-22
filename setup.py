@@ -2,9 +2,9 @@ from setuptools import setup, find_packages
 import os
 
 version = '1.0'
-shortdesc = 'Workflows timed by effective range (Plone/Dexterity)'
+shortdesc = 'Workflowed effective range (Plone/Dexterity)'
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
-longdesc = open(os.path.join(os.path.dirname(__file__), 'HISTORY.rst')).read()
+longdesc = open(os.path.join(os.path.dirname(__file__), 'CHANGES.rst')).read()
 longdesc += open(os.path.join(os.path.dirname(__file__), 'LICENCE.rst')).read()
 
 setup(
