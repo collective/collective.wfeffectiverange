@@ -39,7 +39,7 @@ In your content types GenericSetup XML file replace ``<element value="plone.app.
 Alternativly - when working TTW - do the same in the ``Dexterity content types`` control panel under the Behavior tab.
 
 Configure the cronjob in the Plone control panel cron4plone section.
-Enter ``* * * * portal/@@wfeffectiverange-ticker``and save.
+Enter ``* * * * portal/@@wfeffectiverange-ticker`` (check every minute) and save.
 
 
 Usecases
