@@ -22,7 +22,7 @@ setup(
     keywords='',
     author='BlueDynamics Alliance',
     author_email='dev@bluedynamics.com',
-    url=u'https://bluedynamics.com',
+    url=u'https://pypi.python.org/pypi/collective.wfeffectiverange',
     license='GNU General Public Licence',
     packages=find_packages('src'),
     package_dir={'': 'src'},
