@@ -75,10 +75,12 @@ class IWFEffectiveRange(metadata.IPublication):
                             u"a expiration transition is needed."))
 
 
-class IWFEffectiveRangeDublinCore(metadata.IBasic,
-                       metadata.ICategorization,
-                       IWFEffectiveRange,
-                       metadata.IOwnership):
+class IWFEffectiveRangeDublinCore(
+    metadata.IBasic,
+    metadata.ICategorization,
+    IWFEffectiveRange,
+    metadata.IOwnership
+):
     pass
 
 
@@ -87,8 +89,10 @@ class WFEffectiveRange(metadata.Publication):
     pass
 
 
-class WFEffectiveRangeDublinCore(metadata.Basic,
-                      metadata.Categorization,
-                      WFEffectiveRange,
-                      metadata.Ownership):
+class WFEffectiveRangeDublinCore(
+    metadata.Basic,
+    metadata.Categorization,
+    WFEffectiveRange,
+    metadata.Ownership
+):
     pass
