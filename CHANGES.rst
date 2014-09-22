@@ -2,7 +2,7 @@
 Changes
 =======
 
-1.0.1 (unreleased)
+1.0.1 (2014-09-22)
 ------------------
 
 - fix: ticker view name was wrong.
