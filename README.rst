@@ -18,6 +18,30 @@ But it can still be accessed directly, by entering its URL, by a json request, o
 
 For contents that need more security, we want proper security handling using zopes access control mechanism and CMF/plones workflow functionality.
 
+Installation
+============
+
+In your buildout or ``setup.py`` depend on ``collective.wfeffectiverange``.
+
+Properly configure `Products.cron4plone as described here <https://pypi.python.org/pypi/Products.cron4plone/1.1.10>`_.
+
+Run buildout.
+
+In your profiles ``metadata.xml`` depend on ``profile-collective.wfeffectiverange:default`` or manually activate it in Plone control panels addon section.
+
+In your content types GenericSetup XML file replace ``<element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>`` by::
+
+  <element value="plone.app.dexterity.behaviors.metadata.IBasic"/>
+  <element value="collective.wfeffectiverange.behaviors.IWFEffectiveRange"/>
+  <element value="plone.app.dexterity.behaviors.metadata.ICategorization"/>
+  <element value="plone.app.dexterity.behaviors.metadata.IOwnership"/>
+
+Alternativly - when working TTW - do the same in the ``Dexterity content types`` control panel under the Behavior tab.
+
+Configure the cronjob in the Plone control panel cron4plone section.
+Enter ``* * * * portal/@@wfeffectiverange-ticker``and save.
+
+
 Usecases
 ========
 
@@ -93,30 +117,6 @@ Limitations
 
 No support if a content type has two workflows.
 
-
-Install
-=======
-
-
-In your buildout or ``setup.py`` depend on ``collective.wfeffectiverange``.
-
-Properly configure `Products.cron4plone as described here <https://pypi.python.org/pypi/Products.cron4plone/1.1.10>`_.
-
-Run buildout.
-
-In your profiles ``metadata.xml`` depend on ``profile-collective.wfeffectiverange:default`` or manually activate it in Plone control panels addon section.
-
-In your content types GenericSetup XML file replace ``<element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>`` by::
-
-  <element value="plone.app.dexterity.behaviors.metadata.IBasic"/>
-  <element value="collective.wfeffectiverange.behaviors.IWFEffectiveRange"/>
-  <element value="plone.app.dexterity.behaviors.metadata.ICategorization"/>
-  <element value="plone.app.dexterity.behaviors.metadata.IOwnership"/>
-
-Alternativly - when working TTW - do the same in the ``Dexterity content types`` control panel under the Behavior tab.
-
-Configure the cronjob in the Plone control panel cron4plone section.
-Enter ``* * * * portal/@@wfeffectiverange-ticker``and save.
 
 Source Code and Contributions
 =============================
