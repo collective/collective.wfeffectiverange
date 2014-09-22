@@ -118,11 +118,11 @@ Enter ``* * * * portal/@@wfeffectiverange-ticker``and save.
 Source Code and Contributions
 =============================
 
-If you want to help with the development (improvement, update, bug-fixing, ...) of ``collective.wfeffectiverange`` this is a great idea!
-
-The code is located in the `github collective <https://github.com/collective/collective.wfeffectiverange>`_.
+If you want to help with the development (reporting, improvement, update, bug-fixing, ...) of ``collective.wfeffectiverange`` this is a great idea!
 
 Please file any issues or ideas for enhancement at the `issue tracker <https://github.com/collective/collective.wfeffectiverange/issues>`_.
+
+The code is located in the `github collective <https://github.com/collective/collective.wfeffectiverange>`_.
 
 You can clone it or `get access to the github-collective <http://collective.github.com/>`_ and work directly on the project.
 
