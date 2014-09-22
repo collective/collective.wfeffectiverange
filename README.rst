@@ -2,7 +2,7 @@
 Workflow transition based on publication and expiration date
 ============================================================
 
-Once one of the effective range dates was reached an automatic workflow transition is executed.
+Once one of the effective range dates was reached an automatic workflow transition is executed and chnages the worklfow state with its managed permissions.
 
 This is intended as an alternative implemention of the `Dexterity <http://docs.plone.org/external/plone.app.dexterity/docs/index.html>`_ IPublication behavior.
 
