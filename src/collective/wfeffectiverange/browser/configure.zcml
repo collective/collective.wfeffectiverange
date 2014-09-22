@@ -20,7 +20,7 @@
 
   <browser:page
       for="*"
-      name="pubex-ticker"
+      name="wfeffectiverange-ticker"
       class=".views.WFEffectiveRangeTicker"
       permission="zope.Public"
       />
