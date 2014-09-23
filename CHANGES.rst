@@ -5,8 +5,8 @@ Changes
 1.1 (unreleased)
 ----------------
 
-- fix: keep transition after form validation error. respect base_url for view
-       calls.
+- fix: keep transition after form validation error. respect base_url for view 
+  calls. fixes with vocab fetching.
   [benniboy]
 
 1.0.1 (2014-09-22)
