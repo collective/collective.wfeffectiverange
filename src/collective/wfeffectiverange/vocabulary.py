@@ -20,6 +20,10 @@ class TransitionsSource(object):
     def __call__(self, context):
         # workflowtool
         wftool = api.portal.get_tool('portal_workflow')
+        from .behaviors import WFEffectiveRange
+        if isinstance(context, WFEffectiveRange):
+            context = context.context
+
         url = context.REQUEST.getURL()
         addform = '++add++' in url
 
@@ -55,6 +59,7 @@ class TransitionsSource(object):
 
         if self.transition and self.transition != '--NOVALUE--':
             state = wf.transitions[self.transition].new_state_id
+
             # get current state for portal_type
             # If it is given as a string it returns the default state.
             # see PLIP 217 Workflow by adaptation

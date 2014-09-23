@@ -26,7 +26,7 @@
   <element value="plone.app.dexterity.behaviors.metadata.IOwnership"/>
   <element value="plone.app.content.interfaces.INameFromTitle"/>
   <element value="plone.app.dexterity.behaviors.discussion.IAllowDiscussion"/>
-  <element value="plone.appdexterity.behaviors.exclfromnav.IExcludeFromNavigation"/>
+  <element value="plone.app.dexterity.behaviors.exclfromnav.IExcludeFromNavigation"/>
 <!-- This does not work due to inheritance problems with dx behaviour.
   <element value="collective.wfeffectiverange.behaviors.IWFEffectiveRangeDublinCore"/>
 -->

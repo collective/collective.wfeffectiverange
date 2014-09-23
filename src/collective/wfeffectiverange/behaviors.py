@@ -77,7 +77,14 @@ class IWFEffectiveRange(metadata.IPublication):
 
 # factories:
 class WFEffectiveRange(metadata.Publication):
-    pass
+
+    effective_transition = metadata.DCFieldProperty(
+        IWFEffectiveRange['effective_transition']
+    )
+
+    expires_transition = metadata.DCFieldProperty(
+        IWFEffectiveRange['expires_transition']
+    )
 
 
 # XXX: This does not work due to inheritance problems with dx behaviour.

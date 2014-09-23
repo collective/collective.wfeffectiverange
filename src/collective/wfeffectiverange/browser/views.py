@@ -16,7 +16,7 @@ class WFEffectiveRangeVocabReloadView(BrowserView):
         transitions = TransitionsSource(
             'effective_transition',
             transition=self.request.get('current'),
-            portal_type=self.request.get('contenttype'),
+            portal_type=self.request.get('contenttype', None),
         )
         vocab = transitions(self.context)
         data = []

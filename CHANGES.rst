@@ -5,8 +5,9 @@ Changes
 1.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- fix: keep transition after form validation error. respect base_url for view
+       calls.
+  [benniboy]
 
 1.0.1 (2014-09-22)
 ------------------
