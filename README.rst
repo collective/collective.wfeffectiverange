@@ -2,9 +2,9 @@
 Workflow transition based on publication and expiration date
 ============================================================
 
-Once one of the effective range dates was reached an automatic workflow transition is executed and chnages the workflow state with its managed permissions.
+Once one of the effective range dates was reached an automatic workflow transition is executed and changes the workflow state with its managed permissions.
 
-This is intended as an alternative implemention of the `Dexterity <http://docs.plone.org/external/plone.app.dexterity/docs/index.html>`_ IPublication behavior.
+This is intended as an alternative implementation of the `Dexterity <http://docs.plone.org/external/plone.app.dexterity/docs/index.html>`_ IPublication behavior.
 
 .. contents:: Table of Contents
 
@@ -36,7 +36,7 @@ In your content types GenericSetup XML file replace ``<element value="plone.app.
   <element value="plone.app.dexterity.behaviors.metadata.ICategorization"/>
   <element value="plone.app.dexterity.behaviors.metadata.IOwnership"/>
 
-Alternativly - when working TTW - do the same in the ``Dexterity content types`` control panel under the Behavior tab.
+Alternatively - when working TTW - do the same in the ``Dexterity content types`` control panel under the Behavior tab.
 
 Configure the cronjob in the Plone control panel cron4plone section.
 To check every minute enter::
@@ -44,8 +44,8 @@ To check every minute enter::
     * * * * portal/@@wfeffectiverange-ticker
 
 
-Usecases
-========
+Use cases
+=========
 
 On Publish
 ----------
@@ -80,7 +80,7 @@ On Both
 Abort manual set transition
 ---------------------------
 
-- The user has set an publication or expiration date like in the usecase 1, 2 or 3.
+- The user has set an publication or expiration date like in the use case 1, 2 or 3.
 - The user selects a workflow from the plone default workflow menu, or invokes it in any other way.
 - The workflow transition will be aborted and an error message is shown.
 
@@ -88,28 +88,28 @@ Abort manual set transition
 Publication date in past
 ------------------------
 
-- The user edits content created by usecase 1 after the publication date and the transition was executed.
+- The user edits content created by use case 1 after the publication date and the transition was executed.
 - Now the publication transition field is empty and can not be set because the publication date is in the past.
 
 
 Re-Editing
 ----------
 
-- The user edits content created by usecase 1 after the publication date and the transition was executed.
-- Then the user can follow usecase 2.
+- The user edits content created by use case 1 after the publication date and the transition was executed.
+- Then the user can follow use case 2.
 
 
 Implementation
 ==============
 
-The usecases are implemented by providing a dexterity behavior, zope cronjob (cron4plone) and a workflow subscriber.
+The use cases are implemented by providing a dexterity behavior, zope cronjob (cron4plone) and a workflow subscriber.
 
-For each content type where this behavior is set, it will lookup the workflow gets the possible transitions and provides them as a zope vocabulary. It will also check that the selected transitions dont interfer with each other.
+For each content type where this behavior is set, it will lookup the workflow gets the possible transitions and provides them as a zope vocabulary. It will also check that the selected transitions don't interfere with each other.
 
 Under the edit section, the dates tab will be replaced.
 This behavior will replace publication/expiration fields within the dates tab and adds a fields to select the target workflow transition, including vocabularies, validations and invariants.
 
-A serverside json view delivers the transitions for the expiration date after a publishing date is set, in order to provide a proper vocabulary.
+A server-side json view delivers the transitions for the expiration date after a publishing date is set, in order to provide a proper vocabulary.
 
 In order to make it work, you have to configure a cron job to check if the desired workflow transition date has been met. See install section
 
