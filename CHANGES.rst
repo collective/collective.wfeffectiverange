@@ -2,7 +2,7 @@
 Changes
 =======
 
-1.1 (unreleased)
+1.1 (2014-09-23)
 ----------------
 
 - fix: keep transition after form validation error. respect base_url for view 
