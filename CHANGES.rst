@@ -7,7 +7,7 @@ Changes
 
 - fix: keep transition after form validation error. respect base_url for view 
   calls. fixes with vocab fetching.
-  [benniboy]
+  [benniboy, 2014-09-23]
 
 1.0.1 (2014-09-22)
 ------------------
