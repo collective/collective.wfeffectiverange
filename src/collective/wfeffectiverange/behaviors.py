@@ -31,7 +31,8 @@ class IWFEffectiveRange(metadata.IPublication):
         title=_(u"Publication Transition"),
         description=_(u"Required if a publishing date is set"),
         source=TransitionsSource('effective_transition'),
-        required=False
+        required=False,
+        default=None,
     )
 
     form.order_after(expires_transition='expires')
@@ -39,7 +40,8 @@ class IWFEffectiveRange(metadata.IPublication):
         title=_(u"Expiration Transition"),
         description=_(u"Required if a expiration date is set"),
         source=TransitionsSource('expires_transition'),
-        required=False
+        required=False,
+        default=None,
     )
 
     form.omitted('effective_transition', 'expires_transition')

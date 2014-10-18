@@ -5,13 +5,13 @@ Changes
 1.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Bugfix: Set a default to not fail if no transition was set initially.
+  [jensens, 2014-10-18]
 
 1.1 (2014-09-23)
 ----------------
 
-- fix: keep transition after form validation error. respect base_url for view 
+- fix: keep transition after form validation error. respect base_url for view
   calls. fixes with vocab fetching.
   [benniboy, 2014-09-23]
 
@@ -25,4 +25,4 @@ Changes
 ----------------
 
 - Initial implementation.
-  [jensens, 2014-09-22]
+  [jensens, benniboy, 2014-09-22]

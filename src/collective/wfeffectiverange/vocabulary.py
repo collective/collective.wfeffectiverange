@@ -51,9 +51,13 @@ class TransitionsSource(object):
         # for the expires_transition
         # if an effective_transition is set, only get the allowed
         # transitions for that
+        try:
+            cet = context.effective_transition
+        except AttributeError:
+            cet = None
         if self.transition is None \
                 and not addform \
-                and context.effective_transition is not None \
+                and cet is not None \
                 and self.fieldname == 'expires_transition':
             self.transition = context.effective_transition
 
