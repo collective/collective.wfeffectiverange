@@ -2,7 +2,7 @@
 Changes
 =======
 
-1.2 (unreleased)
+1.2 (2014-10-18)
 ----------------
 
 - Bugfix: Set a default to not fail if no transition was set initially.
