@@ -35,6 +35,7 @@
         title="Date range (with workflowed effective range)"
         description="Adds effective date and expiration date fields. Executes workflow transition when date was reached."
         provides=".behaviors.IWFEffectiveRange"
+        marker=".behaviors.IWFEffectiveRange"
         factory=".behaviors.WFEffectiveRange"
         for="plone.dexterity.interfaces.IDexterityContent"
         />

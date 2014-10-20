@@ -5,7 +5,8 @@ Changes
 1.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Bugfix: Marker interface on behavior was missing.
+  [jensens, 2014-10-20]
 
 
 1.2 (2014-10-18)
