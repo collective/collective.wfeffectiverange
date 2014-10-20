@@ -83,4 +83,3 @@ class WFEffectiveRangeTicker(BrowserView):
             logger.info('no autotransition done in this cycle')
 
         return 'triggered {0} autotransations.'.format(triggered_something)
-
