@@ -2,7 +2,7 @@
 Changes
 =======
 
-1.4 (unreleased)
+1.4 (2014-10-20)
 ----------------
 
 - Bugfix: Subscriber had a problem with both transitions set.
