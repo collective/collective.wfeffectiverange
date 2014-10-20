@@ -5,7 +5,9 @@ Changes
 1.3 (unreleased)
 ----------------
 
-- Bugfix: Marker interface on behavior was missing.
+- Bugfix: Marker interface on behavior was missing after a change so indexer 
+  did not grip. Due to a bug in plone.app.dexterity itself we cant procide 
+  the marker. So we bind the indexer to a general interface.
   [jensens, 2014-10-20]
 
 

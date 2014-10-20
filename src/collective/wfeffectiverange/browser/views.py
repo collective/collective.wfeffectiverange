@@ -7,7 +7,7 @@ from logging import getLogger
 from plone import api
 import json
 
-logger = getLogger('pubex')
+logger = getLogger('wfeffectiverange')
 
 
 class WFEffectiveRangeVocabReloadView(BrowserView):
@@ -37,10 +37,14 @@ class WFEffectiveRangeTicker(BrowserView):
     def __call__(self):
         catalog = api.portal.get_tool('portal_catalog')
 
+        triggered_something = 0
+
         # for effective transition
-        query = {'effective': {'query': datetime.now(), 'range': 'max'},
-                 'has_effective_transition': True,
-                 'object_provides': IWFEffectiveRange.__identifier__}
+        query = {
+            'effective': {'query': datetime.now(), 'range': 'max'},
+            'has_effective_transition': True,
+            # 'object_provides': IWFEffectiveRange.__identifier__
+        }
 
         results = catalog.searchResults(query)
 
@@ -51,12 +55,17 @@ class WFEffectiveRangeTicker(BrowserView):
             api.content.transition(obj=obj, transition=new_transition)
             obj.reindexObject()
             logger.info(
-                'autotransition effective for {0}'.format(obj.absolute_url()))
+                'autotransition "effective" for {0}'.format(
+                    obj.absolute_url())
+            )
+            triggered_something += 1
 
         # for expires transition
-        query = {'expires': {'query': datetime.now(), 'range': 'max'},
-                 'has_expires_transition': True,
-                 'object_provides': IWFEffectiveRange.__identifier__}
+        query = {
+            'expires': {'query': datetime.now(), 'range': 'max'},
+            'has_expires_transition': True,
+            # 'object_provides': IWFEffectiveRange.__identifier__
+        }
 
         results = catalog.searchResults(query)
 
@@ -67,4 +76,11 @@ class WFEffectiveRangeTicker(BrowserView):
             api.content.transition(obj=obj, transition=new_transition)
             obj.reindexObject()
             logger.info(
-                'autotransition expires for {0}'.format(obj.absolute_url()))
+                'autotransition "expires" for {0}'.format(obj.absolute_url()))
+            triggered_something += 1
+
+        if not triggered_something:
+            logger.info('no autotransition done in this cycle')
+
+        return 'triggered {0} autotransations.'.format(triggered_something)
+

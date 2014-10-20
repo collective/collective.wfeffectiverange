@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
-from .behaviors import IWFEffectiveRange
+from plone.dexterity.interfaces import IDexterityContent
 from Acquisition import aq_base
 from plone.indexer import indexer
 
 
-@indexer(IWFEffectiveRange)
+@indexer(IDexterityContent)
 def has_effective_transition(context):
     context = aq_base(context)
-    return bool(context.effective_transition)
+    return hasattr(context, 'effective_transition')\
+        and bool(context.effective_transition)
 
 
-@indexer(IWFEffectiveRange)
+@indexer(IDexterityContent)
 def has_expires_transition(context):
     context = aq_base(context)
-    return bool(context.expires_transition)
+    return hasattr(context, 'expires_transition')\
+        and bool(context.expires_transition)
