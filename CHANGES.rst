@@ -5,7 +5,8 @@ Changes
 1.4 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Bugfix: Subscriber had a problem with both transitions set.
+  [jensens, 2014-10-20]
 
 
 1.3 (2014-10-20)

@@ -6,6 +6,8 @@ from zExceptions import Redirect
 
 def handle_workflow_change_before(event):
     context = event.object
+    if getattr(context, '_v_wfeffectiverange_ignore', False):
+        return
     if (hasattr(context, 'effective_transition')
         and context.effective_transition) \
        or (hasattr(context, 'expires_transition')

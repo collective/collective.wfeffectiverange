@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from Products.Five.browser import BrowserView
-from collective.wfeffectiverange.behaviors import IWFEffectiveRange
 from collective.wfeffectiverange.vocabulary import TransitionsSource
 from datetime import datetime
 from logging import getLogger
@@ -47,12 +46,13 @@ class WFEffectiveRangeTicker(BrowserView):
         }
 
         results = catalog.searchResults(query)
-
         for brain in results:
             obj = brain.getObject()
             new_transition = obj.effective_transition
             obj.effective_transition = None
+            obj._v_wfeffectiverange_ignore = True
             api.content.transition(obj=obj, transition=new_transition)
+            obj._v_wfeffectiverange_ignore = False
             obj.reindexObject()
             logger.info(
                 'autotransition "effective" for {0}'.format(
@@ -73,7 +73,9 @@ class WFEffectiveRangeTicker(BrowserView):
             obj = brain.getObject()
             new_transition = obj.expires_transition
             obj.expires_transition = None
+            obj._v_wfeffectiverange_ignore = True
             api.content.transition(obj=obj, transition=new_transition)
+            obj._v_wfeffectiverange_ignore = False
             obj.reindexObject()
             logger.info(
                 'autotransition "expires" for {0}'.format(obj.absolute_url()))
