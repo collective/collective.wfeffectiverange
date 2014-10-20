@@ -2,7 +2,7 @@
 Changes
 =======
 
-1.3 (unreleased)
+1.3 (2014-10-20)
 ----------------
 
 - Bugfix: Marker interface on behavior was missing after a change so indexer 
