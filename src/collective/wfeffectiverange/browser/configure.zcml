@@ -3,7 +3,7 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:plone="http://namespaces.plone.org/plone"
     xmlns:cache="http://namespaces.zope.org/cache"
-    i18n_domain="collective.wfeffectiverange">
+    i18n_domain="plone">
 
     <browser:page
         for="*"

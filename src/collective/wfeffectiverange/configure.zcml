@@ -6,7 +6,7 @@
     xmlns:five="http://namespaces.zope.org/five"
     xmlns:cmf="http://namespaces.zope.org/cmf"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-    i18n_domain="collective.wfeffectiverange">
+    i18n_domain="plone">
 
     <includeDependencies package="."/>
     <include package="plone.resource" file="meta.zcml"/>

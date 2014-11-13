@@ -2,7 +2,6 @@
 from collective.wfeffectiverange import _
 from collective.wfeffectiverange.vocabulary import TransitionsSource
 from datetime import datetime
-from plone.app.dexterity import PloneMessageFactory as _PMF
 from plone.app.dexterity.behaviors import metadata
 from plone.autoform import directives as form
 from plone.autoform.interfaces import IFormFieldProvider
@@ -22,7 +21,7 @@ class IWFEffectiveRange(metadata.IPublication):
     """
     model.fieldset(
         'dates',
-        label=_PMF(u'label_schema_dates', default=u'Dates'),
+        label=_(u'label_schema_dates', default=u'Dates'),
         fields=['effective_transition', 'expires_transition'],
     )
 
