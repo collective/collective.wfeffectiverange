@@ -1,0 +1,57 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2014-12-13 12:38+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: Peter Holzer <peter.holzer@agitator.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: de\n"
+"Language-Name: German\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+
+#: collective/wfeffectiverange/behaviors.py:41
+msgid "Expiration Transition"
+msgstr "Ablauf Zielaktion"
+
+#: collective/wfeffectiverange/behaviors.py:65
+msgid "If a expiration date is set, a expiration transition is needed."
+msgstr "Wenn ein Ablaufdatum ausgewählt ist, wird eine Ablauf Zielaktion erforderlich."
+
+#: collective/wfeffectiverange/behaviors.py:57
+msgid "If a publication date is set, a publication transition is needed."
+msgstr "Wenn ein Veröffentlichungsdatum ausgewählt ist, wird eine Freigabe Zielaktion erforderlich."
+
+#: collective/wfeffectiverange/behaviors.py:71
+msgid "If a publication transition is set, a publication date is needed."
+msgstr "Wenn eine Zielaktion zur Veröffentlichung gesetzt ist, ist das Veröffentlichungsdatum erforderlich."
+
+#: collective/wfeffectiverange/vocabulary.py:43
+msgid "Multiple workflows are not supported."
+msgstr "Mehrfach-Arbeitsabläufe werden nicht unterstützt"
+
+#: collective/wfeffectiverange/subscribers.py:16
+msgid "New workflow transition can't be set, because there was already an automatic transition set."
+msgstr "Die neue Zielaktion kann nicht gesetzt werden, da es bereits eine automatische Zielaktion aktiv ist."
+
+#: collective/wfeffectiverange/behaviors.py:32
+msgid "Publication Transition"
+msgstr "Freigabe Zielaktion"
+
+#: collective/wfeffectiverange/behaviors.py:42
+msgid "Required if a expiration date is set"
+msgstr "Erforderlich wenn ein Ablaufdatum ausgewählt ist"
+
+#: collective/wfeffectiverange/behaviors.py:33
+msgid "Required if a publishing date is set"
+msgstr "Erforderlich wenn ein Freigabedatum ausgewählt ist"
+
+#. Default: "Dates"
+#: collective/wfeffectiverange/behaviors.py:26
+msgid "label_schema_dates"
+msgstr ""
+
