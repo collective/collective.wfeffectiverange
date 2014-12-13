@@ -54,12 +54,13 @@ $(document).ready(function () {
     }
 
     var effective_element = $("#form-widgets-IWFEffectiveRange-effective_transition");
+    var expires_element = $("#form-widgets-IWFEffectiveRange-expires_transition");
 
     effective_element.change(function () {
         reload_vocab(this);
     });
 
-    if (effective_element.length > 0 && effective_element.val() != '--NOVALUE--') {
+    if (expires_element.val() == '--NOVALUE--' && effective_element.length > 0 && effective_element.val() != '--NOVALUE--') {
         reload_vocab(effective_element);
     }
 });
