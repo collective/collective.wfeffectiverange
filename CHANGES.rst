@@ -2,11 +2,12 @@
 Changes
 =======
 
-1.5 (unreleased)
+1.5.dev0 (unreleased)
 ----------------
 
 - added german translations
 - js fix for existing expiration transition
+- no caching/merging for ajax reload-vocab
   [agitator]
 
 

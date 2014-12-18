@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <object name="portal_javascripts" meta_type="JavaScripts Registry">
 
-    <javascript cacheable="True" compression="none" cookable="True"
+    <javascript cacheable="False" compression="none" cookable="False"
         enabled="True" expression="" id="++resource++collective.wfeffectiverange/wfeffectiverange-reload-vocab.js"
         inline="False"/>
 
