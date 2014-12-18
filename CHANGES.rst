@@ -2,7 +2,7 @@
 Changes
 =======
 
-1.5.dev0 (unreleased)
+1.5 (2014-12-18)
 ----------------
 
 - added german translations
