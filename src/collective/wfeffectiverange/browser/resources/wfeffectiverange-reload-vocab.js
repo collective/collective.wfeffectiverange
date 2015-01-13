@@ -8,8 +8,15 @@ $(document).ready(function () {
         var path = window.location.pathname;
 //        var contenttype = path.replace(/.*\+{2}add\+{2}/, "");
 
-        var regex_portal_type = /.*\+{2}add\+{2}(.*)($|\/.*)/;
-        var regex_base_url = /(.*)\/(edit.*|\+{2}add\+{2}.*)/;
+        if(window.location.href.indexOf("addtranslation") > -1) {
+            var regex_portal_type = /.*\+{2}addtranslation\+{2}(.*)($|\/.*)/;
+            var regex_base_url = /(.*)\/(edit.*|\+{2}addtranslation\+{2}.*)/;
+
+        }
+        else {
+            var regex_portal_type = /.*\+{2}add\+{2}(.*)($|\/.*)/;
+            var regex_base_url = /(.*)\/(edit.*|\+{2}add\+{2}.*)/;
+        }
 
         var match_portal_type = regex_portal_type.exec(path);
         if (!(match_portal_type === null)) {
@@ -25,12 +32,12 @@ $(document).ready(function () {
         }
 
         var effective_transition = $(element).val();
-        var expires_transition = $("#form-widgets-IWFEffectiveRange-expires_transition").val();
+        var expires_transition = $("select#form-widgets-IWFEffectiveRange-expires_transition").val();
 
         // get current options
-        var options = $("#form-widgets-IWFEffectiveRange-expires_transition option");
+        var options = $("select#form-widgets-IWFEffectiveRange-expires_transition option");
         //get expires selector
-        var selector = $("#form-widgets-IWFEffectiveRange-expires_transition");
+        var selector = $("select#form-widgets-IWFEffectiveRange-expires_transition");
         // remove old options
         selector.empty();
 
@@ -53,8 +60,8 @@ $(document).ready(function () {
         });
     }
 
-    var effective_element = $("#form-widgets-IWFEffectiveRange-effective_transition");
-    var expires_element = $("#form-widgets-IWFEffectiveRange-expires_transition");
+    var effective_element = $("select#form-widgets-IWFEffectiveRange-effective_transition");
+    var expires_element = $("select#form-widgets-IWFEffectiveRange-expires_transition");
 
     effective_element.change(function () {
         reload_vocab(this);

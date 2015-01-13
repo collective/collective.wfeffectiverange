@@ -24,6 +24,7 @@ class TransitionsSource(object):
 
         url = context.REQUEST.getURL()
         addform = '++add++' in url
+        addtranslationform = '++addtranslation++' in url
 
         if self.portal_type is None:
             if addform:
@@ -32,6 +33,10 @@ class TransitionsSource(object):
                 url = re.sub('\/@{2}.*', '', url)
                 # get portal_type from addform
                 self.portal_type = re.split('.*\+{2}add\+{2}', url)[1]
+            if addtranslationform:
+                url = re.sub('\/@{2}.*', '', url)
+                # get portal_type from addform
+                self.portal_type = re.split('.*\+{2}addtranslation\+{2}', url)[1]
             else:
                 self.portal_type = context.portal_type
 
@@ -55,6 +60,7 @@ class TransitionsSource(object):
             cet = None
         if self.transition is None \
                 and not addform \
+                and not addtranslationform \
                 and cet is not None \
                 and self.fieldname == 'expires_transition':
             self.transition = context.effective_transition
@@ -65,7 +71,7 @@ class TransitionsSource(object):
             # get current state for portal_type
             # If it is given as a string it returns the default state.
             # see PLIP 217 Workflow by adaptation
-        elif addform:
+        elif addform or addtranslationform:
             state = api.content.get_state(self.portal_type)
         else:
             state = api.content.get_state(context)

@@ -5,7 +5,9 @@ Changes
 1.6 (unreleased)
 ----------------
 
+- support for translations with plone.app.multilingual
 - disabled interfering inline validation
+  [agitator]
 
 
 1.5 (2014-12-18)
