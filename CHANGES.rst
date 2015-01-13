@@ -5,7 +5,7 @@ Changes
 1.6 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- disabled interfering inline validation
 
 
 1.5 (2014-12-18)

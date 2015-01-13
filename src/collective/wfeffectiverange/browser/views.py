@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from Products.Five.browser import BrowserView
 from collective.wfeffectiverange.vocabulary import TransitionsSource
 from datetime import datetime
 from logging import getLogger
 from plone import api
+from Products.Five.browser import BrowserView
 import json
 
 logger = getLogger('wfeffectiverange')
@@ -84,4 +84,4 @@ class WFEffectiveRangeTicker(BrowserView):
         if not triggered_something:
             logger.info('no autotransition done in this cycle')
 
-        return 'triggered {0} autotransations.'.format(triggered_something)
+        return 'triggered {0} autotransitions.'.format(triggered_something)
