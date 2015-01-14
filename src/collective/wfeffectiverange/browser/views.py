@@ -48,17 +48,18 @@ class WFEffectiveRangeTicker(BrowserView):
         results = catalog.searchResults(query)
         for brain in results:
             obj = brain.getObject()
-            new_transition = obj.effective_transition
-            obj.effective_transition = None
-            obj._v_wfeffectiverange_ignore = True
-            api.content.transition(obj=obj, transition=new_transition)
-            obj._v_wfeffectiverange_ignore = False
-            obj.reindexObject()
-            logger.info(
-                'autotransition "effective" for {0}'.format(
-                    obj.absolute_url())
-            )
-            triggered_something += 1
+            if hasattr(obj, 'effective_transition'):
+                new_transition = obj.effective_transition
+                obj.effective_transition = None
+                obj._v_wfeffectiverange_ignore = True
+                api.content.transition(obj=obj, transition=new_transition)
+                obj._v_wfeffectiverange_ignore = False
+                obj.reindexObject()
+                logger.info(
+                    'autotransition "effective" for {0}'.format(
+                        obj.absolute_url())
+                )
+                triggered_something += 1
 
         # for expires transition
         query = {
@@ -71,15 +72,16 @@ class WFEffectiveRangeTicker(BrowserView):
 
         for brain in results:
             obj = brain.getObject()
-            new_transition = obj.expires_transition
-            obj.expires_transition = None
-            obj._v_wfeffectiverange_ignore = True
-            api.content.transition(obj=obj, transition=new_transition)
-            obj._v_wfeffectiverange_ignore = False
-            obj.reindexObject()
-            logger.info(
-                'autotransition "expires" for {0}'.format(obj.absolute_url()))
-            triggered_something += 1
+            if hasattr(obj, 'expires_transition'):
+                new_transition = obj.expires_transition
+                obj.expires_transition = None
+                obj._v_wfeffectiverange_ignore = True
+                api.content.transition(obj=obj, transition=new_transition)
+                obj._v_wfeffectiverange_ignore = False
+                obj.reindexObject()
+                logger.info(
+                    'autotransition "expires" for {0}'.format(obj.absolute_url()))
+                triggered_something += 1
 
         if not triggered_something:
             logger.info('no autotransition done in this cycle')
