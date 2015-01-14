@@ -48,7 +48,7 @@ class WFEffectiveRangeTicker(BrowserView):
         results = catalog.searchResults(query)
         for brain in results:
             obj = brain.getObject()
-            if hasattr(obj, 'effective_transition'):
+            if hasattr(obj, 'effective_transition') and obj.effective_transition:
                 new_transition = obj.effective_transition
                 obj.effective_transition = None
                 obj._v_wfeffectiverange_ignore = True
@@ -72,7 +72,7 @@ class WFEffectiveRangeTicker(BrowserView):
 
         for brain in results:
             obj = brain.getObject()
-            if hasattr(obj, 'expires_transition'):
+            if hasattr(obj, 'expires_transition') and obj.expires_transition:
                 new_transition = obj.expires_transition
                 obj.expires_transition = None
                 obj._v_wfeffectiverange_ignore = True
