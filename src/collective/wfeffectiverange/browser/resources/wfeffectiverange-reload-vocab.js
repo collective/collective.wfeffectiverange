@@ -70,5 +70,11 @@ $(document).ready(function () {
     if (expires_element.val() == '--NOVALUE--' && effective_element.length > 0 && effective_element.val() != '--NOVALUE--') {
         reload_vocab(effective_element);
     }
+
+    // workaround for weird windows "last minute" change of values
+    expires_element.change(function () {
+        $(this).blur();
+    });
+
 });
 
