@@ -2,7 +2,7 @@
 Changes
 =======
 
-1.6 (unreleased)
+1.6 (2015-02-04)
 ----------------
 
 - support for translations with plone.app.multilingual
