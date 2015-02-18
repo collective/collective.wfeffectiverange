@@ -5,7 +5,7 @@ Changes
 1.7 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- load js only for authenticated users
 
 
 1.6 (2015-02-04)
