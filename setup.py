@@ -37,6 +37,7 @@ setup(
         'plone.autoform > 1.6.0',
         'setuptools',
         'z3c.form >= 3.2.1',
+        'plone.protect',
     ],
     extras_require={
         'test': [

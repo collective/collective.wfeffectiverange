@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+from Products.Five.browser import BrowserView
 from collective.wfeffectiverange.vocabulary import TransitionsSource
 from datetime import datetime
 from logging import getLogger
 from plone import api
-from Products.Five.browser import BrowserView
+from plone.protect.interfaces import IDisableCSRFProtection
+from zope.interface import alsoProvides
 import json
 
 logger = getLogger('wfeffectiverange')
@@ -30,10 +32,12 @@ class WFEffectiveRangeVocabReloadView(BrowserView):
         return json.dumps(data)
 
 
-# vocabulary hohlen alle mit pub date in vergangenheit und has(pub_transition)
+# vocabulary get all items that have a pub_transition and
+# where their pub date is in the past
 class WFEffectiveRangeTicker(BrowserView):
 
     def __call__(self):
+        alsoProvides(self.request, IDisableCSRFProtection)
         catalog = api.portal.get_tool('portal_catalog')
 
         triggered_something = 0

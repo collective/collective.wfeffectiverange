@@ -5,7 +5,11 @@ Changes
 1.7 (unreleased)
 ----------------
 
+- support for plone.protect and plone4.csrffixes
+  [agitator]
+
 - load js only for authenticated users
+  [agitator]
 
 
 1.6 (2015-02-04)

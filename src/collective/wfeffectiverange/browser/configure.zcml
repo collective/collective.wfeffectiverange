@@ -22,7 +22,7 @@
       for="*"
       name="wfeffectiverange-ticker"
       class=".views.WFEffectiveRangeTicker"
-      permission="zope.Public"
+      permission="cmf.ManagePortal"
       />
 
 </configure>
