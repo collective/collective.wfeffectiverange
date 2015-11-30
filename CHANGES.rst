@@ -5,7 +5,7 @@ Changes
 1.8 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Fixed target state vocab reload with plone4.csrffixes
 
 
 1.7 (2015-10-30)

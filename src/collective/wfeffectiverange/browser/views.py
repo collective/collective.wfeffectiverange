@@ -14,6 +14,7 @@ logger = getLogger('wfeffectiverange')
 class WFEffectiveRangeVocabReloadView(BrowserView):
 
     def __call__(self):
+        alsoProvides(self.request, IDisableCSRFProtection)
         transitions = TransitionsSource(
             'effective_transition',
             transition=self.request.get('current'),
