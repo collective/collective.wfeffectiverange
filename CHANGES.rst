@@ -2,8 +2,8 @@
 Changes
 =======
 
-1.8 (unreleased)
-----------------
+1.7.1 (2015-11-30)
+------------------
 
 - Fixed target state vocab reload with plone4.csrffixes
 
