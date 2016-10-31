@@ -1,71 +1,57 @@
 <configure
+    i18n_domain="collective.wfeffectiverange"
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:plone="http://namespaces.plone.org/plone"
-    xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:i18n="http://namespaces.zope.org/i18n"
-    xmlns:five="http://namespaces.zope.org/five"
     xmlns:cmf="http://namespaces.zope.org/cmf"
+    xmlns:five="http://namespaces.zope.org/five"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-    i18n_domain="collective.wfeffectiverange">
-
-    <i18n:registerTranslations directory="locales" />
-
-    <includeDependencies package="."/>
-    <include package="plone.resource" file="meta.zcml"/>
-    <include package="plone.app.theming"/>
-    <include package=".browser"/>
-    <include package="Products.GenericSetup" file="meta.zcml"/>
-
-    <genericsetup:registerProfile
-        name="default"
-        title="Workflowed effective range"
-        directory="profiles/default"
-        description="Extension profile for collective.wfeffectiverange"
-        provides="Products.GenericSetup.interfaces.EXTENSION"
-        />
-
-    <genericsetup:registerProfile
-        zcml:condition="installed plone.app.contenttypes"
-        name="testing"
-        title="Workflowed effective range - WITH TEST TYPE"
-        directory="profiles/testing"
-        description="Extension profile for collective.wfeffectiverange - testing content type provided"
-        provides="Products.GenericSetup.interfaces.EXTENSION"
-        />
-
-    <plone:behavior
-        title="Date range (with workflowed effective range)"
-        description="Adds effective date and expiration date fields. Executes workflow transition when date was reached."
-        provides=".behaviors.IWFEffectiveRange"
-        factory=".behaviors.WFEffectiveRange"
-        for="plone.dexterity.interfaces.IDexterityContent"
-        />
-<!--         marker=".behaviors.IWFEffectiveRange"
- -->
-
-<!-- This does not work due to inheritance problems with dx behaviour.
-    <plone:behavior
-        title="Dublin Core metadata (with workflowed effective range)"
-        description="Adds standard metadata fields (equals Basic metadata + Categorization + timed Effective range + Ownership. Executes workflow transition when date was reached."
-        provides=".behaviors.IWFEffectiveRangeDublinCore"
-        factory=".behaviors.WFEffectiveRangeDublinCore"
-        for="plone.dexterity.interfaces.IDexterityContent"
-        /> -->
-
-    <adapter
-        name="has_effective_transition"
-        factory=".indexers.has_effective_transition"
-        />
-
-    <adapter
-        name="has_expires_transition"
-        factory=".indexers.has_expires_transition"
-        />
-
-    <subscriber
-        for="Products.CMFCore.WorkflowCore.ActionWillBeInvokedEvent"
-        handler=".subscribers.handle_workflow_change_before"
-        />
-
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:zcml="http://namespaces.zope.org/zcml">
+  <i18n:registerTranslations directory="locales" />
+  <includeDependencies package="." />
+  <include
+      file="meta.zcml"
+      package="plone.resource"
+  />
+  <include package="plone.app.theming" />
+  <include package=".browser" />
+  <include
+      file="meta.zcml"
+      package="Products.GenericSetup"
+  />
+  <genericsetup:registerProfile
+      description="Extension profile for collective.wfeffectiverange"
+      directory="profiles/default"
+      name="default"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      title="Workflowed effective range"
+  />
+  <genericsetup:registerProfile
+      description="Extension profile for collective.wfeffectiverange - testing content type provided"
+      directory="profiles/testing"
+      name="testing"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      title="Workflowed effective range - WITH TEST TYPE"
+      zcml:condition="installed plone.app.contenttypes"
+  />
+  <plone:behavior
+      description="Adds effective date and expiration date fields. Executes workflow transition when date was reached."
+      factory=".behaviors.WFEffectiveRange"
+      for="plone.dexterity.interfaces.IDexterityContent"
+      provides=".behaviors.IWFEffectiveRange"
+      title="Date range (with workflowed effective range)"
+  />
+  <adapter
+      factory=".indexers.has_effective_transition"
+      name="has_effective_transition"
+  />
+  <adapter
+      factory=".indexers.has_expires_transition"
+      name="has_expires_transition"
+  />
+  <subscriber
+      for="Products.CMFCore.WorkflowCore.ActionWillBeInvokedEvent"
+      handler=".subscribers.handle_workflow_change_before"
+  />
 </configure>

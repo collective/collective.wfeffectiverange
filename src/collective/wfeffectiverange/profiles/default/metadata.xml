@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-    <version>1</version>
-    <dependencies>
-        <dependency>profile-plone.app.dexterity:default</dependency>
-        <dependency>profile-Products.cron4plone:default</dependency>
-        <!--<dependency>profile-plone.app.vocabularies:default</dependency>-->
-    </dependencies>
+  <version>1</version>
+  <dependencies>
+    <dependency>profile-plone.app.dexterity:default</dependency>
+  </dependencies>
 </metadata>

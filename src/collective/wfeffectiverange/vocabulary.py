@@ -16,12 +16,10 @@ class TransitionsSource(object):
         self.portal_type = portal_type
 
     def __call__(self, context):
-        # workflowtool
         wftool = api.portal.get_tool('portal_workflow')
         from .behaviors import WFEffectiveRange
         if isinstance(context, WFEffectiveRange):
             context = context.context
-
         url = context.REQUEST.getURL()
         addform = '++add++' in url
         addtranslationform = '++addtranslation++' in url
@@ -33,10 +31,12 @@ class TransitionsSource(object):
                 url = re.sub('\/@{2}.*', '', url)
                 # get portal_type from addform
                 self.portal_type = re.split('.*\+{2}add\+{2}', url)[1]
-            if addtranslationform:
+            elif addtranslationform:
                 url = re.sub('\/@{2}.*', '', url)
                 # get portal_type from addform
-                self.portal_type = re.split('.*\+{2}addtranslation\+{2}', url)[1]
+                self.portal_type = re.split(
+                    '.*\+{2}addtranslation\+{2}', url
+                )[1]
             else:
                 self.portal_type = context.portal_type
 
@@ -47,7 +47,6 @@ class TransitionsSource(object):
             raise ValueError(
                 _(u'Multiple workflows are not supported.')
             )
-
         wf = wfs[0]
 
         # if no effective_transition is set get all possible transitions

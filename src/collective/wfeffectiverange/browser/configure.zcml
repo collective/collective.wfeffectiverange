@@ -1,28 +1,24 @@
 <configure
+    i18n_domain="collective.wfeffectiverange"
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:plone="http://namespaces.plone.org/plone"
     xmlns:cache="http://namespaces.zope.org/cache"
-    i18n_domain="collective.wfeffectiverange">
-
-    <browser:page
-        for="*"
-        name="wfeffectiverange_vocab"
-        class=".views.WFEffectiveRangeVocabReloadView"
-        permission="cmf.ModifyPortalContent"
-        />
-
-    <!-- resources -->
-    <browser:resourceDirectory
-       name="collective.wfeffectiverange"
-       directory="resources"
-        />
-
+    xmlns:plone="http://namespaces.plone.org/plone">
   <browser:page
+      class=".views.WFEffectiveRangeVocabReloadView"
+      for="*"
+      name="wfeffectiverange_vocab"
+      permission="cmf.ModifyPortalContent"
+  />
+  <!-- resources -->
+  <browser:resourceDirectory
+      directory="resources"
+      name="collective.wfeffectiverange"
+  />
+  <browser:page
+      class=".views.WFEffectiveRangeTicker"
       for="*"
       name="wfeffectiverange-ticker"
-      class=".views.WFEffectiveRangeTicker"
       permission="cmf.ManagePortal"
-      />
-
+  />
 </configure>

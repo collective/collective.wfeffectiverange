@@ -31,7 +31,6 @@ setup(
     zip_safe=False,
     install_requires=[
         'Plone',
-        'Products.cron4plone',
         'plone.api',
         'plone.app.vocabularies',
         'plone.autoform > 1.6.0',
@@ -42,7 +41,6 @@ setup(
     extras_require={
         'test': [
             'interlude[ipython]>=1.3.1',
-            'ipdb',
             'plone.app.contenttypes',  # for local testing
             'plone.app.robotframework [debug]',
             'plone.app.testing',
