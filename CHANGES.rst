@@ -5,6 +5,9 @@ Changes
 1.8.0 (unreleased)
 ------------------
 
+- Fix: Refactor vocabulary in order to be simpler and to take submitted form data into account.
+  [jensens]
+
 - Fix: Translate transitions
   [jensens]
 

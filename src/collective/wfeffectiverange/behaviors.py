@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from collective.wfeffectiverange import _
-from collective.wfeffectiverange.vocabulary import TransitionsSource
+from collective.wfeffectiverange.vocabulary import EffectiveTransitionSource
+from collective.wfeffectiverange.vocabulary import ExpiresTransitionSource
 from datetime import datetime
 from plone.app.dexterity.behaviors import metadata
 from plone.autoform import directives as form
@@ -8,8 +9,6 @@ from plone.autoform.interfaces import IFormFieldProvider
 from plone.supermodel import model
 from z3c.form.interfaces import IAddForm
 from z3c.form.interfaces import IEditForm
-from z3c.form.validator import SimpleFieldValidator
-from z3c.form.validator import WidgetValidatorDiscriminators
 from zope import schema
 from zope.interface import Invalid
 from zope.interface import invariant
@@ -31,7 +30,7 @@ class IWFEffectiveRange(metadata.IPublication):
     effective_transition = schema.Choice(
         title=_(u'Publication Transition'),
         description=_(u'Required if a publishing date is set'),
-        source=TransitionsSource('effective_transition'),
+        source=EffectiveTransitionSource(),
         required=False,
         default=None,
     )
@@ -40,7 +39,7 @@ class IWFEffectiveRange(metadata.IPublication):
     expires_transition = schema.Choice(
         title=_(u'Expiration Transition'),
         description=_(u'Required if a expiration date is set'),
-        source=TransitionsSource('expires_transition'),
+        source=ExpiresTransitionSource(),
         required=False,
         default=None,
     )
@@ -77,14 +76,6 @@ class IWFEffectiveRange(metadata.IPublication):
             raise Invalid(_(u'If a expiration date is set, '
                             u'a expiration transition is needed.'))
 
-    @invariant
-    def expires_transition_vocabulary_check(data):
-
-        # if not data.effective_transition:
-        #     import pdb; pdb.set_trace()
-        # TransitionsSource
-        pass
-
 
 class WFEffectiveRange(metadata.Publication):
 
@@ -95,17 +86,3 @@ class WFEffectiveRange(metadata.Publication):
     expires_transition = metadata.DCFieldProperty(
         IWFEffectiveRange['expires_transition']
     )
-
-
-class ExpiresValidator(SimpleFieldValidator):
-
-    def validate(self, value):
-        # we do nothing in here, because this validation is delegated
-        # to an invariant
-        return
-
-
-WidgetValidatorDiscriminators(
-    ExpiresValidator,
-    field=IWFEffectiveRange['expires_transition']
-)

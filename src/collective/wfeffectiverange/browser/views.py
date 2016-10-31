@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from collective.wfeffectiverange.vocabulary import TransitionsSource
+from collective.wfeffectiverange.vocabulary import ExpiresTransitionSource
 from datetime import datetime
 from logging import getLogger
 from plone import api
@@ -17,8 +17,7 @@ class WFEffectiveRangeVocabReloadView(BrowserView):
 
     def __call__(self):
         alsoProvides(self.request, IDisableCSRFProtection)
-        transitions = TransitionsSource(
-            'effective_transition',
+        transitions = ExpiresTransitionSource(
             transition=self.request.get('current'),
             portal_type=self.request.get('contenttype', None),
         )
