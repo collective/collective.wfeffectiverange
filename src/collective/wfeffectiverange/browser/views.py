@@ -31,7 +31,7 @@ class WFEffectiveRangeVocabReloadView(BrowserView):
             rekord['title'] = term.title
             data.append(rekord)
 
-        self.request.response.setHeader("Content-type", "application/json")
+        self.request.response.setHeader('Content-type', 'application/json')
         return json.dumps(data)
 
 

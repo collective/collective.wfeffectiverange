@@ -80,9 +80,10 @@ class IWFEffectiveRange(metadata.IPublication):
     @invariant
     def expires_transition_vocabulary_check(data):
 
-        if not data.effective_transition:
-            import pdb; pdb.set_trace()
+        # if not data.effective_transition:
+        #     import pdb; pdb.set_trace()
         # TransitionsSource
+        pass
 
 
 class WFEffectiveRange(metadata.Publication):
