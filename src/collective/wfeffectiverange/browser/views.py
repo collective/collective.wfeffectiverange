@@ -41,8 +41,6 @@ class WFEffectiveRangeTicker(BrowserView):
 
     def __call__(self):
         alsoProvides(self.request, IDisableCSRFProtection)
-        catalog = api.portal.get_tool('portal_catalog')
-
         triggered_something = 0
 
         # for effective transition
@@ -51,9 +49,7 @@ class WFEffectiveRangeTicker(BrowserView):
             'has_effective_transition': True,
             # 'object_provides': IWFEffectiveRange.__identifier__
         }
-
-        results = catalog.searchResults(query)
-        for brain in results:
+        for brain in api.content.find(**query):
             obj = brain.getObject()
             if getattr(obj, 'effective_transition', None):
                 new_transition = obj.effective_transition
@@ -75,10 +71,7 @@ class WFEffectiveRangeTicker(BrowserView):
             'has_expires_transition': True,
             # 'object_provides': IWFEffectiveRange.__identifier__
         }
-
-        results = catalog.searchResults(query)
-
-        for brain in results:
+        for brain in api.content.find(**query):
             obj = brain.getObject()
             if hasattr(obj, 'expires_transition') and obj.expires_transition:
                 new_transition = obj.expires_transition
@@ -95,5 +88,4 @@ class WFEffectiveRangeTicker(BrowserView):
 
         if not triggered_something:
             logger.info('no autotransition done in this cycle')
-
         return 'triggered {0} autotransitions.'.format(triggered_something)
