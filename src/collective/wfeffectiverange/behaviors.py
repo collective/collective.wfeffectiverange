@@ -29,8 +29,8 @@ class IWFEffectiveRange(metadata.IPublication):
 
     # form.order_after(effective_transition='IPublication.effective')
     effective_transition = schema.Choice(
-        title=_(u"Publication Transition"),
-        description=_(u"Required if a publishing date is set"),
+        title=_(u'Publication Transition'),
+        description=_(u'Required if a publishing date is set'),
         source=TransitionsSource('effective_transition'),
         required=False,
         default=None,
@@ -38,8 +38,8 @@ class IWFEffectiveRange(metadata.IPublication):
 
     # form.order_after(expires_transition='IPublication.expires')
     expires_transition = schema.Choice(
-        title=_(u"Expiration Transition"),
-        description=_(u"Required if a expiration date is set"),
+        title=_(u'Expiration Transition'),
+        description=_(u'Required if a expiration date is set'),
         source=TransitionsSource('expires_transition'),
         required=False,
         default=None,
@@ -54,28 +54,28 @@ class IWFEffectiveRange(metadata.IPublication):
         if data.effective is not None \
            and data.effective > datetime.now() \
            and data.effective_transition is None:
-            raise Invalid(_(u"If a publication date is set, "
-                            u"a publication transition is needed."))
+            raise Invalid(_(u'If a publication date is set, '
+                            u'a publication transition is needed.'))
 
     @invariant
     def expires_and_expires_transition(data):
         if data.expires is not None \
            and data.expires > datetime.now()\
            and data.expires_transition is None:
-            raise Invalid(_(u"If a expiration date is set, "
-                            u"a expiration transition is needed."))
+            raise Invalid(_(u'If a expiration date is set, '
+                            u'a expiration transition is needed.'))
 
     @invariant
     def effective_transition_without_effective(data):
         if data.effective is None and data.effective_transition is not None:
-            raise Invalid(_(u"If a publication transition is set, "
-                            u"a publication date is needed."))
+            raise Invalid(_(u'If a publication transition is set, '
+                            u'a publication date is needed.'))
 
     @invariant
     def expires_transition_without_expires(data):
         if data.expires is None and data.expires_transition is not None:
-            raise Invalid(_(u"If a expiration date is set, "
-                            u"a expiration transition is needed."))
+            raise Invalid(_(u'If a expiration date is set, '
+                            u'a expiration transition is needed.'))
 
     @invariant
     def expires_transition_vocabulary_check(data):

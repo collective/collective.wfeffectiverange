@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from collective.wfeffectiverange import _
 from plone import api
+from zope.i18nmessageid import MessageFactory
 from zope.interface import implementer
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary
-from zope.i18nmessageid import MessageFactory
 
 import re
+
 
 _pmf = MessageFactory('plone')
 

@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-from Products.Five.browser import BrowserView
 from collective.wfeffectiverange.vocabulary import TransitionsSource
 from datetime import datetime
 from logging import getLogger
 from plone import api
 from plone.protect.interfaces import IDisableCSRFProtection
+from Products.Five.browser import BrowserView
 from zope.interface import alsoProvides
 
 import json
+
 
 logger = getLogger('wfeffectiverange')
 

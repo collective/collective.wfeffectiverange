@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from plone.dexterity.interfaces import IDexterityContent
 from Acquisition import aq_base
+from plone.dexterity.interfaces import IDexterityContent
 from plone.indexer import indexer
 
 
