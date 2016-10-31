@@ -7,7 +7,7 @@ from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary
 
 import re
-
+import urllib
 
 _pmf = MessageFactory('plone')
 
@@ -18,14 +18,13 @@ class BaseTransitionsSource(object):
     FIELD_NAME = ''
 
     def __init__(self):
-        self.transition = None
         self.portal_type = None
 
     def _init_call(self, context):
         from .behaviors import WFEffectiveRange
         if isinstance(context, WFEffectiveRange):
             context = context.context
-        url = context.REQUEST.getURL()
+        url = urllib.unquote(context.REQUEST.getURL())
         addform = '++add++' in url
         addtranslationform = '++addtranslation++' in url
         self.add = addform or addtranslationform
