@@ -6,6 +6,7 @@ from logging import getLogger
 from plone import api
 from plone.protect.interfaces import IDisableCSRFProtection
 from zope.interface import alsoProvides
+
 import json
 
 logger = getLogger('wfeffectiverange')
@@ -53,7 +54,7 @@ class WFEffectiveRangeTicker(BrowserView):
         results = catalog.searchResults(query)
         for brain in results:
             obj = brain.getObject()
-            if hasattr(obj, 'effective_transition') and obj.effective_transition:
+            if getattr(obj, 'effective_transition', None):
                 new_transition = obj.effective_transition
                 obj.effective_transition = None
                 obj._v_wfeffectiverange_ignore = True
@@ -62,7 +63,8 @@ class WFEffectiveRangeTicker(BrowserView):
                 obj.reindexObject()
                 logger.info(
                     'autotransition "effective" for {0}'.format(
-                        obj.absolute_url())
+                        obj.absolute_url()
+                    )
                 )
                 triggered_something += 1
 
@@ -85,7 +87,9 @@ class WFEffectiveRangeTicker(BrowserView):
                 obj._v_wfeffectiverange_ignore = False
                 obj.reindexObject()
                 logger.info(
-                    'autotransition "expires" for {0}'.format(obj.absolute_url()))
+                    'autotransition "expires" for {0}'.format(
+                        obj.absolute_url())
+                )
                 triggered_something += 1
 
         if not triggered_something:

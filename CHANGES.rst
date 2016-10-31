@@ -5,7 +5,17 @@ Changes
 1.8.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix: Translate transitions
+  [jensens]
+
+- Fix: addform used parents transition vocabulary.
+  [jensens]
+
+- Removed plone4cron dependency
+  [jensens]
+
+- Code overhaul.
+  [jensens]
 
 
 1.7.1 (2015-11-30)

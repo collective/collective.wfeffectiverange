@@ -4,7 +4,11 @@ from plone import api
 from zope.interface import implementer
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary
+from zope.i18nmessageid import MessageFactory
+
 import re
+
+_pmf = MessageFactory('plone')
 
 
 @implementer(IContextSourceBinder)
@@ -82,6 +86,11 @@ class TransitionsSource(object):
         for transition in transitions:
             trans_id = wf.transitions[transition].id
             terms.append(
-                SimpleVocabulary.createTerm(trans_id, trans_id, trans_id))
+                SimpleVocabulary.createTerm(
+                    trans_id,
+                    trans_id,
+                    _pmf(trans_id)
+                )
+            )
 
         return SimpleVocabulary(terms)
