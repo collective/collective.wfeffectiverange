@@ -5,8 +5,4 @@
         enabled="True" expression="" id="++resource++collective.wfeffectiverange/wfeffectiverange-reload-vocab.js"
         inline="False"/>
 
-    <javascript cacheable="True" compression="True" cookable="True" authenticated="True"
-        enabled="True" expression="" id="++resource++collective.wfeffectiverange/wfeffectiverange-disable-validation.js"
-        inline="False"/>
-
 </object>
