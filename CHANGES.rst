@@ -2,7 +2,7 @@
 Changes
 =======
 
-1.8.0 (unreleased)
+1.8.0 (2016-11-24)
 ------------------
 
 - Fix: Refactor vocabulary in order to be simpler and to take submitted form data into account.
