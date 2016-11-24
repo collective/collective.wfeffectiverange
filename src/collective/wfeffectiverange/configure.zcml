@@ -20,10 +20,27 @@
       file="meta.zcml"
       package="Products.GenericSetup"
   />
+
   <genericsetup:registerProfile
+      zcml:condition="have plone-5"
       description="Extension profile for collective.wfeffectiverange"
-      directory="profiles/default"
+      directory="profiles/plone5"
       name="default"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      title="Workflowed effective range"
+  />
+  <genericsetup:registerProfile
+      zcml:condition="not-have plone-5"
+      description="Extension profile for collective.wfeffectiverange"
+      directory="profiles/plone4"
+      name="default"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      title="Workflowed effective range"
+  />
+  <genericsetup:registerProfile
+      description="Base profile for collective.wfeffectiverange"
+      directory="profiles/base"
+      name="install-base"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       title="Workflowed effective range"
   />
@@ -54,4 +71,9 @@
       for="Products.CMFCore.WorkflowCore.ActionWillBeInvokedEvent"
       handler=".subscribers.handle_workflow_change_before"
   />
+
+  <utility
+      factory=".setuphandlers.HiddenProfiles"
+      name="collective.wfeffectiverange-hiddenprofiles" />
+
 </configure>
