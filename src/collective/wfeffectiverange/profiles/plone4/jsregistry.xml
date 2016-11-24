@@ -5,4 +5,7 @@
         enabled="True" expression="" id="++resource++collective.wfeffectiverange/wfeffectiverange-reload-vocab.js"
         inline="False"/>
 
+   <javascript id="++resource++collective.wfeffectiverange/wfeffectiverange-disable-validation.js"
+        remove="True"/>
+
 </object>

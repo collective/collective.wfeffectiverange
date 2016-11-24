@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:zcml="http://namespaces.zope.org/zcml">
+
+  <genericsetup:upgradeStep
+      source="*"
+      destination="2"
+      title="Re-install collective.wfeffectiverange to update js registry"
+      description=""
+      profile="collective.wfeffectiverange:default"
+      handler=".upgrades.reload_profile"
+      />
+
+</configure>
