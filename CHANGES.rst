@@ -2,7 +2,7 @@
 Changes
 =======
 
-2.0.0 (unreleased)
+2.0.0 (2016-12-08)
 ------------------
 
 - Upgrade for Plone5/Plone4 compatibility
