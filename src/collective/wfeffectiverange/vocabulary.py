@@ -108,7 +108,7 @@ class ExpiresTransitionSource(BaseTransitionsSource):
             self.transition = None
 
         if self.transition is None:
-            if self.submitted:
+            if self.submitted and self.submitted[0] != u'--NOVALUE--':
                 self.transition = self.submitted[0]
             elif not self.add:
                 self.transition = getattr(
@@ -116,7 +116,8 @@ class ExpiresTransitionSource(BaseTransitionsSource):
                     'effective_transition',
                     None
                 )
-
+                if self.transition == u'--NOVALUE--':
+                    self.transition = None
         if self.transition:
             state = self.workflow.transitions[self.transition].new_state_id
         elif self.add:

@@ -5,7 +5,8 @@ Changes
 1.8.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix #3: ``KeyError: u'--NOVALUE--'`` if nothing selected within behavior tab.
+  [jensens]
 
 
 1.8.0 (2016-11-24)
