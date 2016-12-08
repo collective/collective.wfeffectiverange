@@ -2,7 +2,7 @@
 Changes
 =======
 
-1.8.1 (unreleased)
+1.8.1 (2016-12-08)
 ------------------
 
 - Fix #3: ``KeyError: u'--NOVALUE--'`` if nothing selected within behavior tab.
