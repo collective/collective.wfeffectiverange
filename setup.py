@@ -30,7 +30,7 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
-    keywords='',
+    keywords='workflow cms security zope plone publication date',
     author='BlueDynamics Alliance',
     author_email='dev@bluedynamics.com',
     url=u'https://pypi.python.org/pypi/collective.wfeffectiverange',
