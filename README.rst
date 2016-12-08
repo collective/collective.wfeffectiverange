@@ -137,5 +137,5 @@ Contributors
 
 - Jens W. Klein <jens@bluedynamics.com> - development
 
-- Peter Holzer <hpeter@agitator.com> - use case, development
+- Peter Holzer <peter.holzer@agitator.com> - use case, development
 
