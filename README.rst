@@ -23,8 +23,6 @@ Installation
 
 In your buildout or ``setup.py`` depend on ``collective.wfeffectiverange``.
 
-Properly configure `Products.cron4plone as described here <https://pypi.python.org/pypi/Products.cron4plone/1.1.10>`_.
-
 Run buildout.
 
 In your profiles ``metadata.xml`` depend on ``profile-collective.wfeffectiverange:default`` or manually activate it in Plone control panels addon section.
@@ -38,10 +36,8 @@ In your content types GenericSetup XML file replace ``<element value="plone.app.
 
 Alternatively - when working TTW - do the same in the ``Dexterity content types`` control panel under the Behavior tab.
 
-Configure the cronjob in the Plone control panel cron4plone section.
-To check every minute enter::
-
-    * * * * portal/@@wfeffectiverange-ticker
+Configure a clock-server job with @@wfeffectiverange-ticker as method.
+How to setup a clock-server http://docs.plone.org/develop/plone/misc/asyncronoustasks.html
 
 
 Use cases
@@ -102,7 +98,7 @@ Re-Editing
 Implementation
 ==============
 
-The use cases are implemented by providing a dexterity behavior, zope cronjob (cron4plone) and a workflow subscriber.
+The use cases are implemented by providing a dexterity behavior, zope cronjob and a workflow subscriber.
 
 For each content type where this behavior is set, it will lookup the workflow gets the possible transitions and provides them as a zope vocabulary. It will also check that the selected transitions don't interfere with each other.
 
