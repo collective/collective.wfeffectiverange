@@ -2,6 +2,13 @@
 Changes
 =======
 
+2.0.0 (unreleased)
+------------------
+
+- Upgrade for Plone5/Plone4 compatibility
+  [agitator]
+
+
 1.8.2 (unreleased)
 ------------------
 

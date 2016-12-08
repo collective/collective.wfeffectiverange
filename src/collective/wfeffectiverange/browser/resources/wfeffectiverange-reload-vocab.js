@@ -1,5 +1,19 @@
 $(document).ready(function() {
 
+  //  disable default validation
+  $('#formfield-form-widgets-IWFEffectiveRange-effective').removeClass(
+    'z3cformInlineValidation'
+  );
+  $('#formfield-form-widgets-IWFEffectiveRange-expires').removeClass(
+    'z3cformInlineValidation'
+  );
+  $('#formfield-form-widgets-IWFEffectiveRange-effective_transition').removeClass(
+    'z3cformInlineValidation'
+  );
+  $('#formfield-form-widgets-IWFEffectiveRange-expires_transition').removeClass(
+    'z3cformInlineValidation'
+  );
+
   function reload_vocab(element) {
     //        this function reloads the possible values for expires_transition, each time
     //        effective_transition has changed
