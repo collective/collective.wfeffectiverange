@@ -1,5 +1,9 @@
-from setuptools import setup, find_packages
+# -*- coding: utf-8 -*-
+from setuptools import find_packages
+from setuptools import setup
+
 import os
+
 
 version = '2.0.0.dev0'
 shortdesc = 'Workflowed effective range (Plone/Dexterity)'
@@ -13,11 +17,18 @@ setup(
     description=shortdesc,
     long_description=longdesc,
     classifiers=[
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
-        'License :: OSI Approved :: GNU General Public License (GPL)',
-        'Operating System :: OS Independent',
+        'Framework :: Plone',
+        'Framework :: Plone :: 4.3',
+        'Framework :: Plone :: 5.0',
+        'Framework :: Plone :: 5.1',
+        'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2.7',
+        'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+        'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     keywords='',
     author='BlueDynamics Alliance',
@@ -30,7 +41,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'Plone',
+        'Products.CMFPlone',
         'plone.api',
         'plone.app.vocabularies',
         'plone.autoform > 1.6.0',
