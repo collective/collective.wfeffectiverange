@@ -1,11 +1,17 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <object name="portal_javascripts" meta_type="JavaScripts Registry">
-
-    <javascript cacheable="False" compression="none" cookable="False" authenticated="True"
-        enabled="True" expression="" id="++resource++collective.wfeffectiverange/wfeffectiverange-reload-vocab.js"
-        inline="False"/>
-
-   <javascript id="++resource++collective.wfeffectiverange/wfeffectiverange-disable-validation.js"
-        remove="True"/>
-
+  <javascript
+      authenticated="True"
+      cacheable="False"
+      compression="none"
+      cookable="False"
+      enabled="True"
+      expression=""
+      id="++resource++collective.wfeffectiverange/wfeffectiverange-reload-vocab.js"
+      inline="False"
+  />
+  <javascript
+      id="++resource++collective.wfeffectiverange/wfeffectiverange-disable-validation.js"
+      remove="True"
+  />
 </object>
