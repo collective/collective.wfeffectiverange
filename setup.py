@@ -43,11 +43,19 @@ setup(
     install_requires=[
         'Products.CMFPlone',
         'plone.api',
+        'plone.app.dexterity',
+        'plone.app.event',
         'plone.app.vocabularies',
+        'plone.app.z3cform',
         'plone.autoform > 1.6.0',
+        'plone.indexer',
+        'plone.protect',
+        'plone.supermodel',
         'setuptools',
         'z3c.form >= 3.2.1',
-        'plone.protect',
+        'z3c.relationfield',
+        'zope.interface',
+        'zope.schema',
     ],
     extras_require={
         'test': [

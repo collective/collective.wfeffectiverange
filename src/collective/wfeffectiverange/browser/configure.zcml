@@ -4,21 +4,35 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:cache="http://namespaces.zope.org/cache"
     xmlns:plone="http://namespaces.plone.org/plone">
+
+  
+  <browser:resourceDirectory
+      directory="resources"
+      name="collective.wfeffectiverange"
+  />
+ 
   <browser:page
       class=".views.WFEffectiveRangeVocabReloadView"
       for="*"
       name="wfeffectiverange_vocab"
       permission="cmf.ModifyPortalContent"
   />
-  <!-- resources -->
-  <browser:resourceDirectory
-      directory="resources"
-      name="collective.wfeffectiverange"
-  />
+
   <browser:page
       class=".views.WFEffectiveRangeTicker"
       for="*"
       name="wfeffectiverange-ticker"
       permission="cmf.ManagePortal"
   />
+
+  <browser:page
+      name="workflow-tasks"
+      for="*"
+      class=".wftasks.WFTasksOverviewView"
+      template="wftasksoverview.pt"
+      menu="plone_displayviews"
+      title="Workflow Tasks Overview"
+      permission="cmf.ModifyPortalContent"
+      />
+
 </configure>

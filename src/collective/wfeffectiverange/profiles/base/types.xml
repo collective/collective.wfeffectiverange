@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object name="portal_types" meta_type="Plone Types Tool">
+  <object name="WFTaskEffective" meta_type="Dexterity FTI"/>
+  <object name="WFTaskExpires" meta_type="Dexterity FTI"/>
+</object>
