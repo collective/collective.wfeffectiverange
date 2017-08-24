@@ -36,6 +36,7 @@
             <option tal:define="id python:transition[0]; name python:transition[1]"  tal:attributes="selected python:'selected' if id==task_info['transition'] else None" value="${id}">${name}</option>
             </tal:loop>
           </select>
+          <h1>${task_info/transition}</h1>
           <span tal:condition="not:transitions" i18n:translate="no_common_transitions">No common transitions possible</span>
           <a href="${task_info/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
           <input type="submit" value="Save" i18n:attributes="value label_save" />
@@ -59,7 +60,7 @@
               <td>${ob/state}</td>
               <td>
                 <a href="${ob/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
-                <a href="${view/protected_view_url}&task_id=${task_info/uuid}&ob_remove=${ob/intid}" i18n:translate="label_remove">Remove</a>
+                <a href="${view/protected_view_url}&task_uid=${task_info/uuid}&ob_remove=${ob/intid}" i18n:translate="label_remove">Remove</a>
               </td>
             </tr>
             </tal:loop>

@@ -79,10 +79,10 @@ class WFTasksOverviewView(FolderView):
     def __call__(self, *args, **kwargs):
 
         form = self.request.form
-        task_id = form.get('task_id')
+        task_uid = form.get('task_uid')
 
-        if task_id:
-            task = uuidToObject(task_id)
+        if task_uid:
+            task = uuidToObject(task_uid)
 
             task_date = form.get('task_date', None)
             if task_date is not None:
