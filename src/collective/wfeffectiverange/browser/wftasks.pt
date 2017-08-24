@@ -15,46 +15,58 @@
 <metal:block define-macro="content-core">
 
 
-  <a href="${context/absolute_url}/++add++WFTaskEffective" class="btn btn-large pat-plone-modal" i18n:translate="label_add_wftaskeffective">Add Worfklow Effective Task</a>
+  <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal" i18n:translate="label_add_wftaskeffective">Add Worfklow Effective Task</a>
+
   <tal:tasks_effective repeat="task_brain view/tasks_effective">
 
     <section tal:define="task task_brain/getObject;
+                         task_info python:view.task_info(task);
                          transitions python:view.common_transitions(task);
                          objsinfo python:view.task_objects_info(task)">
-      <header>
-        <h2>
-          <span>${task/title}</span>
-          <input type="datetime" class="pat-pickadate" value="${task/task_date}"/>
+      <form action="${view/protected_view_url}" method="GET">
+        <input type="hidden" name="task_uid" value="${task_info/uuid}"/>
+        <header>
+          <h2>
+            <span>${task_info/title}</span>
+          </h2>
+          <input type="datetime" class="pat-pickadate" value="${task_info/date}"/>
           <select tal:condition="transitions">
-            <option value="" i18n:translate="option_make_selection">No transition selected</option>
+            <option value="" tal:attributes="selected python:'selected' if task_info['transition'] else None" i18n:translate="option_make_selection">No transition selected</option>
             <tal:loop repeat="transition transitions">
-            <option tal:define="id python:transition[0]; name python:transition[1]" value="${id}">${name}</option>
+            <option tal:define="id python:transition[0]; name python:transition[1]"  tal:attributes="selected python:'selected' if id==task_info['transition'] else None" value="${id}">${name}</option>
             </tal:loop>
           </select>
           <span tal:condition="not:transitions" i18n:translate="no_common_transitions">No common transitions possible</span>
-        </h2>
-      </header>
+          <a href="${task_info/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
+          <input type="submit" value="Save" i18n:attributes="value label_save" />
+        </header>
 
-      <tal:if condition="objsinfo">
-      <table>
-        <thead>
-          <tr>
-            <th>title</th>
-            <th>workflows</th>
-            <th>state</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tal:loop repeat="ob objsinfo">
-          <tr>
-            <td class="state-${ob/state}"><a href="${ob/url}">${ob/title}</a></td>
-            <td class="state-${ob/state}">${ob/workflows}</td>
-            <td class="state-${ob/state}">${ob/state}</td>
-          </tr>
-          </tal:loop>
-        </tbody>
-      </table>
-      </tal:if>
+        <tal:if condition="objsinfo">
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Workflows</th>
+              <th>State</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tal:loop repeat="ob objsinfo">
+            <tr class="state-${ob/state}">
+              <td><a href="${ob/url}">${ob/title}</a></td>
+              <td>${ob/workflows}</td>
+              <td>${ob/state}</td>
+              <td>
+                <a href="${ob/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
+                <a href="${view/protected_view_url}&task_id=${task_info/uuid}&ob_remove=${ob/intid}" i18n:translate="label_remove">Remove</a>
+              </td>
+            </tr>
+            </tal:loop>
+          </tbody>
+        </table>
+        </tal:if>
+      </form>
     </section>
 
   </tal:tasks_effective>
