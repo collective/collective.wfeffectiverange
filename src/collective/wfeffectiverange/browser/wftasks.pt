@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    lang="en"
+    metal:use-macro="context/main_template/macros/master"
+    i18n:domain="collective.wfeffectiverange">
+<body>
+
+<metal:custom_title fill-slot="content-title">
+  <h1 class="documentFirstHeading" i18n:translate="heading_task_overview">Workflow Task Overview</h1>
+</metal:custom_title>
+
+<metal:content-core fill-slot="content-core">
+<metal:block define-macro="content-core">
+
+
+  <tal:tasks_effective repeat="task view/tasks_effective">
+
+    <button href="${context/absolute_url}/++add++WFTaskEffective" class="btn btn-large pat-plone-modal" i18n:translate="label_add_wftaskeffective">Add Worfklow Effective Task</button>
+
+    <section define="objs python:view.task_objects(task)">
+      <header>
+        <strong tal:content="task/title">title</strong>
+        <span tal:content="task/task_date">date</strong>
+        <span tal:content="task/task_transition">transition</strong>
+      </header>
+
+      <tal:objs condition="objs">
+      <table>
+        <th>
+          <td></td>
+        </th>
+        <tr tal:repeat="ob objs">
+          <td tal:content="ob/title"></td>
+        </tr>
+      </table>
+      </tal:objs>
+
+    </section>
+
+  </tal:tasks_effective>
+
+
+</metal:block>
+</metal:content-core>
+
+</body>
+</html>

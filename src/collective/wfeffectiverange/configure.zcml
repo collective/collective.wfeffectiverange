@@ -39,7 +39,7 @@
       name="has_expires_transition"
   />
   <adapter
-      factory=".indexer.wftask_date_indexer"
+      factory=".indexers.date_indexer"
       name="start"
   />
 

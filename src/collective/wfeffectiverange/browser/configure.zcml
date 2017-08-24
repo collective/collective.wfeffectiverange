@@ -29,7 +29,7 @@
       name="workflow-tasks"
       for="*"
       class=".wftasks.WFTasksOverviewView"
-      template="wftasksoverview.pt"
+      template="wftasks.pt"
       menu="plone_displayviews"
       title="Workflow Tasks Overview"
       permission="cmf.ModifyPortalContent"
