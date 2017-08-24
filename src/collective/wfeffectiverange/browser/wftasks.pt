@@ -25,9 +25,11 @@
         <h2>
           <span>${task/title}</span>
           <input type="datetime" class="pat-pickadate" value="${task/task_date}"/>
-          <select condition="transitions">
+          <select tal:condition="transitions">
             <option value="" i18n:translate="option_make_selection">No transition selected</option>
-            <option tal:repeat="transition transitions" value="${transition}">${transition}</option>
+            <tal:loop repeat="transition transitions">
+            <option tal:define="id python:transition[0]; name python:transition[1]" value="${id}">${name}</option>
+            </tal:loop>
           </select>
           <span tal:condition="not:transitions" i18n:translate="no_common_transitions">No common transitions possible</span>
         </h2>

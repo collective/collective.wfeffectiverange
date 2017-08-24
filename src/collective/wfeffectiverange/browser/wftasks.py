@@ -43,15 +43,11 @@ class WFTasksOverviewView(FolderView):
         wftool = plone.api.portal.get_tool('portal_workflow')
         transitions = []
         for ob in self.task_objects(task):
-            ob_transitions = []
-            wfs = wftool.getWorkflowsFor(ob)
-            for wf in wfs:
-                for state in wf.states.objectValues():
-                    ob_transitions += list(state.getTransitions())
-            transitions.append(set(ob_transitions))
-
-        import pdb
-        pdb.set_trace()
+            _trans = [
+                (it['id'], it['name'])
+                for it in wftool.getTransitionsFor(ob)
+            ]
+            transitions.append(set(_trans))
 
         ret = None
         for transition in transitions:
