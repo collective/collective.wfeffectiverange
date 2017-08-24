@@ -29,8 +29,8 @@
           <h2>
             <span>${task_info/title}</span>
           </h2>
-          <input type="datetime" class="pat-pickadate" value="${task_info/date}"/>
-          <select tal:condition="transitions">
+          <input name="task_date" type="datetime" class="pat-pickadate" value="${task_info/date}"/>
+          <select name="task_transition" tal:condition="transitions">
             <option value="" tal:attributes="selected python:'selected' if task_info['transition'] else None" i18n:translate="option_make_selection">No transition selected</option>
             <tal:loop repeat="transition transitions">
             <option tal:define="id python:transition[0]; name python:transition[1]"  tal:attributes="selected python:'selected' if id==task_info['transition'] else None" value="${id}">${name}</option>

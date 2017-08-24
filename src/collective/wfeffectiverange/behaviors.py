@@ -10,7 +10,6 @@ from plone.app.z3cform.widget import RelatedItemsFieldWidget
 from plone.app.z3cform.widget import SelectFieldWidget
 from plone.autoform import directives as form
 from plone.autoform.interfaces import IFormFieldProvider
-from plone.indexer.decorator import indexer
 from plone.supermodel import model
 from z3c.form.interfaces import IAddForm
 from z3c.form.interfaces import IEditForm

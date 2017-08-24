@@ -30,8 +30,8 @@ class WFTasksOverviewView(FolderView):
         return {
             'title': task.title,
             'url': task.absolute_url(),
-            'date': task.task_date,
-            'transition': task.task_transition,
+            'date': getattr(task, 'task_date', None),
+            'transition': getattr(task, 'task_transition', None),
             'uuid': IUUID(task)
         }
 
@@ -87,7 +87,7 @@ class WFTasksOverviewView(FolderView):
             task_date = form.get('task_date', None)
             if task_date is not None:
                 task.task_date = task_date
-
+            
             task_transition = form.get('task_transition', None)
             if task_transition is not None:
                 task.task_transition = task_transition
