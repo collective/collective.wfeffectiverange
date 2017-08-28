@@ -14,21 +14,27 @@
 <metal:content-core fill-slot="content-core">
 <metal:block define-macro="content-core">
 
+  <section tal:define="tasks view/tasks">
+    <h1 i18n:translate="label_workflow_tasks">Workflow Tasks</h1>
 
-  <nav class="wftask_add">
-    <ul>
-      <li>
-        <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal" i18n:translate="label_add_wftaskeffective">Add Worfklow Effective Task</a>
-      </li>
-      <li>
-        <a href="${context/absolute_url}/++add++WFTaskExpired" class="pat-plone-modal" i18n:translate="label_add_wftaskexpired">Add Worfklow Expired Task</a>
-      </li>
-    </ul>
-  </nav>
+    <nav class="wftask_add">
+      <ul>
+        <li>
+          <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal" i18n:translate="label_add_wftaskeffective">Add Worfklow Effective Task</a>
+        </li>
+        <li>
+          <a href="${context/absolute_url}/++add++WFTaskExpired" class="pat-plone-modal" i18n:translate="label_add_wftaskexpired">Add Worfklow Expired Task</a>
+        </li>
+      </ul>
+    </nav>
 
-  <tal:tasks repeat="task_brain view/tasks">
+    <p tal:condition="not: tasks" i18n:translate="help_no_tasks">
+      There are no tasks defined yet.
+    </p>
 
-    <section tal:define="task task_brain/getObject;
+  <tal:tasks repeat="task_brain tasks">
+
+    <article tal:define="task task_brain/getObject;
                          task_info python:view.task_info(task);
                          transitions python:view.common_transitions(task);
                          objsinfo python:view.task_objects_info(task)">
@@ -76,10 +82,49 @@
         </table>
         </tal:if>
       </form>
-    </section>
+    </article>
 
   </tal:tasks>
+  </section>
 
+
+  <section tal:define="res view/wfeffectiverange_objs">
+    <h1 i18n:translate="label_workflow_tasks">Workflow Effective Range</h1>
+
+    <p tal:condition="not: res" i18n:translate="help_no_wfeffectiverange">
+      There are no effective range objects defined yet.
+    </p>
+
+    <table tal:condition="res">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Effective Date</th>
+          <th>Effective Transition</th>
+          <th>Expires Date</th>
+          <th>Expires Transition</th>
+          <th>State</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tal:loop repeat="ob res">
+        <tr class="state-${ob/state}">
+          <td><a href="${ob/url}">${ob/title}</a></td>
+          <td class="pat-moment">${ob/effective}</td>
+          <td>${ob/effective_transition}</td>
+          <td class="pat-moment">${ob/expires}</td>
+          <td>${ob/expires_transition}</td>
+          <td>${ob/state}</td>
+          <td>
+            <a href="${ob/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
+          </td>
+        </tr>
+        </tal:loop>
+      </tbody>
+    </table>
+
+  </section>
 
 </metal:block>
 </metal:content-core>

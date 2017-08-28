@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from collective.wfeffectiverange.behaviors import IWFEffectiveRange
+# from collective.wfeffectiverange.behaviors import IWFEffectiveRange
 from collective.wfeffectiverange.behaviors import IWFTask
 from plone.app.uuid.utils import uuidToObject
 from plone.protect.interfaces import IDisableCSRFProtection
@@ -15,6 +15,11 @@ import plone.app.event
 logger = logging.getLogger('wfeffectiverange')
 
 
+def is_wfeffectiverange(ob):
+    return getattr(ob, 'effective_transition', False) or\
+        getattr(ob, 'expires_transition', False)
+
+
 def run_task(task, include_wfer=False):
     """Run a task.
     """
@@ -27,7 +32,8 @@ def run_task(task, include_wfer=False):
         if not obj:
             # Invalid
             continue
-        if not include_wfer and IWFEffectiveRange.providedBy(obj):
+        # if not include_wfer and IWFEffectiveRange.providedBy(obj):
+        if not include_wfer and is_wfeffectiverange(obj):
             # WFEffectiveRange objects referenced by a task will get
             # multi-edited by the task and run individually via the
             # code above.
@@ -44,7 +50,8 @@ def run_task(task, include_wfer=False):
                 obj=obj,
                 transition=transition
             )
-            if IWFEffectiveRange.providedBy(obj) and include_wfer:
+            # if IWFEffectiveRange.providedBy(obj) and include_wfer:
+            if is_wfeffectiverange(obj) and include_wfer:
                 if task.portal_type == 'WFTaskEffective':
                     obj.effective_transition = None
                 else:

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# from collective.wfeffectiverange.behaviors import IWFEffectiveRange
 from collective.wfeffectiverange.behaviors import IWFTask
 from DateTime import DateTime
 from plone.app.contenttypes.browser.folder import FolderView
@@ -24,6 +25,39 @@ class WFTaskOverviewView(FolderView):
         ret = plone.api.content.find(**{
             'object_provides': IWFTask.__identifier__
         })
+        return ret
+
+    def wfeffectiverange_objs(self):
+        ret_effective = plone.api.content.find(**{
+            # 'object_provides': IWFEffectiveRange.__identifier__,
+            'has_effective_transition': True
+        })
+        ret_expires = plone.api.content.find(**{
+            # 'object_provides': IWFEffectiveRange.__identifier__,
+            'has_expires_transition': True
+        })
+        ret = set(
+            [it.getObject() for it in ret_effective] +
+            [it.getObject() for it in ret_expires]
+        )
+
+        def _publicationcomp(x, y):
+            dat_x = x.effective or x.expires
+            dat_y = y.effective or y.expires
+            return cmp(dat_x, dat_y)
+
+        ret = sorted(ret, _publicationcomp)
+        ret = [{
+            'title': it.title,
+            'url': it.absolute_url(),
+            'effective': it.effective,
+            'effective_transition': it.effective_transition,
+            'expires': it.expires,
+            'expires_transition': it.expires_transition,
+            'state': plone.api.content.get_state(it),
+            'uuid': IUUID(it),
+        } for it in ret]
+
         return ret
 
     def task_info(self, task):
