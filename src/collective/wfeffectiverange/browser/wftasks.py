@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
+from DateTime import DateTime
 from plone.app.contenttypes.browser.folder import FolderView
+from plone.app.event.base import default_timezone
 from plone.app.uuid.utils import uuidToObject
+from plone.event.utils import pydt
 from plone.protect.utils import addTokenToUrl
 from plone.uuid.interfaces import IUUID
-from zExceptions import Redirect
 
 import plone.api
 
 
 class WFTasksOverviewView(FolderView):
 
+    @property
     def protected_view_url(self):
         url = addTokenToUrl(self.context.absolute_url() + '/@@workflow-tasks')
         return url
@@ -86,8 +89,18 @@ class WFTasksOverviewView(FolderView):
 
             task_date = form.get('task_date', None)
             if task_date is not None:
+                # First, parse a Python datetime from a time string.
+                # For this, we let Zope DateTime do the parsing, but it might
+                # return a wrong zone. DateTime.asdatetime returns a Python
+                # datetime without timezone information.
+                # We apply the default timezone via pydt then.
+                # Cries for a utility method in plone.event or plone.app.event.
+                task_date = pydt(
+                    DateTime(task_date).asdatetime(),
+                    default_timezone(self.context, as_tzinfo=True)
+                )
                 task.task_date = task_date
-            
+
             task_transition = form.get('task_transition', None)
             if task_transition is not None:
                 task.task_transition = task_transition
