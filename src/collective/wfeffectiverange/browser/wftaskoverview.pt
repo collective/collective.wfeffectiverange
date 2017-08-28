@@ -23,7 +23,7 @@
           <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal" i18n:translate="label_add_wftaskeffective">Add Worfklow Effective Task</a>
         </li>
         <li>
-          <a href="${context/absolute_url}/++add++WFTaskExpired" class="pat-plone-modal" i18n:translate="label_add_wftaskexpired">Add Worfklow Expired Task</a>
+          <a href="${context/absolute_url}/++add++WFTaskExpires" class="pat-plone-modal" i18n:translate="label_add_wftaskexpires">Add Worfklow Expires Task</a>
         </li>
       </ul>
     </nav>
