@@ -15,9 +15,18 @@
 <metal:block define-macro="content-core">
 
 
-  <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal" i18n:translate="label_add_wftaskeffective">Add Worfklow Effective Task</a>
+  <nav class="wftask_add">
+    <ul>
+      <li>
+        <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal" i18n:translate="label_add_wftaskeffective">Add Worfklow Effective Task</a>
+      </li>
+      <li>
+        <a href="${context/absolute_url}/++add++WFTaskExpired" class="pat-plone-modal" i18n:translate="label_add_wftaskexpired">Add Worfklow Expired Task</a>
+      </li>
+    </ul>
+  </nav>
 
-  <tal:tasks_effective repeat="task_brain view/tasks_effective">
+  <tal:tasks repeat="task_brain view/tasks">
 
     <section tal:define="task task_brain/getObject;
                          task_info python:view.task_info(task);
@@ -26,9 +35,8 @@
       <form action="${view/protected_view_url}" method="GET">
         <input type="hidden" name="task_uid" value="${task_info/uuid}"/>
         <header>
-          <h2>
-            <span>${task_info/title}</span>
-          </h2>
+          <strong>${task_info/title}</strong>
+          <span class="task_type">${task_info/type}</span>
           <input name="task_date" type="datetime" class="pat-pickadate" value="${task_info/date}"/>
           <select name="task_transition" tal:condition="transitions">
             <option value="" tal:attributes="selected python:'selected' if task_info['transition'] else None" i18n:translate="option_make_selection">No transition selected</option>
@@ -70,7 +78,7 @@
       </form>
     </section>
 
-  </tal:tasks_effective>
+  </tal:tasks>
 
 
 </metal:block>

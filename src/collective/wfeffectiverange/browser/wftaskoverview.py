@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from collective.wfeffectiverange.behaviors import IWFTask
 from DateTime import DateTime
 from plone.app.contenttypes.browser.folder import FolderView
 from plone.app.event.base import default_timezone
@@ -19,15 +20,9 @@ class WFTaskOverviewView(FolderView):
         url = addTokenToUrl(self.context.absolute_url() + '/@@wftaskoverview')
         return url
 
-    def tasks_effective(self):
+    def tasks(self):
         ret = plone.api.content.find(**{
-            'portal_type': 'WFTaskEffective'
-        })
-        return ret
-
-    def tasks_expired(self):
-        ret = plone.api.content.find(**{
-            'portal_type': 'WFTaskExpired'
+            'object_provides': IWFTask.__identifier__
         })
         return ret
 
@@ -37,7 +32,8 @@ class WFTaskOverviewView(FolderView):
             'url': task.absolute_url(),
             'date': getattr(task, 'task_date', None),
             'transition': getattr(task, 'task_transition', None),
-            'uuid': IUUID(task)
+            'uuid': IUUID(task),
+            'type': task.Type
         }
 
     def task_objects(self, task):
