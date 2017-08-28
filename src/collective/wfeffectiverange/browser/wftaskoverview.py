@@ -36,10 +36,10 @@ class WFTaskOverviewView(FolderView):
             # 'object_provides': IWFEffectiveRange.__identifier__,
             'has_expires_transition': True
         })
-        ret = set(
+        ret = list(set(
             [it.getObject() for it in ret_effective] +
             [it.getObject() for it in ret_expires]
-        )
+        ))
 
         def _publicationcomp(x, y):
             dat_x = x.effective or x.expires
@@ -109,7 +109,7 @@ class WFTaskOverviewView(FolderView):
                 continue
             ret = ret.intersection(transition)
 
-        return list(ret)
+        return list(ret) if ret else []
 
     def __call__(self, *args, **kwargs):
 
