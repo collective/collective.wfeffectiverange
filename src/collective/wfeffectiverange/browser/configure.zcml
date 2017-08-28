@@ -26,10 +26,10 @@
   />
 
   <browser:page
-      name="workflow-tasks"
+      name="wftaskoverview"
       for="*"
-      class=".wftasks.WFTasksOverviewView"
-      template="wftasks.pt"
+      class=".wftaskoverview.WFTaskOverviewView"
+      template="wftaskoverview.pt"
       menu="plone_displayviews"
       title="Workflow Tasks Overview"
       permission="cmf.ModifyPortalContent"

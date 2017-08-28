@@ -10,11 +10,11 @@ from plone.uuid.interfaces import IUUID
 import plone.api
 
 
-class WFTasksOverviewView(FolderView):
+class WFTaskOverviewView(FolderView):
 
     @property
     def protected_view_url(self):
-        url = addTokenToUrl(self.context.absolute_url() + '/@@workflow-tasks')
+        url = addTokenToUrl(self.context.absolute_url() + '/@@wftaskoverview')
         return url
 
     def tasks_effective(self):
@@ -112,4 +112,4 @@ class WFTasksOverviewView(FolderView):
                     if it.to_id != int(ob_remove)
                 ]
 
-        return super(WFTasksOverviewView, self).__call__(*args, **kwargs)
+        return super(WFTaskOverviewView, self).__call__(*args, **kwargs)
