@@ -6,8 +6,10 @@ from plone.app.uuid.utils import uuidToObject
 from plone.event.utils import pydt
 from plone.protect.utils import addTokenToUrl
 from plone.uuid.interfaces import IUUID
+from zExceptions import Redirect
 
 import plone.api
+import transaction
 
 
 class WFTaskOverviewView(FolderView):
@@ -88,7 +90,7 @@ class WFTaskOverviewView(FolderView):
             task = uuidToObject(task_uid)
 
             task_date = form.get('task_date', None)
-            if task_date is not None:
+            if task_date:
                 # First, parse a Python datetime from a time string.
                 # For this, we let Zope DateTime do the parsing, but it might
                 # return a wrong zone. DateTime.asdatetime returns a Python
@@ -102,7 +104,7 @@ class WFTaskOverviewView(FolderView):
                 task.task_date = task_date
 
             task_transition = form.get('task_transition', None)
-            if task_transition is not None:
+            if task_transition:
                 task.task_transition = task_transition
 
             ob_remove = form.get('ob_remove', None)
@@ -111,5 +113,10 @@ class WFTaskOverviewView(FolderView):
                     it for it in task.task_items
                     if it.to_id != int(ob_remove)
                 ]
+
+            # Redirect to this view to exclude all url parameters, so that by
+            # reloading the form isn't processed again.
+            transaction.commit()
+            raise Redirect(self.protected_view_url)
 
         return super(WFTaskOverviewView, self).__call__(*args, **kwargs)
