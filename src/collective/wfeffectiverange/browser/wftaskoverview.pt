@@ -15,7 +15,7 @@
 <metal:block define-macro="content-core">
 
   <section tal:define="tasks view/tasks">
-    <h1 i18n:translate="label_workflow_tasks">Workflow Tasks</h1>
+    <h2 i18n:translate="label_workflow_tasks">Workflow Tasks</h2>
 
     <nav class="wftask_add">
       <ul>
@@ -89,7 +89,7 @@
 
 
   <section tal:define="res view/wfeffectiverange_objs">
-    <h1 i18n:translate="label_workflow_tasks">Workflow Effective Range</h1>
+    <h2 i18n:translate="label_workflow_tasks">Workflow Effective Range</h2>
 
     <p tal:condition="not: res" i18n:translate="help_no_wfeffectiverange">
       There are no effective range objects defined yet.

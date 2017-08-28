@@ -50,10 +50,10 @@ class WFTaskOverviewView(FolderView):
         ret = [{
             'title': it.title,
             'url': it.absolute_url(),
-            'effective': it.effective,
-            'effective_transition': it.effective_transition,
-            'expires': it.expires,
-            'expires_transition': it.expires_transition,
+            'effective': getattr(it, 'effective', None),
+            'effective_transition': getattr(it, 'effective_transition', None),
+            'expires': getattr(it, 'expires', None),
+            'expires_transition': getattr(it, 'expires_transition', None),
             'state': plone.api.content.get_state(it),
             'uuid': IUUID(it),
         } for it in ret]
