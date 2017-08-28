@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# from collective.wfeffectiverange.behaviors import IWFEffectiveRange
-from collective.wfeffectiverange.behaviors import IWFTask
 from DateTime import DateTime
 from plone.app.contenttypes.browser.folder import FolderView
 from plone.app.event.base import default_timezone
@@ -9,6 +7,9 @@ from plone.event.utils import pydt
 from plone.protect.utils import addTokenToUrl
 from plone.uuid.interfaces import IUUID
 from zExceptions import Redirect
+from zope.component import getUtility
+from zope.intid.interfaces import IIntIds
+from collective.wfeffectiverange.behaviors import IWFTask
 
 import plone.api
 import transaction
@@ -21,95 +22,93 @@ class WFTaskOverviewView(FolderView):
         url = addTokenToUrl(self.context.absolute_url() + '/@@wftaskoverview')
         return url
 
-    def tasks(self):
-        ret = plone.api.content.find(**{
-            'object_provides': IWFTask.__identifier__
-        })
-        return ret
+    def items(self, type_='effective'):
 
-    def wfeffectiverange_objs(self):
-        ret_effective = plone.api.content.find(**{
-            # 'object_provides': IWFEffectiveRange.__identifier__,
-            'has_effective_transition': True
-        })
-        ret_expires = plone.api.content.find(**{
-            # 'object_provides': IWFEffectiveRange.__identifier__,
-            'has_expires_transition': True
-        })
-        ret = list(set(
-            [it.getObject() for it in ret_effective] +
-            [it.getObject() for it in ret_expires]
-        ))
+        intids = getUtility(IIntIds)
+        wftool = plone.api.portal.get_tool('portal_workflow')
 
-        def _publicationcomp(x, y):
-            dat_x = x.effective or x.expires
-            dat_y = y.effective or y.expires
+        ret_tasks = plone.api.content.find(**{
+            'portal_type': 'WFTask' + type_.capitalize()
+        })
+        ret_tasks = [it.getObject() for it in ret_tasks]
+        # Get all task_items ids for IWFEffectiveRange object filtering.
+        task_items_ids = []
+        for task in ret_tasks:
+            task_items_ids += [it.to_id for it in task.task_items]
+
+        ret_obj = plone.api.content.find(**{
+            'has_' + type_ + '_transition': True
+        })
+        # Filter all IWFEffectiveRange objects, which are already related in an
+        # IWFTask object.
+        # Also, get the object as we need it anyways.
+        ret_obj = [
+            it.getObject()
+            for it in ret_obj
+            if intids.getId(it.getObject()) not in task_items_ids
+        ]
+
+        def _datecomp(x, y):
+            dat_x = getattr(x, 'task_date', getattr(x, type_, None))
+            dat_y = getattr(y, 'task_date', getattr(y, type_, None))
             return cmp(dat_x, dat_y)
 
-        ret = sorted(ret, _publicationcomp)
+        # Sort for date
+        ret = sorted(ret_tasks + ret_obj, _datecomp)
+
+        def _task_item_info(ref):
+            ob = ref.to_object
+            return {
+                'title': ob.title,
+                'url': ob.absolute_url(),
+                'state': plone.api.content.get_state(ob),
+                'intid': ref.to_id
+            }
+
+        def _common_transitions(task_items):
+            transitions = []
+            for ref in task_items:
+                ob = ref.to_object
+                _trans = [
+                    (it['id'], it['name'])
+                    for it in wftool.getTransitionsFor(ob)
+                ]
+                transitions.append(set(_trans))
+
+            ret = None
+            for transition in transitions:
+                if ret is None:
+                    ret = transition
+                    continue
+                ret = ret.intersection(transition)
+
+            return list(ret) if ret else []
+
         ret = [{
+            'ob': it,
             'title': it.title,
             'url': it.absolute_url(),
-            'effective': getattr(it, 'effective', None),
-            'effective_transition': getattr(it, 'effective_transition', None),
-            'expires': getattr(it, 'expires', None),
-            'expires_transition': getattr(it, 'expires_transition', None),
+            'transition_date': getattr(it, 'task_date', getattr(it, type_, None)),  # noqa
+            'transition': getattr(it, 'task_transition', getattr(it, type_ + '_transition', None)),  # noqa
             'state': plone.api.content.get_state(it),
             'uuid': IUUID(it),
+            'is_wftask': IWFTask.providedBy(it),
+            'task_items': [
+                _task_item_info(ref)
+                for ref in getattr(it, 'task_items', [])
+            ],
+            'common_transitions': _common_transitions(
+                getattr(it, 'task_items', [])
+            )
         } for it in ret]
 
         return ret
 
-    def task_info(self, task):
-        return {
-            'title': task.title,
-            'url': task.absolute_url(),
-            'date': getattr(task, 'task_date', None),
-            'transition': getattr(task, 'task_transition', None),
-            'uuid': IUUID(task),
-            'type': task.Type
-        }
+    def items_effective(self):
+        return self.items(type_='effective')
 
-    def task_objects(self, task):
-        refs = getattr(task, 'task_items', [])
-        ret = [ref.to_object for ref in refs if ref]
-        return ret
-
-    def task_objects_info(self, task):
-        wftool = plone.api.portal.get_tool('portal_workflow')
-
-        ret = []
-        refs = getattr(task, 'task_items', [])
-        for ref in refs:
-            ob = ref.to_object
-            ret.append({
-                'title': ob.title,
-                'url': ob.absolute_url(),
-                'workflows': u', '.join([wf.title for wf in wftool.getWorkflowsFor(ob)]),  # noqa
-                'state': plone.api.content.get_state(ob),
-                'intid': ref.to_id
-            })
-
-        return ret
-
-    def common_transitions(self, task):
-        wftool = plone.api.portal.get_tool('portal_workflow')
-        transitions = []
-        for ob in self.task_objects(task):
-            _trans = [
-                (it['id'], it['name'])
-                for it in wftool.getTransitionsFor(ob)
-            ]
-            transitions.append(set(_trans))
-
-        ret = None
-        for transition in transitions:
-            if ret is None:
-                ret = transition
-                continue
-            ret = ret.intersection(transition)
-
-        return list(ret) if ret else []
+    def items_expired(self):
+        return self.items(type_='expired')
 
     def __call__(self, *args, **kwargs):
 

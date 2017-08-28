@@ -8,122 +8,64 @@
 <body>
 
 <metal:custom_title fill-slot="content-title">
-  <h1 class="documentFirstHeading" i18n:translate="heading_task_overview">Workflow Task Overview</h1>
+  <h1 class="documentFirstHeading" i18n:translate="heading_task_overview">Task Overview</h1>
 </metal:custom_title>
 
 <metal:content-core fill-slot="content-core">
 <metal:block define-macro="content-core">
 
-  <section tal:define="tasks view/tasks">
-    <h2 i18n:translate="label_workflow_tasks">Workflow Tasks</h2>
+  <section tal:define="items view/items_effective">
+    <h2 i18n:translate="label_workflow_tasks">Effective Tasks</h2>
+    <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal" i18n:translate="label_add_task">Add Task</a>
 
-    <nav class="wftask_add">
-      <ul>
-        <li>
-          <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal" i18n:translate="label_add_wftaskeffective">Add Worfklow Effective Task</a>
-        </li>
-        <li>
-          <a href="${context/absolute_url}/++add++WFTaskExpires" class="pat-plone-modal" i18n:translate="label_add_wftaskexpires">Add Worfklow Expires Task</a>
-        </li>
-      </ul>
-    </nav>
-
-    <p tal:condition="not: tasks" i18n:translate="help_no_tasks">
+    <p tal:condition="not: items" i18n:translate="help_no_items">
       There are no tasks defined yet.
     </p>
 
-  <tal:tasks repeat="task_brain tasks">
-
-    <article tal:define="task task_brain/getObject;
-                         task_info python:view.task_info(task);
-                         transitions python:view.common_transitions(task);
-                         objsinfo python:view.task_objects_info(task)">
-      <form action="${view/protected_view_url}" method="GET">
-        <input type="hidden" name="task_uid" value="${task_info/uuid}"/>
-        <header>
-          <strong>${task_info/title}</strong>
-          <span class="task_type">${task_info/type}</span>
-          <input name="task_date" type="datetime" class="pat-pickadate" value="${task_info/date}"/>
-          <select name="task_transition" tal:condition="transitions">
-            <option value="" tal:attributes="selected python:'selected' if task_info['transition'] else None" i18n:translate="option_make_selection">No transition selected</option>
-            <tal:loop repeat="transition transitions">
-            <option tal:define="id python:transition[0]; name python:transition[1]"  tal:attributes="selected python:'selected' if id==task_info['transition'] else None" value="${id}">${name}</option>
-            </tal:loop>
-          </select>
-          <span tal:condition="not:transitions" i18n:translate="no_common_transitions">No common transitions possible</span>
-          <a href="${task_info/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
-          <input type="submit" value="Save" i18n:attributes="value label_save" />
-          <a href="@@wftaskrunner?task_uid=${task_info/uuid}" class="pat-plone-modal" i18n:translate="label_run_now">Run Now</a>
-        </header>
-
-        <tal:if condition="objsinfo">
-        <table>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Workflows</th>
-              <th>State</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tal:loop repeat="ob objsinfo">
-            <tr class="state-${ob/state}">
-              <td><a href="${ob/url}">${ob/title}</a></td>
-              <td>${ob/workflows}</td>
-              <td>${ob/state}</td>
-              <td>
+    <tal:if condition="items">
+    <table>
+      <tal:loop repeat="item items">
+      <tr tal:define="transitions item/common_transitions" data-uuid="${item/uuid}">
+        <td>
+          <div>
+            <h3>${item/title}</h3>
+            <a href="${item/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
+          </div>
+          <div tal:condition="item/task_items">
+            <ul>
+              <li tal:repeat="ob item/task_items">
+                <a href="${ob/url}" class="state-${ob/state}" title="${ob/state}">${ob/title}</a> 
                 <a href="${ob/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
-                <a href="${view/protected_view_url}&task_uid=${task_info/uuid}&ob_remove=${ob/intid}" i18n:translate="label_remove">Remove</a>
-              </td>
-            </tr>
-            </tal:loop>
-          </tbody>
-        </table>
-        </tal:if>
-      </form>
-    </article>
-
-  </tal:tasks>
-  </section>
-
-
-  <section tal:define="res view/wfeffectiverange_objs">
-    <h2 i18n:translate="label_workflow_tasks">Workflow Effective Range</h2>
-
-    <p tal:condition="not: res" i18n:translate="help_no_wfeffectiverange">
-      There are no effective range objects defined yet.
-    </p>
-
-    <table tal:condition="res">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Effective Date</th>
-          <th>Effective Transition</th>
-          <th>Expires Date</th>
-          <th>Expires Transition</th>
-          <th>State</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tal:loop repeat="ob res">
-        <tr class="state-${ob/state}">
-          <td><a href="${ob/url}">${ob/title}</a></td>
-          <td class="pat-moment">${ob/effective}</td>
-          <td>${ob/effective_transition}</td>
-          <td class="pat-moment">${ob/expires}</td>
-          <td>${ob/expires_transition}</td>
-          <td>${ob/state}</td>
-          <td>
-            <a href="${ob/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
-          </td>
-        </tr>
-        </tal:loop>
-      </tbody>
+                <a href="${view/protected_view_url}&task_uuid=${item/uuid}&ob_remove=${ob/intid}" i18n:translate="label_remove">Remove</a>
+              </li>
+            </ul>
+          </div>
+        </td>
+        <td>
+          <div>
+            <select name="task_transition" tal:condition="transitions">
+              <option value="" tal:attributes="selected python:'selected' if not item['transition'] else None" i18n:translate="option_make_selection">No transition selected</option>
+              <tal:loop repeat="transition transitions">
+              <option tal:define="id python:transition[0]; name python:transition[1]"  tal:attributes="selected python:'selected' if id==item['transition'] else None" value="${id}">${name}</option>
+              </tal:loop>
+            </select>
+            <span tal:condition="not:transitions" i18n:translate="no_common_transitions">No common transitions possible</span>
+          </div>
+          <div tal:condition="item/task_items">
+            <span tal:repeat="ob item/task_items" class="state-${ob/state}">${ob/state}</span>
+          </div>
+        </td>
+        <td>
+          <input name="task_date" type="datetime" class="pat-pickadate" value="${item/transition_date}"/>
+        </td>
+        <td>
+          <input type="submit" value="Save" i18n:attributes="value label_save" />
+          <a href="@@wftaskrunner?task_uid=${item/uuid}" class="pat-plone-modal" i18n:translate="label_run_now">Run Now</a>
+        </td>
+      </tr>
+      </tal:loop>
     </table>
-
+    </tal:if>
   </section>
 
 </metal:block>
