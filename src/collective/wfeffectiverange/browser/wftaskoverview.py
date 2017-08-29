@@ -11,6 +11,7 @@ from plone.app.uuid.utils import uuidToObject
 from plone.event.utils import pydt
 from plone.protect.utils import addTokenToUrl
 from plone.uuid.interfaces import IUUID
+from Products.statusmessages.interfaces import IStatusMessage
 from zope.component import getUtility
 from zope.intid.interfaces import IIntIds
 
@@ -149,8 +150,25 @@ class WFTaskOverviewView(FolderView):
 
         form = self.request.form
         uuid = form.get('uuid')
+        run_task = form.get('run_task', None)
 
-        if uuid:
+        if uuid and run_task:
+            wftype = form.get('wftype', None)
+            task = uuidToObject(uuid)
+
+            infos, warnings = run_task(
+                task,
+                include_wfer=True,
+                wftype=wftype
+            )
+
+            messages = IStatusMessage(self.request)
+            for msg in infos:
+                messages.add(msg, type=u"info")
+            for msg in warnings:
+                messages.add(msg, type=u"warning")
+
+        elif uuid:
 
             items = [uuidToObject(uuid)]
 

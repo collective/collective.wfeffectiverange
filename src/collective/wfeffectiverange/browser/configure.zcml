@@ -35,12 +35,4 @@
       permission="cmf.ModifyPortalContent"
       />
 
-  <browser:page
-      name="wftaskrunner"
-      for="*"
-      class=".wftaskrunner.WFTaskRunnerView"
-      template="wftaskrunner.pt"
-      permission="cmf.ModifyPortalContent"
-      />
-
 </configure>
