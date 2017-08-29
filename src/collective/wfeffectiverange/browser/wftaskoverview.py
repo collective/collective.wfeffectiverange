@@ -62,6 +62,9 @@ class WFTaskOverviewView(FolderView):
             return {
                 'title': ob.title,
                 'url': ob.absolute_url(),
+                'edit_url': addTokenToUrl(
+                    ob.absolute_url() + '/@@edit'
+                ),
                 'state': plone.api.content.get_state(ob),
                 'intid': ref.to_id
             }
@@ -103,6 +106,12 @@ class WFTaskOverviewView(FolderView):
             'ob': it,
             'title': it.title,
             'url': it.absolute_url(),
+            'delete_url': addTokenToUrl(
+                it.absolute_url() + '/@@delete_confirmation'
+            ),
+            'edit_url': addTokenToUrl(
+                it.absolute_url() + '/@@edit'
+            ),
             'transition_date': getattr(it, 'task_date', getattr(it, type_, None)),  # noqa
             'transition': getattr(it, 'task_transition', getattr(it, type_ + '_transition', None)),  # noqa
             'state': plone.api.content.get_state(it),

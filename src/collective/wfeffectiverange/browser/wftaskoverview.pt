@@ -33,14 +33,15 @@
         <td class="title">
           <div>
             <strong>${item/title}</strong>
-            <a href="${item/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
+            <a href="${item/edit_url}" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
             <a tal:condition="not:item/is_task" href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${item/uuid}" i18n:translate="label_remove">Remove</a>
+            <a tal:condition="item/is_task" href="${item/delete_url}" class="pat-plone-modal" i18n:translate="label_delete">Delete</a>
           </div>
           <div tal:condition="item/task_items">
             <ul>
               <li tal:repeat="ob item/task_items">
                 <a href="${ob/url}" class="state-${ob/state}" title="${ob/state}">${ob/title}</a>
-                <a href="${ob/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
+                <a href="${ob/edit_url}" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
                 <a href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${ob/intid}" i18n:translate="label_remove">Remove</a>
               </li>
             </ul>
