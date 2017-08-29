@@ -19,8 +19,8 @@
     <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal glyphicon glyphicon-plus"
        i18n:attributes="title label_add_task" title="Add Task"></a>
 
-    <p tal:condition="not: items" i18n:translate="help_no_items">
-      There are no tasks defined yet.
+    <p tal:condition="not: items" i18n:translate="help_no_effective_items">
+      There are no effective tasks defined yet.
     </p>
 
     <metal:macro define-macro="listing">
@@ -66,8 +66,8 @@
             <span tal:condition="not:transitions" i18n:translate="no_common_transitions">No common transitions available</span>
           </div>
           <div>
-            <span tal:condition="not:item/is_task" class="state state-${item/state}">${item/state}</span>
-            <span tal:repeat="ob item/task_items" class="state state-${ob/state}">${ob/state}</span>
+            <span tal:condition="not:item/is_task" class="state state-${item/state}" i18n:translate="" i18n:domain="plone">${item/state}</span>
+            <span tal:repeat="ob item/task_items" class="state state-${ob/state}" i18n:translate="" i18n:domain="plone">${ob/state}</span>
           </div>
         </td>
         <td class="transition_date">
@@ -89,8 +89,8 @@
     <a href="${context/absolute_url}/++add++WFTaskExpires" class="pat-plone-modal glyphicon glyphicon-plus"
        i18n:attributes="title label_add_task" title="Add Task"></a>
 
-    <p tal:condition="not: items" i18n:translate="help_no_items">
-      There are no tasks defined yet.
+    <p tal:condition="not: items" i18n:translate="help_no_expires_items">
+      There are no expires tasks defined yet.
     </p>
 
     <metal:macro use-macro="context/wftaskoverview/macros/listing" />
