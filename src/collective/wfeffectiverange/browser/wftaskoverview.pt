@@ -34,7 +34,7 @@
           <div>
             <strong>${item/title}</strong>
             <a href="${item/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
-            <a href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${item/uuid}" i18n:translate="label_remove">Remove</a>
+            <a tal:condition="not:item/is_task" href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${item/uuid}" i18n:translate="label_remove">Remove</a>
           </div>
           <div tal:condition="item/task_items">
             <ul>

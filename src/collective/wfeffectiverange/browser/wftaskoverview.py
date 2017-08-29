@@ -107,7 +107,7 @@ class WFTaskOverviewView(FolderView):
             'transition': getattr(it, 'task_transition', getattr(it, type_ + '_transition', None)),  # noqa
             'state': plone.api.content.get_state(it),
             'uuid': IUUID(it),
-            'is_wftask': IWFTask.providedBy(it),
+            'is_task': IWFTask.providedBy(it),
             'task_items': [
                 _task_item_info(ref)
                 for ref in getattr(it, 'task_items', [])
