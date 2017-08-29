@@ -23,7 +23,7 @@
     <!-- <element value="" />-->
   </property>
   <property name="filter_content_types">False</property>
-  <property name="global_allow">True</property>
+  <property name="global_allow">False</property>
 
   <!-- Schema, class and security -->
   <property name="add_permission">cmf.AddPortalContent</property>
