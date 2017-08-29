@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2017-08-29 12:34+0000\n"
+"POT-Creation-Date: 2017-08-29 13:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,8 +33,22 @@ msgstr ""
 msgid "Date range (with workflowed effective range)"
 msgstr ""
 
+#: collective/wfeffectiverange/profiles/base/types/WFTaskEffective.xml
+#: collective/wfeffectiverange/profiles/base/types/WFTaskExpires.xml
+#: collective/wfeffectiverange/profiles/base/types/WFTaskFolder.xml
+msgid "Edit"
+msgstr ""
+
+#: collective/wfeffectiverange/profiles/base/types/WFTaskEffective.xml
+msgid "Effective Task"
+msgstr ""
+
 #: collective/wfeffectiverange/behaviors.py:45
 msgid "Expiration Transition"
+msgstr ""
+
+#: collective/wfeffectiverange/profiles/base/types/WFTaskExpires.xml
+msgid "Expires Task"
 msgstr ""
 
 #: collective/wfeffectiverange/configure.zcml:74
@@ -77,12 +91,26 @@ msgstr ""
 msgid "Required if a publishing date is set"
 msgstr ""
 
+#: collective/wfeffectiverange/profiles/base/types/WFTaskEffective.xml
+#: collective/wfeffectiverange/profiles/base/types/WFTaskExpires.xml
+#: collective/wfeffectiverange/profiles/base/types/WFTaskFolder.xml
+msgid "View"
+msgstr ""
+
 #: collective/wfeffectiverange/configure.zcml:29
 msgid "Workflow Scheduler Task"
 msgstr ""
 
+#: collective/wfeffectiverange/profiles/base/types/WFTaskFolder.xml
+msgid "Workflow Task Folder"
+msgstr ""
+
 #: collective/wfeffectiverange/browser/configure.zcml:36
 msgid "Workflow Tasks Overview"
+msgstr ""
+
+#: collective/wfeffectiverange/configure.zcml:74
+msgid "Workflowed Effective Range"
 msgstr ""
 
 #: collective/wfeffectiverange/configure.zcml:97
@@ -93,10 +121,6 @@ msgstr ""
 msgid "Workflowed effective range base profile"
 msgstr ""
 
-#: collective/wfeffectiverange/configure.zcml:74
-msgid "Workflowed effective range default profile"
-msgstr ""
-
 #. Default: "Select one or more content objects to be processed."
 #: collective/wfeffectiverange/behaviors.py:106
 msgid "description_task_items"
@@ -105,11 +129,6 @@ msgstr ""
 #. Default: "Task Overview"
 #: collective/wfeffectiverange/browser/wftaskoverview.pt:11
 msgid "heading_overview"
-msgstr ""
-
-#. Default: "Run Now"
-#: collective/wfeffectiverange/browser/wftaskoverview.pt:74
-msgid "hello_world"
 msgstr ""
 
 #. Default: "There are no tasks defined yet."
@@ -145,6 +164,11 @@ msgstr ""
 #. Default: "Remove"
 #: collective/wfeffectiverange/browser/wftaskoverview.pt:39
 msgid "label_remove"
+msgstr ""
+
+#. Default: "Run Now"
+#: collective/wfeffectiverange/browser/wftaskoverview.pt:74
+msgid "label_run_now"
 msgstr ""
 
 #. Default: "Dates"
