@@ -4,7 +4,6 @@ from collective.wfeffectiverange.vocabulary import EffectiveTransitionSource
 from collective.wfeffectiverange.vocabulary import ExpiresTransitionSource
 from datetime import datetime
 from plone.app.dexterity.behaviors import metadata
-from plone.app.event.base import default_timezone
 from plone.app.z3cform.widget import DatetimeFieldWidget
 from plone.app.z3cform.widget import RelatedItemsFieldWidget
 from plone.app.z3cform.widget import SelectFieldWidget
@@ -151,8 +150,7 @@ class IWFTask(model.Schema):
     )
     form.widget(
         'task_date',
-        DatetimeFieldWidget,
-        default_timezone=default_timezone
+        DatetimeFieldWidget
     )
 
     form.omitted('task_transition', 'task_date')

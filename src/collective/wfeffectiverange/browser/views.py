@@ -10,7 +10,6 @@ from zope.interface import alsoProvides
 import json
 import logging
 import plone.api
-import plone.app.event
 
 
 logger = logging.getLogger('wfeffectiverange')
@@ -99,10 +98,8 @@ class WFEffectiveRangeTicker(BrowserView):
         # Run Tasks
         infos = []
         warnings = []
-        # Use timezone'd now.
-        now = plone.app.event.base.localized_now(self.context)
         query = {
-            'start': {'query': now, 'range': 'max'},
+            'start': {'query': datetime.now(), 'range': 'max'},
             'object_provides': IWFTask.__identifier__
         }
         for brain in plone.api.content.find(**query):

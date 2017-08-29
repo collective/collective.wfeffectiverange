@@ -53,8 +53,8 @@ class WFTaskOverviewView(FolderView):
         ]
 
         def _datecomp(x, y):
-            dat_x = getattr(x, 'task_date', getattr(x, type_, None))
-            dat_y = getattr(y, 'task_date', getattr(y, type_, None))
+            dat_x = getattr(x, 'task_date', getattr(IWFEffectiveRange(x, None), type_, None))  # noqa
+            dat_y = getattr(y, 'task_date', getattr(IWFEffectiveRange(y, None), type_, None))  # noqa
             return cmp(dat_x, dat_y)
 
         # Sort for date
@@ -187,16 +187,8 @@ class WFTaskOverviewView(FolderView):
                 is_task = IWFTask.providedBy(item)
 
                 if transition_date:
-                    # First, parse a Python datetime from a time string.  For
-                    # this, we let Zope DateTime do the parsing, but it might
-                    # return a wrong zone. DateTime.asdatetime returns a Python
-                    # datetime without timezone information.
-                    # We apply the default timezone via pydt then.
-                    # Cries for a utility method in plone.event or p.a.event.
-                    transition_date = pydt(
-                        DateTime(transition_date).asdatetime(),
-                        default_timezone(self.context, as_tzinfo=True)
-                    )
+                    # Parse a Python datetime from a string using Zope DateTime
+                    transition_date = DateTime(transition_date).asdatetime()
                     if is_task:
                         item.task_date = transition_date
 
