@@ -24,10 +24,13 @@
 
     <metal:macro define-macro="listing">
     <tal:if condition="items">
-    <table>
+    <table class="listing">
       <tal:loop repeat="item items">
-      <tr tal:define="transitions item/common_transitions" data-uuid="${item/uuid}">
-        <td>
+      <tr data-uuid="${item/uuid}"
+          tal:define="transitions item/common_transitions;
+                      oddrow      repeat/item/odd;"
+          tal:attributes="class python:oddrow and 'odd' or 'even'">
+        <td class="title">
           <div>
             <strong>${item/title}</strong>
             <a href="${item/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
@@ -36,16 +39,16 @@
           <div tal:condition="item/task_items">
             <ul>
               <li tal:repeat="ob item/task_items">
-                <a href="${ob/url}" class="state-${ob/state}" title="${ob/state}">${ob/title}</a> 
+                <a href="${ob/url}" class="state-${ob/state}" title="${ob/state}">${ob/title}</a>
                 <a href="${ob/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
                 <a href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${ob/intid}" i18n:translate="label_remove">Remove</a>
               </li>
             </ul>
           </div>
         </td>
-        <td>
+        <td class="transitions">
           <div>
-            <select name="transition" tal:condition="transitions">
+            <select class="transition" name="transition" tal:condition="transitions">
               <option value="" tal:attributes="selected python:'selected' if not item['transition'] else None" i18n:translate="option_make_selection">No transition selected</option>
               <tal:loop repeat="transition transitions">
               <option tal:define="id python:transition[0]; name python:transition[1]"  tal:attributes="selected python:'selected' if id==item['transition'] else None" value="${id}">${name}</option>
@@ -60,7 +63,7 @@
         <td class="transition_date">
           <input name="transition_date" type="datetime" class="pat-pickadate" value="${item/transition_date}"/>
         </td>
-        <td>
+        <td class="run_now">
           <a href="@@wftaskrunner?uuid=${item/uuid}" class="pat-plone-modal" i18n:translate="label_run_now">Run Now</a>
         </td>
       </tr>

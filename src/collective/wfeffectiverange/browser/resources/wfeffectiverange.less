@@ -1,0 +1,51 @@
+//*// MIXIN CLEARFIX //*//
+
+.clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.template-wftaskoverview #content {
+  h2, h3 {
+    display: inline-block;
+  }
+  td {
+    h2, h3, h4 {
+      margin-top: 0;
+    }
+    &.title {
+      width: 40%;
+    }
+    &.run_now {
+      width: 2em;
+    }
+  }
+  select.transition {
+    height: 1.5em;
+    padding: 2px 4px;
+  }
+  .pattern-pickadate-wrapper {
+    input.picker__input {
+      height: 1.5em;
+      width: 100px;
+      padding: 0;
+    }
+    button.pattern-pickadate-now {
+      display: none;
+    }
+    button.pattern-pickadate-clear {
+      padding: 2px 4px;
+      font-size: 13px;
+      line-height: 1;
+      .glyphicon-trash:before {
+        content: "\e014";
+      }
+    }
+  }
+}
