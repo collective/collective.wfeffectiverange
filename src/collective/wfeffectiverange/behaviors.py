@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from Acquisition import aq_parent
 from collective.wfeffectiverange import _
 from collective.wfeffectiverange.vocabulary import EffectiveTransitionSource
 from collective.wfeffectiverange.vocabulary import ExpiresTransitionSource
@@ -15,6 +16,7 @@ from z3c.form.interfaces import IEditForm
 from z3c.relationfield.schema import RelationChoice
 from z3c.relationfield.schema import RelationList
 from zope import schema
+from zope.component.hooks import getSite
 from zope.interface import Invalid
 from zope.interface import invariant
 from zope.interface import provider
@@ -115,7 +117,10 @@ class IWFTask(model.Schema):
     )
     form.widget(
         'task_items',
-        RelatedItemsFieldWidget
+        RelatedItemsFieldWidget,
+        pattern_options={
+            'basePath': lambda ctx: '/'.join(getSite().getPhysicalPath())
+        }
     )
 
     task_transition = schema.Choice(
