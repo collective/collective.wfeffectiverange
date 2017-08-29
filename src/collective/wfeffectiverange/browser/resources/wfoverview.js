@@ -29,7 +29,7 @@ $(document).ready(function() {
         });
     });
 
-    $('input[name="transition_date"]').on('input', function(e) {
+    $('input[name="transition_date"]').on('updated.pickadate.patterns', function(e) {
         var val = this.value || undefined;
         var basic = basic_parameters(this);
         $.ajax({

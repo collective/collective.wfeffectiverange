@@ -208,7 +208,7 @@ class WFTaskOverviewView(FolderView):
                         setattr(
                             IWFEffectiveRange(item),
                             wftype,
-                            DT(transition_date)
+                            transition_date
                         )
 
                 if transition:
