@@ -67,24 +67,38 @@ class WFTaskOverviewView(FolderView):
                 'intid': ref.to_id
             }
 
-        def _common_transitions(task_items):
-            transitions = []
-            for ref in task_items:
-                ob = ref.to_object
-                _trans = [
+        def _common_transitions(item):
+            ret = []
+
+            if IWFTask.providedBy(item):
+                # Get the common transition for all referenced objects.
+                task_items = getattr(item, 'task_items', [])
+                transitions = []
+                for ref in task_items:
+                    ob = ref.to_object
+                    _trans = [
+                        (it['id'], it['name'])
+                        for it in wftool.getTransitionsFor(ob)
+                    ]
+                    transitions.append(set(_trans))
+
+                ret = None
+                for transition in transitions:
+                    if ret is None:
+                        ret = transition
+                        continue
+                    ret = ret.intersection(transition)
+
+                ret = list(ret) if ret else []
+
+            else:
+                # Get all current transitions for the given object
+                ret = [
                     (it['id'], it['name'])
-                    for it in wftool.getTransitionsFor(ob)
+                    for it in wftool.getTransitionsFor(item)
                 ]
-                transitions.append(set(_trans))
 
-            ret = None
-            for transition in transitions:
-                if ret is None:
-                    ret = transition
-                    continue
-                ret = ret.intersection(transition)
-
-            return list(ret) if ret else []
+            return ret
 
         ret = [{
             'ob': it,
@@ -99,9 +113,7 @@ class WFTaskOverviewView(FolderView):
                 _task_item_info(ref)
                 for ref in getattr(it, 'task_items', [])
             ],
-            'common_transitions': _common_transitions(
-                getattr(it, 'task_items', [])
-            )
+            'common_transitions': _common_transitions(it)
         } for it in ret]
 
         return ret
