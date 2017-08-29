@@ -14,7 +14,7 @@
 <metal:content-core fill-slot="content-core">
 <metal:block define-macro="content-core">
 
-  <section tal:define="items view/items_effective" data-wftype="effective" data-actionurl="${view/protected_view_url}">
+  <section tal:define="items view/items_effective; wftype string:effective" data-wftype="effective" data-actionurl="${view/protected_view_url}">
     <h2 i18n:translate="label_workflow_effective_tasks">Effective Tasks</h2>
     <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal" i18n:translate="label_add_task">Add Task</a>
 
@@ -64,7 +64,7 @@
           <input name="transition_date" type="datetime" class="pat-pickadate" value="${item/transition_date}"/>
         </td>
         <td class="run_now">
-          <a href="@@wftaskrunner?uuid=${item/uuid}" class="pat-plone-modal" i18n:translate="label_run_now">Run Now</a>
+          <a href="@@wftaskrunner?uuid=${item/uuid}&wftype=${wftype}" class="pat-plone-modal" i18n:translate="label_run_now">Run Now</a>
         </td>
       </tr>
       </tal:loop>
@@ -73,7 +73,7 @@
     </metal:macro>
   </section>
 
-  <section tal:define="items view/items_expires" data-wftype="expires" data-actionurl="${view/protected_view_url}">
+  <section tal:define="items view/items_expires; wftype string:expires" data-wftype="expires" data-actionurl="${view/protected_view_url}">
     <h2 i18n:translate="label_workflow_expires_tasks">Expires Tasks</h2>
     <a href="${context/absolute_url}/++add++WFTaskExpires" class="pat-plone-modal" i18n:translate="label_add_task">Add Task</a>
 
