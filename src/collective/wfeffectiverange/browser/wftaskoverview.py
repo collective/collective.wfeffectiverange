@@ -109,8 +109,8 @@ class WFTaskOverviewView(FolderView):
     def items_effective(self):
         return self.items(type_='effective')
 
-    def items_expired(self):
-        return self.items(type_='expired')
+    def items_expires(self):
+        return self.items(type_='expires')
 
     def __call__(self, *args, **kwargs):
 
