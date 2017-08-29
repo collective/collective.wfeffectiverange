@@ -33,7 +33,9 @@
           tal:attributes="class python:oddrow and 'odd' or 'even'">
         <td class="title">
           <div>
-            <strong>${item/title}</strong>
+            <a tal:omit-tag="item/is_task" href="${item/url}" class="state-${item/state}">
+              <strong>${item/title}</strong>
+            </a>
             <a href="${item/edit_url}" class="pat-plone-modal glyphicon glyphicon-pencil"
                i18n:attributes="title label_edit" title="Edit"></a>
             <a tal:condition="not:item/is_task" href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${item/uuid}"
@@ -63,7 +65,8 @@
             </select>
             <span tal:condition="not:transitions" i18n:translate="no_common_transitions">No common transitions available</span>
           </div>
-          <div tal:condition="item/task_items">
+          <div>
+            <span tal:condition="not:item/is_task" class="state state-${item/state}">${item/state}</span>
             <span tal:repeat="ob item/task_items" class="state state-${ob/state}">${ob/state}</span>
           </div>
         </td>
