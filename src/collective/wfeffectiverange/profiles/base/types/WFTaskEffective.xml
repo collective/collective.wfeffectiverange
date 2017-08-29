@@ -26,7 +26,7 @@
   <property name="global_allow">False</property>
 
   <!-- Schema, class and security -->
-  <property name="add_permission">cmf.AddPortalContent</property>
+  <property name="add_permission">collective.wfeffectiverange.addTask</property>
   <property name="klass">plone.dexterity.content.Item</property>
   <property name="model_file"></property>
   <property name="model_source">
