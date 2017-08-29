@@ -74,7 +74,7 @@
           <input name="transition_date" type="datetime" class="pat-pickadate" value="${item/transition_date}"/>
         </td>
         <td class="run_now">
-          <a href="${view/protected_view_url}&run_task=1&uuid=${item/uuid}&wftype=${wftype}" class="pat-plone-modal icon-execute"
+          <a href="${view/protected_view_url}&run_task=1&uuid=${item/uuid}&wftype=${wftype}" class="icon-execute"
              i18n:attributes="title label_run_now" title="Run Now"></a>
         </td>
       </tr>

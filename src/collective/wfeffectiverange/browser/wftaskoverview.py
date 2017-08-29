@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from collective.wfeffectiverange.behaviors import IWFEffectiveRange
 from collective.wfeffectiverange.behaviors import IWFTask
+from collective.wfeffectiverange.browser.views import run_task
 from collective.wfeffectiverange.vocabulary import EffectiveTransitionSource
 from collective.wfeffectiverange.vocabulary import ExpiresTransitionSource
 from DateTime import DateTime
@@ -150,9 +151,8 @@ class WFTaskOverviewView(FolderView):
 
         form = self.request.form
         uuid = form.get('uuid')
-        run_task = form.get('run_task', None)
 
-        if uuid and run_task:
+        if uuid and form.get('run_task', None):
             wftype = form.get('wftype', None)
             task = uuidToObject(uuid)
 

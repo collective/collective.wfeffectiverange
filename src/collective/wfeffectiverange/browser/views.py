@@ -178,20 +178,16 @@ def run_task(task, include_wfer=False, wftype=None):
                 else:
                     obj.expires_transition = None
             obj.reindexObject()
-            infos.append(u'Task <a href="{0}">{1}</a> successfully run for object <a href="{2}">{3}</a>.'.format(  # noqa
-                task.absolute_url(),
+            infos.append(u'Task {0} successfully run for object {1}.'.format(
                 task.title,
-                obj.absolute_url(),
                 obj.title
             ))
             logger.info(infos[-1])
 
         except plone.api.exc.InvalidParameterError:
-            warnings.append(u'Could not apply task <a href="{0}">{1}</a> with transform {2} for object <a href="{3}">{4}</a>.'.format(  # noqa
-                task.absolute_url(),
+            warnings.append(u'Could not apply task {0} with transform {1} for object {2}.'.format(  # noqa
                 task.title,
                 transition,
-                obj.absolute_url(),
                 obj.title
             ))
             logger.warn(warnings[-1])
