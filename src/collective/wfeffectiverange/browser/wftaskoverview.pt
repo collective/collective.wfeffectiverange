@@ -96,6 +96,8 @@
     <metal:macro use-macro="context/wftaskoverview/macros/listing" />
   </section>
 
+  <script src="++resource++collective.wfeffectiverange/wfoverview.js" charset="utf-8"></script>
+
 </metal:block>
 </metal:content-core>
 
