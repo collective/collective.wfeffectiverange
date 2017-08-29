@@ -119,52 +119,60 @@ class WFTaskOverviewView(FolderView):
 
         if uuid:
 
-            import pdb
-            pdb.set_trace()
+            items = [uuidToObject(uuid)]
 
-            item = uuidToObject(uuid)
-
-            is_task = IWFTask.providedBy(item)
             wftype = form.get('wftype', 'effective')
 
-            transition_date = form.get('transition_date', None)
-            if transition_date:
-                # First, parse a Python datetime from a time string.
-                # For this, we let Zope DateTime do the parsing, but it might
-                # return a wrong zone. DateTime.asdatetime returns a Python
-                # datetime without timezone information.
-                # We apply the default timezone via pydt then.
-                # Cries for a utility method in plone.event or plone.app.event.
-                transition_date = pydt(
-                    DateTime(transition_date).asdatetime(),
-                    default_timezone(self.context, as_tzinfo=True)
-                )
-                if is_task:
-                    item.task_date = transition_date
-                else:
-                    setattr(
-                        IPublication(item),
-                        wftype,
-                        DT(transition_date)
-                    )
-
-            transition = form.get('transition', None)
-            if transition:
-                if is_task:
-                    item.task_transition = transition
-                else:
-                    setattr(
-                        IWFEffectiveRange(item),
-                        wftype + '_transition',
-                        transition
-                    )
-
-            ob_remove = form.get('ob_remove', None)
-            if ob_remove and is_task:
-                item.task_items = [
-                    it for it in item.task_items
-                    if it.to_id != int(ob_remove)
+            if IWFTask.providedBy(items[0]):
+                items += [
+                    it.to_object for it in getattr(items[0], 'task_items', [])
                 ]
+
+            transition_date = form.get('transition_date', None)
+            transition = form.get('transition', None)
+            ob_remove = form.get('ob_remove', None)
+
+            for item in items:
+
+                is_task = IWFTask.providedBy(item)
+
+                if transition_date:
+                    # First, parse a Python datetime from a time string.  For
+                    # this, we let Zope DateTime do the parsing, but it might
+                    # return a wrong zone. DateTime.asdatetime returns a Python
+                    # datetime without timezone information.
+                    # We apply the default timezone via pydt then.
+                    # Cries for a utility method in plone.event or p.a.event.
+                    transition_date = pydt(
+                        DateTime(transition_date).asdatetime(),
+                        default_timezone(self.context, as_tzinfo=True)
+                    )
+                    if is_task:
+                        item.task_date = transition_date
+                    else:
+                        setattr(
+                            IPublication(item),
+                            wftype,
+                            DT(transition_date)
+                        )
+
+                if transition:
+                    if is_task:
+                        item.task_transition = transition
+                    else:
+                        setattr(
+                            IWFEffectiveRange(item),
+                            wftype + '_transition',
+                            transition
+                        )
+
+                if ob_remove and is_task:
+                    item.task_items = [
+                        it for it in item.task_items
+                        if it.to_id != int(ob_remove)
+                    ]
+
+                item.reindexObject()
 
             transaction.commit()
             return "Saved"
