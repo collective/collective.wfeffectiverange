@@ -15,15 +15,42 @@
   h2, h3 {
     display: inline-block;
   }
+  a {
+    border: 0;
+    text-decoration: none;
+    &:hover {
+      border: 0;
+      text-decoration: none;
+    }
+  }
   td {
     h2, h3, h4 {
       margin-top: 0;
     }
     &.title {
       width: 40%;
+      ul {
+        padding-left: 1em;
+      }
+      .glyphicon-remove,
+      .glyphicon-trash {
+        color: #c4183c;
+      }
     }
     &.run_now {
       width: 2em;
+      .glyphicon {
+        color: #009000;
+      }
+      .icon-execute::before {
+        content: '\e82a';
+        font-family: "fontello";
+        font-size: 1.5em;
+      }
+    }
+    &.transitions .state {
+      display: block;
+      margin-left: 0.75em;
     }
   }
   select.transition {

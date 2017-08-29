@@ -16,7 +16,8 @@
 
   <section tal:define="items view/items_effective; wftype string:effective" data-wftype="effective" data-actionurl="${view/protected_view_url}">
     <h2 i18n:translate="label_workflow_effective_tasks">Effective Tasks</h2>
-    <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal" i18n:translate="label_add_task">Add Task</a>
+    <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal glyphicon glyphicon-plus"
+       i18n:attributes="title label_add_task" title="Add Task"></a>
 
     <p tal:condition="not: items" i18n:translate="help_no_items">
       There are no tasks defined yet.
@@ -33,16 +34,21 @@
         <td class="title">
           <div>
             <strong>${item/title}</strong>
-            <a href="${item/edit_url}" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
-            <a tal:condition="not:item/is_task" href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${item/uuid}" i18n:translate="label_remove">Remove</a>
-            <a tal:condition="item/is_task" href="${item/delete_url}" class="pat-plone-modal" i18n:translate="label_delete">Delete</a>
+            <a href="${item/edit_url}" class="pat-plone-modal glyphicon glyphicon-pencil"
+               i18n:attributes="title label_edit" title="Edit"></a>
+            <a tal:condition="not:item/is_task" href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${item/uuid}"
+               i18n:attributes="title label_remove" title="Remove" class="glyphicon glyphicon-remove"></a>
+            <a tal:condition="item/is_task" href="${item/delete_url}" class="pat-plone-modal glyphicon glyphicon-trash"
+               i18n:attributes="title label_delete" title="Delete"></a>
           </div>
           <div tal:condition="item/task_items">
             <ul>
               <li tal:repeat="ob item/task_items">
                 <a href="${ob/url}" class="state-${ob/state}" title="${ob/state}">${ob/title}</a>
-                <a href="${ob/edit_url}" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
-                <a href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${ob/intid}" i18n:translate="label_remove">Remove</a>
+                <a href="${ob/edit_url}" class="pat-plone-modal glyphicon glyphicon-pencil"
+                   i18n:attributes="title label_edit" title="Edit"></a>
+                <a href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${ob/intid}" class="glyphicon glyphicon-remove"
+                   i18n:attributes="title label_remove" title="Remove"></a>
               </li>
             </ul>
           </div>
@@ -55,17 +61,18 @@
               <option tal:define="id python:transition[0]; name python:transition[1]"  tal:attributes="selected python:'selected' if id==item['transition'] else None" value="${id}">${name}</option>
               </tal:loop>
             </select>
-            <span tal:condition="not:transitions" i18n:translate="no_common_transitions">No common transitions possible</span>
+            <span tal:condition="not:transitions" i18n:translate="no_common_transitions">No common transitions available</span>
           </div>
           <div tal:condition="item/task_items">
-            <span tal:repeat="ob item/task_items" class="state-${ob/state}">${ob/state}</span>
+            <span tal:repeat="ob item/task_items" class="state state-${ob/state}">${ob/state}</span>
           </div>
         </td>
         <td class="transition_date">
           <input name="transition_date" type="datetime" class="pat-pickadate" value="${item/transition_date}"/>
         </td>
         <td class="run_now">
-          <a href="@@wftaskrunner?uuid=${item/uuid}&wftype=${wftype}" class="pat-plone-modal" i18n:translate="label_run_now">Run Now</a>
+          <a href="@@wftaskrunner?uuid=${item/uuid}&wftype=${wftype}" class="pat-plone-modal icon-execute"
+             i18n:attributes="title hello_world" title="Run Now"></a>
         </td>
       </tr>
       </tal:loop>
@@ -76,7 +83,8 @@
 
   <section tal:define="items view/items_expires; wftype string:expires" data-wftype="expires" data-actionurl="${view/protected_view_url}">
     <h2 i18n:translate="label_workflow_expires_tasks">Expires Tasks</h2>
-    <a href="${context/absolute_url}/++add++WFTaskExpires" class="pat-plone-modal" i18n:translate="label_add_task">Add Task</a>
+    <a href="${context/absolute_url}/++add++WFTaskExpires" class="pat-plone-modal glyphicon glyphicon-plus"
+       i18n:attributes="title label_add_task" title="Add Task"></a>
 
     <p tal:condition="not: items" i18n:translate="help_no_items">
       There are no tasks defined yet.
