@@ -8,13 +8,13 @@
 <body>
 
 <metal:custom_title fill-slot="content-title">
-  <h1 class="documentFirstHeading" i18n:translate="heading_task_overview">Task Overview</h1>
+  <h1 class="documentFirstHeading" i18n:translate="heading_overview">Task Overview</h1>
 </metal:custom_title>
 
 <metal:content-core fill-slot="content-core">
 <metal:block define-macro="content-core">
 
-  <section tal:define="items view/items_effective">
+  <section tal:define="items view/items_effective" data-wftype="effective" data-actionurl="${view/protected_view_url}">
     <h2 i18n:translate="label_workflow_tasks">Effective Tasks</h2>
     <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal" i18n:translate="label_add_task">Add Task</a>
 
@@ -36,14 +36,14 @@
               <li tal:repeat="ob item/task_items">
                 <a href="${ob/url}" class="state-${ob/state}" title="${ob/state}">${ob/title}</a> 
                 <a href="${ob/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
-                <a href="${view/protected_view_url}&task_uuid=${item/uuid}&ob_remove=${ob/intid}" i18n:translate="label_remove">Remove</a>
+                <a href="${view/protected_view_url}&item_uuid=${item/uuid}&ob_remove=${ob/intid}" i18n:translate="label_remove">Remove</a>
               </li>
             </ul>
           </div>
         </td>
         <td>
           <div>
-            <select name="task_transition" tal:condition="transitions">
+            <select name="transition" tal:condition="transitions">
               <option value="" tal:attributes="selected python:'selected' if not item['transition'] else None" i18n:translate="option_make_selection">No transition selected</option>
               <tal:loop repeat="transition transitions">
               <option tal:define="id python:transition[0]; name python:transition[1]"  tal:attributes="selected python:'selected' if id==item['transition'] else None" value="${id}">${name}</option>
@@ -55,12 +55,11 @@
             <span tal:repeat="ob item/task_items" class="state-${ob/state}">${ob/state}</span>
           </div>
         </td>
-        <td>
-          <input name="task_date" type="datetime" class="pat-pickadate" value="${item/transition_date}"/>
+        <td class="transition_date">
+          <input name="transition_date" type="datetime" class="pat-pickadate" value="${item/transition_date}"/>
         </td>
         <td>
-          <input type="submit" value="Save" i18n:attributes="value label_save" />
-          <a href="@@wftaskrunner?task_uid=${item/uuid}" class="pat-plone-modal" i18n:translate="label_run_now">Run Now</a>
+          <a href="@@wftaskrunner?item_uuid=${item/uuid}" class="pat-plone-modal" i18n:translate="label_run_now">Run Now</a>
         </td>
       </tr>
       </tal:loop>

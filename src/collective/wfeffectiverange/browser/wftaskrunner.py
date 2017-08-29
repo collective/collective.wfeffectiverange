@@ -90,11 +90,11 @@ class WFTaskRunnerView(BrowserView):
     def __call__(self, *args, **kwargs):
         alsoProvides(self.request, IDisableCSRFProtection)
         
-        task_uuid = self.request.form.get('task_uid', None)
-        if not task_uuid:
+        item_uuid = self.request.form.get('item_uuid', None)
+        if not item_uuid:
             return
 
-        task = uuidToObject(task_uuid)
+        task = uuidToObject(item_uuid)
         self.infos, self.warnings = run_task(task, include_wfer=True)
 
         return super(WFTaskRunnerView, self).__call__(*args, **kwargs)

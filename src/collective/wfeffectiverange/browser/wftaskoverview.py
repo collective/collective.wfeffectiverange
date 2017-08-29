@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
+from collective.wfeffectiverange.behaviors import IWFEffectiveRange
+from collective.wfeffectiverange.behaviors import IWFTask
 from DateTime import DateTime
 from plone.app.contenttypes.browser.folder import FolderView
+from plone.app.dexterity.behaviors.metadata import IPublication
 from plone.app.event.base import default_timezone
+from plone.app.event.base import DT
 from plone.app.uuid.utils import uuidToObject
 from plone.event.utils import pydt
 from plone.protect.utils import addTokenToUrl
 from plone.uuid.interfaces import IUUID
-from zExceptions import Redirect
 from zope.component import getUtility
 from zope.intid.interfaces import IIntIds
-from collective.wfeffectiverange.behaviors import IWFTask
 
 import plone.api
 import transaction
@@ -113,39 +115,58 @@ class WFTaskOverviewView(FolderView):
     def __call__(self, *args, **kwargs):
 
         form = self.request.form
-        task_uid = form.get('task_uid')
+        uuid = form.get('uuid')
 
-        if task_uid:
-            task = uuidToObject(task_uid)
+        if uuid:
 
-            task_date = form.get('task_date', None)
-            if task_date:
+            import pdb
+            pdb.set_trace()
+
+            item = uuidToObject(uuid)
+
+            is_task = IWFTask.providedBy(item)
+            wftype = form.get('wftype', 'effective')
+
+            transition_date = form.get('transition_date', None)
+            if transition_date:
                 # First, parse a Python datetime from a time string.
                 # For this, we let Zope DateTime do the parsing, but it might
                 # return a wrong zone. DateTime.asdatetime returns a Python
                 # datetime without timezone information.
                 # We apply the default timezone via pydt then.
                 # Cries for a utility method in plone.event or plone.app.event.
-                task_date = pydt(
-                    DateTime(task_date).asdatetime(),
+                transition_date = pydt(
+                    DateTime(transition_date).asdatetime(),
                     default_timezone(self.context, as_tzinfo=True)
                 )
-                task.task_date = task_date
+                if is_task:
+                    item.task_date = transition_date
+                else:
+                    setattr(
+                        IPublication(item),
+                        wftype,
+                        DT(transition_date)
+                    )
 
-            task_transition = form.get('task_transition', None)
-            if task_transition:
-                task.task_transition = task_transition
+            transition = form.get('transition', None)
+            if transition:
+                if is_task:
+                    item.task_transition = transition
+                else:
+                    setattr(
+                        IWFEffectiveRange(item),
+                        wftype + '_transition',
+                        transition
+                    )
 
             ob_remove = form.get('ob_remove', None)
-            if ob_remove:
-                task.task_items = [
-                    it for it in task.task_items
+            if ob_remove and is_task:
+                item.task_items = [
+                    it for it in item.task_items
                     if it.to_id != int(ob_remove)
                 ]
 
-            # Redirect to this view to exclude all url parameters, so that by
-            # reloading the form isn't processed again.
             transaction.commit()
-            raise Redirect(self.protected_view_url)
+            return "Saved"
 
         return super(WFTaskOverviewView, self).__call__(*args, **kwargs)
