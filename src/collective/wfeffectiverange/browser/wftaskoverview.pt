@@ -33,7 +33,7 @@
           tal:attributes="class python:oddrow and 'odd' or 'even'">
         <td class="title">
           <div>
-            <a tal:omit-tag="item/is_task" href="${item/url}" class="state-${item/state}">
+            <a tal:omit-tag="item/is_task" href="${item/url}" class="state-${item/state}" title="${item/state}">
               <strong>${item/title}</strong>
             </a>
             <a href="${item/edit_url}" class="pat-plone-modal glyphicon glyphicon-pencil"
