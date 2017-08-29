@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from collective.wfeffectiverange import _
 from collective.wfeffectiverange.behaviors import IWFEffectiveRange
 from collective.wfeffectiverange.behaviors import IWFTask
 from collective.wfeffectiverange.browser.views import run_task
@@ -7,7 +8,6 @@ from collective.wfeffectiverange.vocabulary import ExpiresTransitionSource
 from DateTime import DateTime
 from plone.app.contenttypes.browser.folder import FolderView
 from plone.app.event.base import default_timezone
-from plone.app.event.base import DT
 from plone.app.uuid.utils import uuidToObject
 from plone.event.utils import pydt
 from plone.protect.utils import addTokenToUrl
@@ -16,9 +16,7 @@ from Products.statusmessages.interfaces import IStatusMessage
 from zope.component import getUtility
 from zope.intid.interfaces import IIntIds
 
-import json
 import plone.api
-import transaction
 
 
 class WFTaskOverviewView(FolderView):
@@ -152,6 +150,9 @@ class WFTaskOverviewView(FolderView):
         form = self.request.form
         uuid = form.get('uuid')
 
+        infos = []
+        warnings = []
+
         if uuid and form.get('run_task', None):
             wftype = form.get('wftype', None)
             task = uuidToObject(uuid)
@@ -161,12 +162,6 @@ class WFTaskOverviewView(FolderView):
                 include_wfer=True,
                 wftype=wftype
             )
-
-            messages = IStatusMessage(self.request)
-            for msg in infos:
-                messages.add(msg, type=u"info")
-            for msg in warnings:
-                messages.add(msg, type=u"warning")
 
         elif uuid:
 
@@ -204,6 +199,16 @@ class WFTaskOverviewView(FolderView):
                     )
                     if is_task:
                         item.task_date = transition_date
+
+                        infos.append(_(
+                            'info_task_set_transition_date',
+                            default=u'Set transition date ${transition_date} on task ${title}.',  # noqa
+                            mapping={
+                                'transition_date': transition_date,
+                                'title': item.title
+                            }
+                        ))
+
                     else:
                         setattr(
                             IWFEffectiveRange(item),
@@ -211,9 +216,29 @@ class WFTaskOverviewView(FolderView):
                             transition_date
                         )
 
+                        infos.append(_(
+                            'info_wf_set_transition_date',
+                            default=u'Set ${wftype} transition date ${transition_date} on object ${title}.',  # noqa
+                            mapping={
+                                'wftype': wftype,
+                                'transition_date': transition_date,
+                                'title': item.title
+                            }
+                        ))
+
                 if transition:
                     if is_task:
                         item.task_transition = transition
+
+                        infos.append(_(
+                            'info_task_set_transition',
+                            default=u'Set transition ${transition} on task ${title}.',  # noqa
+                            mapping={
+                                'transition': transition,
+                                'title': item.title
+                            }
+                        ))
+
                     else:
                         setattr(
                             IWFEffectiveRange(item),
@@ -221,12 +246,34 @@ class WFTaskOverviewView(FolderView):
                             transition
                         )
 
+                        infos.append(_(
+                            'info_wf_set_transition',
+                            default=u'Set ${wftype} transition ${transition} on object ${title}.',  # noqa
+                            mapping={
+                                'wftype': wftype,
+                                'transition': transition,
+                                'title': item.title
+                            }
+                        ))
+
                 if ob_remove and is_task:
                     # Remove the referenced item from the task
                     item.task_items = [
                         it for it in item.task_items
                         if it.to_id != int(ob_remove)
                     ]
+                    intids = getUtility(IIntIds)
+                    ob = intids.getObject(int(ob_remove))
+
+                    infos.append(_(
+                        'info_task_object_removed',
+                        default=u'Removed referenced object ${obj_title} from task ${task_title}.',  # noqa
+                        mapping={
+                            'obj_title': ob.title,
+                            'task_title': item.title
+                        }
+                    ))
+
                 elif ob_remove == uuid:
                     # Clear the IWFEffectiveRange date and transition
                     setattr(
@@ -240,13 +287,21 @@ class WFTaskOverviewView(FolderView):
                         None
                     )
 
+                    infos.append(_(
+                        'info_wf_cleared',
+                        default=u'Cleared the ${wftype} date and transition from ${title} and removed it from this list.',  # noqa
+                        mapping={
+                            'wftype': wftype,
+                            'title': item.title
+                        }
+                    ))
+
                 item.reindexObject()
 
-            transaction.commit()
-            if self.request.form.get('ajax', False):
-                self.request.RESPONSE.setHeader(
-                    'Content-Type', 'application/json'
-                )
-                return json.dumps({'Status': 'OK'})
+        messages = IStatusMessage(self.request)
+        for msg in infos:
+            messages.add(msg, type=u"info")
+        for msg in warnings:
+            messages.add(msg, type=u"warning")
 
         return super(WFTaskOverviewView, self).__call__(*args, **kwargs)

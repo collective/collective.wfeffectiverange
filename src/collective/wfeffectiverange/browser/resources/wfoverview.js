@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-
     function basic_parameters (start_node) {
         var wftype = $(start_node).closest('section').data('wftype');
         var actionurl = $(start_node).closest('section').data('actionurl');
@@ -15,35 +14,21 @@ $(document).ready(function() {
     $('select[name="transition"]').on('change', function(e) {
         var val = this.value || undefined;
         var basic = basic_parameters(this);
-        $.ajax({
-            url: basic.actionurl,
-            data: {
-                wftype: basic.wftype,
-                transition: val,
-                uuid: basic.uuid,
-                ajax: true
-            }
-        })
-        .always(function() {
-            window.parent.location.reload();
-        });
+
+        window.location.href = basic.actionurl
+            + '&wfype=' + basic.wftype
+            + '&transition=' + val
+            + '&uuid=' + basic.uuid;
     });
 
     $('input[name="transition_date"]').on('updated.pickadate.patterns', function(e) {
         var val = this.value || undefined;
         var basic = basic_parameters(this);
-        $.ajax({
-            url: basic.actionurl,
-            data: {
-                wftype: basic.wftype,
-                transition_date: val,
-                uuid: basic.uuid,
-                ajax: true
-            }
-        })
-        .always(function() {
-            window.parent.location.reload();
-        });
+
+        window.location.href = basic.actionurl
+            + '&wfype=' + basic.wftype
+            + '&transition_date=' + val
+            + '&uuid=' + basic.uuid;
     });
 
 });
