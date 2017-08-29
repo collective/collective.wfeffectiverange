@@ -135,8 +135,12 @@ class WFTaskOverviewView(FolderView):
             wftype = form.get('wftype', 'effective')
 
             if IWFTask.providedBy(items[0]):
+                # Extend the list of items by all IWFEffectiveRange objects for
+                # multi-editing those.
                 items += [
-                    it.to_object for it in getattr(items[0], 'task_items', [])
+                    it.to_object
+                    for it in getattr(items[0], 'task_items', [])
+                    if IWFEffectiveRange(it.to_object, None)
                 ]
 
             transition_date = form.get('transition_date', None)
