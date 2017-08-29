@@ -14,6 +14,7 @@ from plone.uuid.interfaces import IUUID
 from zope.component import getUtility
 from zope.intid.interfaces import IIntIds
 
+import json
 import plone.api
 import transaction
 
@@ -224,6 +225,10 @@ class WFTaskOverviewView(FolderView):
                 item.reindexObject()
 
             transaction.commit()
-            return "Saved"
+            if self.request.form.get('ajax', False):
+                self.request.RESPONSE.setHeader(
+                    'Content-Type', 'application/json'
+                )
+                return json.dumps({'Status': 'OK'})
 
         return super(WFTaskOverviewView, self).__call__(*args, **kwargs)

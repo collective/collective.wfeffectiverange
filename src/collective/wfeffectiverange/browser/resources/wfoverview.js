@@ -16,12 +16,16 @@ $(document).ready(function() {
         var val = this.value || undefined;
         var basic = basic_parameters(this);
         $.ajax({
-            url: basic.actionurl, 
+            url: basic.actionurl,
             data: {
                 wftype: basic.wftype,
                 transition: val,
-                uuid: basic.uuid
+                uuid: basic.uuid,
+                ajax: true
             }
+        })
+        .always(function() {
+            window.parent.location.reload();
         });
     });
 
@@ -29,14 +33,17 @@ $(document).ready(function() {
         var val = this.value || undefined;
         var basic = basic_parameters(this);
         $.ajax({
-            url: basic.actionurl, 
+            url: basic.actionurl,
             data: {
                 wftype: basic.wftype,
                 transition_date: val,
-                uuid: basic.uuid
+                uuid: basic.uuid,
+                ajax: true
             }
+        })
+        .always(function() {
+            window.parent.location.reload();
         });
     });
-
 
 });
