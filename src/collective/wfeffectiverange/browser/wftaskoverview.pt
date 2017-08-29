@@ -16,7 +16,7 @@
 
   <section tal:define="items view/items_effective; wftype string:effective" data-wftype="effective" data-actionurl="${view/protected_view_url}">
     <h2 i18n:translate="label_workflow_effective_tasks">Effective Tasks</h2>
-    <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal glyphicon glyphicon-plus"
+    <a href="${context/absolute_url}/++add++WFTaskEffective?ajax_load=1" class="pat-plone-modal glyphicon glyphicon-plus"
        i18n:attributes="title label_add_task" title="Add Task"></a>
 
     <p tal:condition="not: items" i18n:translate="help_no_effective_items">
@@ -36,7 +36,7 @@
             <a tal:omit-tag="item/is_task" href="${item/url}" class="state-${item/state}" title="${item/state}">
               <strong>${item/title}</strong>
             </a>
-            <a href="${item/edit_url}" class="pat-plone-modal glyphicon glyphicon-pencil"
+            <a href="${item/edit_url}&ajax_load=1" class="pat-plone-modal glyphicon glyphicon-pencil"
                i18n:attributes="title label_edit" title="Edit"></a>
             <a tal:condition="not:item/is_task" href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${item/uuid}"
                i18n:attributes="title label_remove" title="Remove" class="glyphicon glyphicon-remove"></a>
@@ -47,7 +47,7 @@
             <ul>
               <li tal:repeat="ob item/task_items">
                 <a href="${ob/url}" class="state-${ob/state}" title="${ob/state}">${ob/title}</a>
-                <a href="${ob/edit_url}" class="pat-plone-modal glyphicon glyphicon-pencil"
+                <a href="${ob/edit_url}&ajax_load=1" class="pat-plone-modal glyphicon glyphicon-pencil"
                    i18n:attributes="title label_edit" title="Edit"></a>
                 <a href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${ob/intid}" class="glyphicon glyphicon-remove"
                    i18n:attributes="title label_remove" title="Remove"></a>
@@ -86,7 +86,7 @@
 
   <section tal:define="items view/items_expires; wftype string:expires" data-wftype="expires" data-actionurl="${view/protected_view_url}">
     <h2 i18n:translate="label_workflow_expires_tasks">Expires Tasks</h2>
-    <a href="${context/absolute_url}/++add++WFTaskExpires" class="pat-plone-modal glyphicon glyphicon-plus"
+    <a href="${context/absolute_url}/++add++WFTaskExpires?ajax_load=1" class="pat-plone-modal glyphicon glyphicon-plus"
        i18n:attributes="title label_add_task" title="Add Task"></a>
 
     <p tal:condition="not: items" i18n:translate="help_no_expires_items">
