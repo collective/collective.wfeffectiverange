@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from collective.wfeffectiverange.behaviors import IWFEffectiveRange
 from collective.wfeffectiverange.behaviors import IWFTask
+from collective.wfeffectiverange.vocabulary import EffectiveTransitionSource
+from collective.wfeffectiverange.vocabulary import ExpiresTransitionSource
 from DateTime import DateTime
 from plone.app.contenttypes.browser.folder import FolderView
 from plone.app.event.base import default_timezone
@@ -95,9 +97,19 @@ class WFTaskOverviewView(FolderView):
 
             else:
                 # Get all current transitions for the given object
+                if type_ == 'effective':
+                    source = EffectiveTransitionSource
+                else:
+                    source = ExpiresTransitionSource
+
+                transitions = source(
+                    portal_type=item.portal_type
+                )
+                vocab = transitions(self.context)
+
                 ret = [
-                    (it['id'], it['name'])
-                    for it in wftool.getTransitionsFor(item)
+                    (it.token, it.title)
+                    for it in vocab
                 ]
 
             return ret
