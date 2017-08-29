@@ -29,8 +29,9 @@
       <tr tal:define="transitions item/common_transitions" data-uuid="${item/uuid}">
         <td>
           <div>
-            <h3>${item/title}</h3>
+            <strong>${item/title}</strong>
             <a href="${item/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
+            <a href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${item/uuid}" i18n:translate="label_remove">Remove</a>
           </div>
           <div tal:condition="item/task_items">
             <ul>

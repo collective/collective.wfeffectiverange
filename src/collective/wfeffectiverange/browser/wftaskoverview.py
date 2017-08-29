@@ -3,7 +3,6 @@ from collective.wfeffectiverange.behaviors import IWFEffectiveRange
 from collective.wfeffectiverange.behaviors import IWFTask
 from DateTime import DateTime
 from plone.app.contenttypes.browser.folder import FolderView
-from plone.app.dexterity.behaviors.metadata import IPublication
 from plone.app.event.base import default_timezone
 from plone.app.event.base import DT
 from plone.app.uuid.utils import uuidToObject
@@ -163,7 +162,7 @@ class WFTaskOverviewView(FolderView):
                         item.task_date = transition_date
                     else:
                         setattr(
-                            IPublication(item),
+                            IWFEffectiveRange(item),
                             wftype,
                             DT(transition_date)
                         )
@@ -179,10 +178,23 @@ class WFTaskOverviewView(FolderView):
                         )
 
                 if ob_remove and is_task:
+                    # Remove the referenced item from the task
                     item.task_items = [
                         it for it in item.task_items
                         if it.to_id != int(ob_remove)
                     ]
+                elif ob_remove == uuid:
+                    # Clear the IWFEffectiveRange date and transition
+                    setattr(
+                        IWFEffectiveRange(item),
+                        wftype,
+                        None
+                    )
+                    setattr(
+                        IWFEffectiveRange(item),
+                        wftype + '_transition',
+                        None
+                    )
 
                 item.reindexObject()
 
