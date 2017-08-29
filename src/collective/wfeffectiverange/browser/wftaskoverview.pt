@@ -75,7 +75,7 @@
         </td>
         <td class="run_now">
           <a href="@@wftaskrunner?uuid=${item/uuid}&wftype=${wftype}" class="pat-plone-modal icon-execute"
-             i18n:attributes="title hello_world" title="Run Now"></a>
+             i18n:attributes="title label_run_now" title="Run Now"></a>
         </td>
       </tr>
       </tal:loop>

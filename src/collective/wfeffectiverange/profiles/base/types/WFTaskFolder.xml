@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <object
-    i18n:domain="collective.wfscheduler"
+    i18n:domain="collective.wfeffectiverange"
     meta_type="Dexterity FTI"
     name="WFTaskFolder"
     xmlns:i18n="http://xml.zope.org/namespaces/i18n">

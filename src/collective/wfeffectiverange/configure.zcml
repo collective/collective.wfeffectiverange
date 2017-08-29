@@ -70,7 +70,7 @@
       directory="profiles/plone5"
       name="default"
       provides="Products.GenericSetup.interfaces.EXTENSION"
-      title="Workflowed effective range default profile"
+      title="Workflowed Effective Range"
   />
   <genericsetup:registerProfile
       zcml:condition="not-have plone-5"
@@ -78,7 +78,7 @@
       directory="profiles/plone4"
       name="default"
       provides="Products.GenericSetup.interfaces.EXTENSION"
-      title="Workflowed effective range default profile"
+      title="Workflowed Effective Range"
   />
   <genericsetup:registerProfile
       description="Base profile for collective.wfeffectiverange"

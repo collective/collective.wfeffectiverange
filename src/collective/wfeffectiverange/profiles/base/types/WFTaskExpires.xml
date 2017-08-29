@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <object
-    i18n:domain="collective.wfscheduler"
+    i18n:domain="collective.wfeffectiverange"
     meta_type="Dexterity FTI"
     name="WFTaskExpires"
     xmlns:i18n="http://xml.zope.org/namespaces/i18n">
@@ -8,7 +8,7 @@
   <!-- Basic properties -->
   <property
       i18n:translate=""
-      name="title">Workflow Task Expires</property>
+      name="title">Expires Task</property>
   <property
       i18n:translate=""
       name="description"></property>
