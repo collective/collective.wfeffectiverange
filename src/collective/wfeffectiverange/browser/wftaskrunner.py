@@ -32,7 +32,6 @@ def run_task(task, include_wfer=False):
         if not obj:
             # Invalid
             continue
-        # if not include_wfer and IWFEffectiveRange.providedBy(obj):
         if not include_wfer and is_wfeffectiverange(obj):
             # WFEffectiveRange objects referenced by a task will get
             # multi-edited by the task and run individually via the
@@ -50,7 +49,6 @@ def run_task(task, include_wfer=False):
                 obj=obj,
                 transition=transition
             )
-            # if IWFEffectiveRange.providedBy(obj) and include_wfer:
             if is_wfeffectiverange(obj) and include_wfer:
                 if task.portal_type == 'WFTaskEffective':
                     obj.effective_transition = None
@@ -90,11 +88,11 @@ class WFTaskRunnerView(BrowserView):
     def __call__(self, *args, **kwargs):
         alsoProvides(self.request, IDisableCSRFProtection)
         
-        item_uuid = self.request.form.get('item_uuid', None)
-        if not item_uuid:
+        uuid = self.request.form.get('uuid', None)
+        if not uuid:
             return
 
-        task = uuidToObject(item_uuid)
+        task = uuidToObject(uuid)
         self.infos, self.warnings = run_task(task, include_wfer=True)
 
         return super(WFTaskRunnerView, self).__call__(*args, **kwargs)

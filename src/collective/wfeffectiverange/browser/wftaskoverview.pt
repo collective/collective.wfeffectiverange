@@ -37,7 +37,7 @@
               <li tal:repeat="ob item/task_items">
                 <a href="${ob/url}" class="state-${ob/state}" title="${ob/state}">${ob/title}</a> 
                 <a href="${ob/url}/@@edit" class="pat-plone-modal" i18n:translate="label_edit">Edit</a>
-                <a href="${view/protected_view_url}&item_uuid=${item/uuid}&ob_remove=${ob/intid}" i18n:translate="label_remove">Remove</a>
+                <a href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${ob/intid}" i18n:translate="label_remove">Remove</a>
               </li>
             </ul>
           </div>
@@ -60,7 +60,7 @@
           <input name="transition_date" type="datetime" class="pat-pickadate" value="${item/transition_date}"/>
         </td>
         <td>
-          <a href="@@wftaskrunner?item_uuid=${item/uuid}" class="pat-plone-modal" i18n:translate="label_run_now">Run Now</a>
+          <a href="@@wftaskrunner?uuid=${item/uuid}" class="pat-plone-modal" i18n:translate="label_run_now">Run Now</a>
         </td>
       </tr>
       </tal:loop>
