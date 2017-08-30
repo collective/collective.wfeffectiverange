@@ -12,14 +12,14 @@
   />
  
   <browser:page
-      class=".views.WFEffectiveRangeVocabReloadView"
+      class=".wfvocabreload.WFEffectiveRangeVocabReloadView"
       for="*"
       name="wfeffectiverange_vocab"
       permission="cmf.ModifyPortalContent"
   />
 
   <browser:page
-      class=".views.WFEffectiveRangeTicker"
+      class=".wfticker.WFEffectiveRangeTicker"
       for="*"
       name="wfeffectiverange-ticker"
       permission="cmf.ManagePortal"

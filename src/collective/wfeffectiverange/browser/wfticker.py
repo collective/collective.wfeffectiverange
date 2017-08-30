@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 from collective.wfeffectiverange.behaviors import IWFEffectiveRange
 from collective.wfeffectiverange.behaviors import IWFTask
-from collective.wfeffectiverange.vocabulary import ExpiresTransitionSource
 from datetime import datetime
 from plone.protect.interfaces import IDisableCSRFProtection
 from Products.Five.browser import BrowserView
 from zope.annotation.interfaces import IAnnotations
 from zope.interface import alsoProvides
 
-import json
 import logging
 import plone.api
 import transaction
@@ -18,104 +16,14 @@ logger = logging.getLogger('wfeffectiverange')
 WFTASK_LOGGER_KEY = 'wftasklogger'
 
 
-class WFEffectiveRangeVocabReloadView(BrowserView):
-
-    def __call__(self):
-        alsoProvides(self.request, IDisableCSRFProtection)
-        transitions = ExpiresTransitionSource(
-            transition=self.request.get('current'),
-            portal_type=self.request.get('contenttype', None),
-        )
-        vocab = transitions(self.context)
-        data = []
-
-        for term in vocab:
-            rekord = {}
-            rekord['token'] = term.token
-            rekord['title'] = term.title
-            data.append(rekord)
-
-        self.request.response.setHeader('Content-type', 'application/json')
-        return json.dumps(data)
-
-
-# vocabulary get all items that have a pub_transition and
-# where their pub date is in the past
-class WFEffectiveRangeTicker(BrowserView):
-
-    def __call__(self):
-        alsoProvides(self.request, IDisableCSRFProtection)
-        triggered_something = 0
-
-        # for effective transition
-        query = {
-            'effective': {'query': datetime.now(), 'range': 'max'},
-            'has_effective_transition': True,
-            # 'object_provides': IWFEffectiveRange.__identifier__
-        }
-        for brain in plone.api.content.find(**query):
-            obj = brain.getObject()
-            if getattr(obj, 'effective_transition', None):
-                new_transition = obj.effective_transition
-                obj.effective_transition = None
-                obj._v_wfeffectiverange_ignore = True
-                plone.api.content.transition(
-                    obj=obj, transition=new_transition
-                )
-                obj._v_wfeffectiverange_ignore = False
-                obj.reindexObject()
-                logger.info(
-                    'autotransition "effective" for {0}'.format(
-                        obj.absolute_url()
-                    )
-                )
-                triggered_something += 1
-
-        # for expires transition
-        query = {
-            'expires': {'query': datetime.now(), 'range': 'max'},
-            'has_expires_transition': True,
-            # 'object_provides': IWFEffectiveRange.__identifier__
-        }
-        for brain in plone.api.content.find(**query):
-            obj = brain.getObject()
-            if hasattr(obj, 'expires_transition') and obj.expires_transition:
-                new_transition = obj.expires_transition
-                obj.expires_transition = None
-                obj._v_wfeffectiverange_ignore = True
-                plone.api.content.transition(
-                    obj=obj, transition=new_transition
-                )
-                obj._v_wfeffectiverange_ignore = False
-                obj.reindexObject()
-                logger.info(
-                    'autotransition "expires" for {0}'.format(
-                        obj.absolute_url())
-                )
-                triggered_something += 1
-
-        if not triggered_something:
-            logger.info('no autotransition done in this cycle')
-        return 'triggered {0} autotransitions.'.format(triggered_something)
-
-        # Run Tasks
-        query = {
-            'start': {'query': datetime.now(), 'range': 'max'},
-            'object_provides': IWFTask.__identifier__
-        }
-        for brain in plone.api.content.find(**query):
-            task = brain.getObject()
-            run_task(task, include_wfer=False)
-
-        transaction.commit()
-
-
 def is_wfeffectiverange(ob):
+    """True, if the object has the IWFEffectiveRange behavior.
+    """
     return bool(IWFEffectiveRange(ob, False))
 
 
 def run_task(task, include_wfer=False, wftype=None):
-    """Run a task.
+    """Run a IWFTask.
     """
     infos = []
     warnings = []
@@ -206,3 +114,72 @@ def run_task(task, include_wfer=False, wftype=None):
     task.reindexObject()
 
     return infos, warnings
+
+
+class WFEffectiveRangeTicker(BrowserView):
+
+    def __call__(self):
+        alsoProvides(self.request, IDisableCSRFProtection)
+        triggered_something = 0
+
+        # for effective transition
+        query = {
+            'effective': {'query': datetime.now(), 'range': 'max'},
+            'has_effective_transition': True,
+            # 'object_provides': IWFEffectiveRange.__identifier__
+        }
+        for brain in plone.api.content.find(**query):
+            obj = brain.getObject()
+            if getattr(obj, 'effective_transition', None):
+                new_transition = obj.effective_transition
+                obj.effective_transition = None
+                obj._v_wfeffectiverange_ignore = True
+                plone.api.content.transition(
+                    obj=obj, transition=new_transition
+                )
+                obj._v_wfeffectiverange_ignore = False
+                obj.reindexObject()
+                logger.info(
+                    'autotransition "effective" for {0}'.format(
+                        obj.absolute_url()
+                    )
+                )
+                triggered_something += 1
+
+        # for expires transition
+        query = {
+            'expires': {'query': datetime.now(), 'range': 'max'},
+            'has_expires_transition': True,
+            # 'object_provides': IWFEffectiveRange.__identifier__
+        }
+        for brain in plone.api.content.find(**query):
+            obj = brain.getObject()
+            if hasattr(obj, 'expires_transition') and obj.expires_transition:
+                new_transition = obj.expires_transition
+                obj.expires_transition = None
+                obj._v_wfeffectiverange_ignore = True
+                plone.api.content.transition(
+                    obj=obj, transition=new_transition
+                )
+                obj._v_wfeffectiverange_ignore = False
+                obj.reindexObject()
+                logger.info(
+                    'autotransition "expires" for {0}'.format(
+                        obj.absolute_url())
+                )
+                triggered_something += 1
+
+        if not triggered_something:
+            logger.info('no autotransition done in this cycle')
+        return 'triggered {0} autotransitions.'.format(triggered_something)
+
+        # Run Tasks
+        query = {
+            'start': {'query': datetime.now(), 'range': 'max'},
+            'object_provides': IWFTask.__identifier__
+        }
+        for brain in plone.api.content.find(**query):
+            task = brain.getObject()
+            run_task(task, include_wfer=False)
+
+        transaction.commit()
