@@ -42,7 +42,7 @@
                i18n:attributes="title label_remove" title="Remove" class="icon glyphicon glyphicon-remove"></a>
             <a tal:condition="item/is_task" href="${item/delete_url}" class="pat-plone-modal icon glyphicon glyphicon-trash"
                i18n:attributes="title label_delete" title="Delete"></a>
-            <a href="${item/url}/@@wftasklog" class="pat-plone-modal icon glyphicon glyphicon-th-list"
+            <a tal:condition="item/is_task" href="${item/url}/@@wftasklog" class="pat-plone-modal icon glyphicon glyphicon-th-list"
                i18n:attributes="title label_tasklog" title="Task log"></a>
           </div>
           <div tal:condition="item/task_items">

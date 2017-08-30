@@ -25,7 +25,6 @@ class WFTaskOverviewView(FolderView):
         return url
 
     def items(self, type_='effective'):
-
         intids = getUtility(IIntIds)
         wftool = plone.api.portal.get_tool('portal_workflow')
 
@@ -46,25 +45,26 @@ class WFTaskOverviewView(FolderView):
         # Plus, filter out effective of 1969,30,12 and expires of 2499,30,12.
         # Add a little buffer for timezone quirks. You never know...
         # Also, get the object as we need it anyways.
+        ret_obj = [it.getObject() for it in ret_obj]
         ret_obj = [
-            it.getObject()
+            it
             for it in ret_obj
-            if intids.getId(it.getObject()) not in task_items_ids
+            if intids.getId(it) not in task_items_ids
             and (
                 (type_ == 'effective' and (
-                    not getattr(it, 'effective', False)
-                    or it.effective > DateTime(1970, 1, 2)
+                    not it.effective()
+                    or it.effective() > DateTime(1970, 1, 2)
                 )) or
                 (type_ == 'expires' and (
-                    not getattr(it, 'expires', False)
-                    or it.expires < DateTime(2499, 1, 1)
+                    not it.expires()
+                    or it.expires() < DateTime(2499, 1, 1)
                 ))
             )
         ]
 
         def _datecomp(x, y):
-            dat_x = getattr(x, 'task_date', getattr(IWFEffectiveRange(x, None), type_, None))  # noqa
-            dat_y = getattr(y, 'task_date', getattr(IWFEffectiveRange(y, None), type_, None))  # noqa
+            dat_x = getattr(x, 'task_date', getattr(x, type_)())
+            dat_y = getattr(y, 'task_date', getattr(y, type_)())
             return cmp(dat_x, dat_y) if dat_x and dat_y else -1
 
         # Sort for date
@@ -135,7 +135,7 @@ class WFTaskOverviewView(FolderView):
             'edit_url': addTokenToUrl(
                 it.absolute_url() + '/@@edit'
             ),
-            'transition_date': getattr(it, 'task_date', getattr(it, type_, None)),  # noqa
+            'transition_date': getattr(it, 'task_date', getattr(it, type_)()),  # noqa
             'transition': getattr(it, 'task_transition', getattr(it, type_ + '_transition', None)),  # noqa
             'state': plone.api.content.get_state(it),
             'uuid': IUUID(it),
