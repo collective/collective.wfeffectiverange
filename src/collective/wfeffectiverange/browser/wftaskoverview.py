@@ -7,9 +7,7 @@ from collective.wfeffectiverange.vocabulary import EffectiveTransitionSource
 from collective.wfeffectiverange.vocabulary import ExpiresTransitionSource
 from DateTime import DateTime
 from plone.app.contenttypes.browser.folder import FolderView
-from plone.app.event.base import default_timezone
 from plone.app.uuid.utils import uuidToObject
-from plone.event.utils import pydt
 from plone.protect.utils import addTokenToUrl
 from plone.uuid.interfaces import IUUID
 from Products.statusmessages.interfaces import IStatusMessage
@@ -45,11 +43,23 @@ class WFTaskOverviewView(FolderView):
         })
         # Filter all IWFEffectiveRange objects, which are already related in an
         # IWFTask object.
+        # Plus, filter out effective of 1969,30,12 and expires of 2499,30,12.
+        # Add a little buffer for timezone quirks. You never know...
         # Also, get the object as we need it anyways.
         ret_obj = [
             it.getObject()
             for it in ret_obj
             if intids.getId(it.getObject()) not in task_items_ids
+            and (
+                (type_ == 'effective' and (
+                    not getattr(it, 'effective', False)
+                    or it.effective > DateTime(1970, 1, 2)
+                )) or
+                (type_ == 'expires' and (
+                    not getattr(it, 'expires', False)
+                    or it.expires < DateTime(2499, 1, 1)
+                ))
+            )
         ]
 
         def _datecomp(x, y):
