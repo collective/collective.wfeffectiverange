@@ -54,33 +54,33 @@ class IWFEffectiveRange(metadata.IPublication):
     form.no_omit(IEditForm, 'effective_transition', 'expires_transition')
     form.no_omit(IAddForm, 'effective_transition', 'expires_transition')
 
-    @invariant
-    def effective_and_effective_transition(data):
-        if data.effective is not None \
-           and data.effective > datetime.now() \
-           and data.effective_transition is None:
-            raise Invalid(_(u'If a publication date is set, '
-                            u'a publication transition is needed.'))
+    # @invariant
+    # def effective_and_effective_transition(data):
+    #     if data.effective is not None \
+    #        and data.effective > datetime.now() \
+    #        and data.effective_transition is None:
+    #         raise Invalid(_(u'If a publication date is set, '
+    #                         u'a publication transition is needed.'))
 
-    @invariant
-    def expires_and_expires_transition(data):
-        if data.expires is not None \
-           and data.expires > datetime.now()\
-           and data.expires_transition is None:
-            raise Invalid(_(u'If a expiration date is set, '
-                            u'a expiration transition is needed.'))
+    # @invariant
+    # def expires_and_expires_transition(data):
+    #     if data.expires is not None \
+    #        and data.expires > datetime.now()\
+    #        and data.expires_transition is None:
+    #         raise Invalid(_(u'If a expiration date is set, '
+    #                         u'a expiration transition is needed.'))
 
-    @invariant
-    def effective_transition_without_effective(data):
-        if data.effective is None and data.effective_transition is not None:
-            raise Invalid(_(u'If a publication transition is set, '
-                            u'a publication date is needed.'))
+    # @invariant
+    # def effective_transition_without_effective(data):
+    #     if data.effective is None and data.effective_transition is not None:
+    #         raise Invalid(_(u'If a publication transition is set, '
+    #                         u'a publication date is needed.'))
 
-    @invariant
-    def expires_transition_without_expires(data):
-        if data.expires is None and data.expires_transition is not None:
-            raise Invalid(_(u'If a expiration date is set, '
-                            u'a expiration transition is needed.'))
+    # @invariant
+    # def expires_transition_without_expires(data):
+    #     if data.expires is None and data.expires_transition is not None:
+    #         raise Invalid(_(u'If a expiration date is set, '
+    #                         u'a expiration transition is needed.'))
 
 
 class WFEffectiveRange(metadata.Publication):
