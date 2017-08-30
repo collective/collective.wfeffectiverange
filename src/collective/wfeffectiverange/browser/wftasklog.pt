@@ -31,13 +31,13 @@
       </td>
 
       <td>
-        <tal:if define="info msg/infos" condition="info">
+        <tal:if define="infos msg/infos" condition="infos">
         <strong>Infos</strong>
         <ul>
           <li tal:repeat="info infos">${info}</li>
         </ul>
         </tal:if>
-        <tal:if define="warning msg/warnings" condition="warning">
+        <tal:if define="warnings msg/warnings" condition="warnings">
         <strong>Warnings</strong>
         <ul>
           <li tal:repeat="warning warnings">${warning}</li>
@@ -46,7 +46,11 @@
       </td>
 
     </tr>
+    </tal:loop>
   </table>
+
+</metal:block>
+</metal:content-core>
 
 </body>
 </html>

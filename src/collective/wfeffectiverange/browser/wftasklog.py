@@ -9,14 +9,11 @@ WFTASK_LOGGER_KEY = 'wftasklogger'
 
 class WFTaskLogView(BrowserView):
 
-    @property
     def log(self):
-        import pdb
-        pdb.set_trace()
         annotations = IAnnotations(self.context)
-        tasklogger = annotations[WFTASK_LOGGER_KEY] or {}
+        tasklogger = annotations.get(WFTASK_LOGGER_KEY, {})
         ret = sorted(
             tasklogger.items(),
-            lambda x, y: cmp(DateTime(x), DateTime(y))
+            lambda x, y: cmp(DateTime(x[0]), DateTime(y[0]))
         )
         return ret
