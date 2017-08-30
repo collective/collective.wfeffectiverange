@@ -67,10 +67,10 @@
             </select>
             <span tal:condition="not:transitions" i18n:translate="no_common_transitions">No common transitions available</span>
           </div>
-          <div>
-            <span tal:condition="not:item/is_task" class="state state-${item/state}" i18n:translate="" i18n:domain="plone">${item/state}</span>
-            <span tal:repeat="ob item/task_items" class="state state-${ob/state}" i18n:translate="" i18n:domain="plone">${ob/state}</span>
-          </div>
+          <ul>
+            <li tal:condition="not:item/is_task" class="state state-${item/state}" i18n:translate="" i18n:domain="plone">${item/state}</li>
+            <li tal:repeat="ob item/task_items" class="state state-${ob/state}" i18n:translate="" i18n:domain="plone">${ob/state}</li>
+          </ul>
         </td>
         <td class="transition_date">
           <input name="transition_date" type="datetime" class="pat-pickadate" value="${item/transition_date}"/>

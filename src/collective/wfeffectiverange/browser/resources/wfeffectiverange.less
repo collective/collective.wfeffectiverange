@@ -47,9 +47,11 @@
         font-size: 1.5em;
       }
     }
-    &.transitions .state {
-      display: block;
-      margin-left: 0.75em;
+    &.transitions {
+      ul {
+        list-style-type: inherit;
+        padding-left: 0.25em;
+      }
     }
   }
   select.transition {
@@ -59,7 +61,7 @@
   .pattern-pickadate-wrapper {
     input.picker__input {
       height: 1.5em;
-      width: 100px;
+      width: 10em;
       padding: 0;
     }
     button.pattern-pickadate-now {
