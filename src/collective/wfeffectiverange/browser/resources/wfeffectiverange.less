@@ -1,15 +1,5 @@
-//*// MIXIN CLEARFIX //*//
-
-.clearfix() {
-  &:before,
-  &:after {
-    content: " "; // 1
-    display: table; // 2
-  }
-  &:after {
-    clear: both;
-  }
-}
+@import url("https://raw.githubusercontent.com/plone/Products.CMFPlone/master/Products/CMFPlone/static/patterns/toolbar/src/css/variables.less");
+@import url("https://raw.githubusercontent.com/plone/plonetheme.barceloneta/master/plonetheme/barceloneta/theme/less/variables.plone.less");
 
 .template-wftaskoverview #content {
   h2, h3 {
@@ -76,6 +66,23 @@
       }
     }
   }
+}
+
+[class*="contenttype-"]::before,
+.contenttype-file #crud-edit-File-widgets-view_title::before {
+    font-family:"Fontello";
+    font-size: 100%;
+    padding: 0;
+    margin:0;
+    position: relative;
+    left: inherit;
+    display: inline-block;
+    color: inherit;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    margin-right: @plone-padding-base-vertical;
+    content: '\e834';
 }
 
 .contenttype-wftaskfolder::before {
