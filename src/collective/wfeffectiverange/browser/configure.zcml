@@ -35,4 +35,14 @@
       permission="cmf.ModifyPortalContent"
       />
 
+  <browser:page
+      name="wftasklog"
+      for="collective.wfeffectiverange.behaviors.IWFTask"
+      class=".wftasklog.WFTaskLogView"
+      template="wftasklog.pt"
+      menu="plone_displayviews"
+      title="Workflow Tasks Log"
+      permission="cmf.ModifyPortalContent"
+      />
+
 </configure>

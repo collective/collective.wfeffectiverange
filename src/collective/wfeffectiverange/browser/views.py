@@ -5,14 +5,17 @@ from collective.wfeffectiverange.vocabulary import ExpiresTransitionSource
 from datetime import datetime
 from plone.protect.interfaces import IDisableCSRFProtection
 from Products.Five.browser import BrowserView
+from zope.annotation.interfaces import IAnnotations
 from zope.interface import alsoProvides
 
 import json
 import logging
 import plone.api
+import transaction
 
 
 logger = logging.getLogger('wfeffectiverange')
+WFTASK_LOGGER_KEY = 'wftasklogger'
 
 
 class WFEffectiveRangeVocabReloadView(BrowserView):
@@ -96,17 +99,15 @@ class WFEffectiveRangeTicker(BrowserView):
         return 'triggered {0} autotransitions.'.format(triggered_something)
 
         # Run Tasks
-        infos = []
-        warnings = []
         query = {
             'start': {'query': datetime.now(), 'range': 'max'},
             'object_provides': IWFTask.__identifier__
         }
         for brain in plone.api.content.find(**query):
             task = brain.getObject()
-            infos_, warnings_ = run_task(task, include_wfer=False)
-            infos += infos_
-            warnings += warnings_
+            run_task(task, include_wfer=False)
+
+        transaction.commit()
 
 
 def is_wfeffectiverange(ob):
@@ -193,6 +194,14 @@ def run_task(task, include_wfer=False, wftype=None):
         # After running, clear the task transition and date.
         IWFTask(task).task_transition = None
         IWFTask(task).task_date = None
+
+    annotations = IAnnotations(task)
+    tasklogger = annotations.get(WFTASK_LOGGER_KEY, {})
+    tasklogger[datetime.now().isoformat()] = {
+        'infos': infos,
+        'warnings': warnings
+    }
+    annotations[WFTASK_LOGGER_KEY] = tasklogger
 
     task.reindexObject()
 
