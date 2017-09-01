@@ -14,6 +14,7 @@ class WFTaskLogView(BrowserView):
         tasklogger = annotations.get(WFTASK_LOGGER_KEY, {})
         ret = sorted(
             tasklogger.items(),
-            lambda x, y: cmp(DateTime(x[0]), DateTime(y[0]))
+            cmp=lambda x, y: cmp(DateTime(x[0]), DateTime(y[0])),
+            reverse=True
         )
         return ret
