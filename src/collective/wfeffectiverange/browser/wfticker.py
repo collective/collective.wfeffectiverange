@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from collective.wfeffectiverange import utils
 from collective.wfeffectiverange.behaviors import IWFEffectiveRange
 from collective.wfeffectiverange.behaviors import IWFTask
 from datetime import datetime
@@ -16,35 +17,26 @@ logger = logging.getLogger('wfeffectiverange')
 WFTASK_LOGGER_KEY = 'wftasklogger'
 
 
-def is_wfeffectiverange(ob):
-    """True, if the object has the IWFEffectiveRange behavior.
-    """
-    return bool(IWFEffectiveRange(ob, False))
-
-
 def run_task(task, include_wfer=False, wftype=None):
     """Run a IWFTask.
     """
     infos = []
     warnings = []
 
-    items = []
-
     if wftype:
         # If wftype is given - say that a IWFEffectiveRange "task" is run
         # manually - one of the following wftypes must be given.
         assert wftype in ('effective', 'expires')
 
-    # Can also be run from an IWFEffectiveRange object instead of an IWFTask
-    is_task = IWFTask.providedBy(task)
-
+    items = []
+    is_task = utils.is_task(task)
     if is_task:
         items = [it.to_object for it in getattr(task, 'task_items', [])]
-    elif is_wfeffectiverange(task):
+    elif utils.is_wfeffectiverange(task):
         items = [task]
 
     for obj in items:
-        is_wfer = is_wfeffectiverange(obj)
+        is_wfer = utils.is_wfeffectiverange(obj)
 
         if not obj:
             # Invalid
@@ -59,7 +51,7 @@ def run_task(task, include_wfer=False, wftype=None):
         transition = None
         if is_task:
             transition = getattr(task, 'task_transition', None)
-        elif is_wfeffectiverange and wftype:
+        elif is_wfer and wftype:
             transition = getattr(
                 IWFEffectiveRange(obj, None),
                 wftype + '_transition',

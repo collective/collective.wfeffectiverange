@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from collective.wfeffectiverange import _
-from collective.wfeffectiverange.behaviors import IWFEffectiveRange
-from collective.wfeffectiverange.behaviors import IWFTask
+from collective.wfeffectiverange import utils
 from collective.wfeffectiverange.browser.wfticker import run_task
 from collective.wfeffectiverange.vocabulary import EffectiveTransitionSource
 from collective.wfeffectiverange.vocabulary import ExpiresTransitionSource
@@ -85,7 +84,7 @@ class WFTaskOverviewView(FolderView):
         def _common_transitions(item):
             ret = []
 
-            if IWFTask.providedBy(item):
+            if utils.is_task(item):
                 # Get the common transition for all referenced objects.
                 task_items = getattr(item, 'task_items', [])
                 transitions = []
@@ -136,7 +135,7 @@ class WFTaskOverviewView(FolderView):
             'transition': getattr(it, 'task_transition', getattr(it, type_ + '_transition', None)),  # noqa
             'state': plone.api.content.get_state(it),
             'uuid': IUUID(it),
-            'is_task': IWFTask.providedBy(it),
+            'is_task': utils.is_task(it),
             'task_items': [
                 _task_item_info(ref)
                 for ref in getattr(it, 'task_items', [])
@@ -176,13 +175,13 @@ class WFTaskOverviewView(FolderView):
 
             wftype = form.get('wftype', 'effective')
 
-            if IWFTask.providedBy(items[0]):
+            if utils.is_task(items[0]):
                 # Extend the list of items by all IWFEffectiveRange objects for
                 # multi-editing those.
                 items += [
                     it.to_object
                     for it in getattr(items[0], 'task_items', [])
-                    if IWFEffectiveRange(it.to_object, None)
+                    if utils.is_wfeffectiverange(it.to_object)
                 ]
 
             transition_date = form.get('transition_date', None)
@@ -191,7 +190,8 @@ class WFTaskOverviewView(FolderView):
 
             for item in items:
 
-                is_task = IWFTask.providedBy(item)
+                is_task = utils.is_task(item)
+                is_wfeffectiverange = utils.is_wfeffectiverange(item)
 
                 if transition_date:
                     # Parse a Python datetime from a string using Zope DateTime
@@ -208,9 +208,9 @@ class WFTaskOverviewView(FolderView):
                             }
                         ))
 
-                    else:
+                    elif is_wfeffectiverange:
                         setattr(
-                            IWFEffectiveRange(item),
+                            item,
                             wftype,
                             transition_date
                         )
@@ -238,9 +238,9 @@ class WFTaskOverviewView(FolderView):
                             }
                         ))
 
-                    else:
+                    elif is_wfeffectiverange:
                         setattr(
-                            IWFEffectiveRange(item),
+                            item,
                             wftype + '_transition',
                             transition
                         )
@@ -255,7 +255,7 @@ class WFTaskOverviewView(FolderView):
                             }
                         ))
 
-                if ob_remove and is_task:
+                if is_task and ob_remove:
                     # Remove the referenced item from the task
                     item.task_items = [
                         it for it in item.task_items
@@ -273,15 +273,15 @@ class WFTaskOverviewView(FolderView):
                         }
                     ))
 
-                elif ob_remove == uuid:
+                elif is_wfeffectiverange and ob_remove == uuid:
                     # Clear the IWFEffectiveRange date and transition
                     setattr(
-                        IWFEffectiveRange(item),
+                        item,
                         wftype,
                         None
                     )
                     setattr(
-                        IWFEffectiveRange(item),
+                        item,
                         wftype + '_transition',
                         None
                     )
