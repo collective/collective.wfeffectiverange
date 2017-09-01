@@ -20,7 +20,7 @@ $(document).ready(function() {
         var basic = basic_parameters(this);
 
         window.location.href = basic.actionurl
-            + '&wfype=' + basic.wftype
+            + '&wftype=' + basic.wftype
             + '&transition=' + val
             + '&uuid=' + basic.uuid;
     });
@@ -30,7 +30,7 @@ $(document).ready(function() {
         var basic = basic_parameters(this);
 
         window.location.href = basic.actionurl
-            + '&wfype=' + basic.wftype
+            + '&wftype=' + basic.wftype
             + '&transition_date=' + val
             + '&uuid=' + basic.uuid;
     });

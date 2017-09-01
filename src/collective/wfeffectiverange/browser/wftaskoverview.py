@@ -154,13 +154,13 @@ class WFTaskOverviewView(FolderView):
     def __call__(self, *args, **kwargs):
 
         form = self.request.form
-        uuid = form.get('uuid')
+        uuid = form.get('uuid', None)
+        wftype = form.get('wftype', None)
 
         infos = []
         warnings = []
 
-        if uuid and form.get('run_task', None):
-            wftype = form.get('wftype', None)
+        if uuid and wftype and form.get('run_task', None):
             task = uuidToObject(uuid)
 
             infos, warnings = run_task(
@@ -169,11 +169,9 @@ class WFTaskOverviewView(FolderView):
                 wftype=wftype
             )
 
-        elif uuid:
+        elif uuid and wftype:
 
             items = [uuidToObject(uuid)]
-
-            wftype = form.get('wftype', 'effective')
 
             if utils.is_task(items[0]):
                 # Extend the list of items by all IWFEffectiveRange objects for
