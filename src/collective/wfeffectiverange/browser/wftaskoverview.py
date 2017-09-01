@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from collective.wfeffectiverange import _
 from collective.wfeffectiverange import utils
+from collective.wfeffectiverange.behaviors import IWFEffectiveRange
 from collective.wfeffectiverange.browser.wfticker import run_task
 from collective.wfeffectiverange.vocabulary import EffectiveTransitionSource
 from collective.wfeffectiverange.vocabulary import ExpiresTransitionSource
@@ -208,7 +209,7 @@ class WFTaskOverviewView(FolderView):
 
                     elif is_wfeffectiverange:
                         setattr(
-                            item,
+                            IWFEffectiveRange(item),
                             wftype,
                             transition_date
                         )
