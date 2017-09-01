@@ -24,7 +24,7 @@ class WFTaskOverviewView(FolderView):
         url = addTokenToUrl(self.context.absolute_url() + '/@@wftaskoverview')
         return url
 
-    def items(self, type_='effective'):
+    def items(self, type_):
         intids = getUtility(IIntIds)
         wftool = plone.api.portal.get_tool('portal_workflow')
 
