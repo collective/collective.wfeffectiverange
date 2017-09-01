@@ -113,8 +113,8 @@ class WFTaskOverviewView(FolderView):
                     transitions = EffectiveTransitionSource()
                 else:
                     transitions = ExpiresTransitionSource(
-                        # transition=getattr(item, 'effective_transition', None),
-                        # portal_type=item.portal_type
+                        transition=getattr(item, 'effective_transition', None),
+                        portal_type=item.portal_type
                     )
                 vocab = transitions(self.context)
 
