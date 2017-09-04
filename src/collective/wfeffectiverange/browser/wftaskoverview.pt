@@ -73,7 +73,7 @@
           </ul>
         </td>
         <td class="transition_date">
-          <input name="transition_date" type="datetime" class="pat-pickadate" value="${item/transition_date}"/>
+          <input name="transition_date" type="datetime" class="pat-pickadate" data-pat-pickadate="${view/pickadate_options}" value="${item/transition_date}"/>
         </td>
         <td class="run_now">
           <a href="${view/protected_view_url}&run_task=1&uuid=${item/uuid}&wftype=${wftype}" class="icon icon-execute"

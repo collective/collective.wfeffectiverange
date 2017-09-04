@@ -13,7 +13,9 @@ from plone.uuid.interfaces import IUUID
 from Products.statusmessages.interfaces import IStatusMessage
 from zope.component import getUtility
 from zope.intid.interfaces import IIntIds
+from plone.app.widgets.utils import get_datetime_options
 
+import json
 import plone.api
 
 
@@ -23,6 +25,10 @@ class WFTaskOverviewView(FolderView):
     def protected_view_url(self):
         url = addTokenToUrl(self.context.absolute_url() + '/@@wftaskoverview')
         return url
+
+    @property
+    def pickadate_options(self):
+        return json.dumps(get_datetime_options(self.request))
 
     def items(self, type_):
         intids = getUtility(IIntIds)
