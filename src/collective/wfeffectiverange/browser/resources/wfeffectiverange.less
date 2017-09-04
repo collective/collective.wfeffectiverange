@@ -68,23 +68,20 @@
   }
 }
 
-[class*="contenttype-"]::before,
-.contenttype-file #crud-edit-File-widgets-view_title::before {
-    font-family:"Fontello";
-    font-size: 100%;
-    padding: 0;
-    margin:0;
-    position: relative;
-    left: inherit;
-    display: inline-block;
-    color: inherit;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    margin-right: @plone-padding-base-vertical;
-    content: '\e834';
-}
-
-.contenttype-wftaskfolder::before {
+.contenttype-wftaskfolder::after,
+.contenttype-wftaskexpires::after,
+.contenttype-wftaskeffective::after {
+  font-family:"Fontello";
+  font-size: 100%;
+  padding: 0;
+  margin:0;
+  position: relative;
+  left: inherit;
+  display: inline-block;
+  color: inherit;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  margin-right: @plone-padding-base-vertical;
   content: '\e805'!important;
 }

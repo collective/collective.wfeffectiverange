@@ -14,7 +14,7 @@ module.exports = function (grunt) {
                     strictMath: false,
                     sourceMap: true,
                     outputSourceFiles: true,
-                    sourceMapFileInline: true,
+                    sourceMapFileInline: false,
                     sourceMapURL: "++resource++collective.wfeffectiverange/wfeffectiverange-compiled.less.map",
                     sourceMapFilename: "wfeffectiverange-compiled.less.map",
                     modifyVars: {
@@ -28,7 +28,7 @@ module.exports = function (grunt) {
         },
         postcss: {
             options: {
-                map: true,
+                map: false,
                 processors: [
                     require("autoprefixer")({
                         browsers: ["last 2 versions"]
