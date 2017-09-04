@@ -38,7 +38,7 @@
             </a>
             <a href="${item/edit_url}" class="pat-plone-modal icon glyphicon glyphicon-pencil"
                i18n:attributes="title label_edit" title="Edit"></a>
-            <a tal:condition="not:item/is_task" href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${item/uuid}"
+            <a tal:condition="not:item/is_task" href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${item/uuid}&wftype=${wftype}"
                i18n:attributes="title label_remove" title="Remove" class="icon glyphicon glyphicon-remove"></a>
             <a tal:condition="item/is_task" href="${item/delete_url}" class="pat-plone-modal icon glyphicon glyphicon-trash"
                i18n:attributes="title label_delete" title="Delete"></a>

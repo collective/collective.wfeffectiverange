@@ -176,7 +176,7 @@ class WFTaskOverviewView(FolderView):
                 wftype=wftype
             )
 
-        elif uuid and wftype:
+        elif uuid:
 
             items = [uuidToObject(uuid)]
 
@@ -213,7 +213,7 @@ class WFTaskOverviewView(FolderView):
                             }
                         ))
 
-                    elif is_wfeffectiverange:
+                    elif is_wfeffectiverange and wftype:
                         setattr(
                             IWFEffectiveRange(item),
                             wftype,
@@ -243,7 +243,7 @@ class WFTaskOverviewView(FolderView):
                             }
                         ))
 
-                    elif is_wfeffectiverange:
+                    elif is_wfeffectiverange and wftype:
                         setattr(
                             item,
                             wftype + '_transition',
@@ -278,7 +278,7 @@ class WFTaskOverviewView(FolderView):
                         }
                     ))
 
-                elif is_wfeffectiverange and ob_remove == uuid:
+                elif is_wfeffectiverange and ob_remove == uuid and wftype:
                     # Clear the IWFEffectiveRange date and transition
                     setattr(
                         item,
