@@ -194,9 +194,10 @@ class WFTaskOverviewView(FolderView):
                 is_task = utils.is_task(item)
                 is_wfeffectiverange = utils.is_wfeffectiverange(item)
 
-                if transition_date:
+                if transition_date is not None:
                     # Parse a Python datetime from a string using Zope DateTime
-                    transition_date = DateTime(transition_date).asdatetime()
+                    # If set, but empty clear the field with None.
+                    transition_date = DateTime(transition_date).asdatetime() if transition_date else None  # noqa
                     if is_task:
                         item.task_date = transition_date
 
@@ -226,7 +227,7 @@ class WFTaskOverviewView(FolderView):
                             }
                         ))
 
-                if transition:
+                if transition is not None:
                     if is_task:
                         item.task_transition = transition
 

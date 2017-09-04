@@ -21,7 +21,7 @@ $(document).ready(function() {
         // if we do not wait for any user interaction first.
     
         $('select[name="transition"]').on('change', function(e) {
-            var val = this.value || undefined;
+            var val = this.value || '';
             var basic = basic_parameters(this);
 
             window.location.href = basic.actionurl
@@ -31,7 +31,7 @@ $(document).ready(function() {
         });
 
         $('input[name="transition_date"]').on('updated.pickadate.patterns', function(e) {
-            var val = this.value || undefined;
+            var val = this.value || '';
             var basic = basic_parameters(this);
 
             window.location.href = basic.actionurl
