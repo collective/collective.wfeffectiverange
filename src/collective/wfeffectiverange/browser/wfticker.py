@@ -126,9 +126,15 @@ class WFEffectiveRangeTicker(BrowserView):
                 new_transition = obj.effective_transition
                 obj.effective_transition = None
                 obj._v_wfeffectiverange_ignore = True
-                plone.api.content.transition(
-                    obj=obj, transition=new_transition
-                )
+                try:
+                    plone.api.content.transition(
+                        obj=obj, transition=new_transition
+                    )
+                except plone.api.exc.InvalidParameterError as e:
+                    logger.warn(u'Error on running effective transition on object {0}'.format(  # noqa
+                        obj.absolute_url()
+                    ))
+                    raise e
                 obj._v_wfeffectiverange_ignore = False
                 obj.reindexObject()
                 logger.info(
@@ -150,9 +156,15 @@ class WFEffectiveRangeTicker(BrowserView):
                 new_transition = obj.expires_transition
                 obj.expires_transition = None
                 obj._v_wfeffectiverange_ignore = True
-                plone.api.content.transition(
-                    obj=obj, transition=new_transition
-                )
+                try:
+                    plone.api.content.transition(
+                        obj=obj, transition=new_transition
+                    )
+                except plone.api.exc.InvalidParameterError as e:
+                    logger.warn(u'Error on running expires transition on object {0}'.format(  # noqa
+                        obj.absolute_url()
+                    ))
+                    raise e
                 obj._v_wfeffectiverange_ignore = False
                 obj.reindexObject()
                 logger.info(
