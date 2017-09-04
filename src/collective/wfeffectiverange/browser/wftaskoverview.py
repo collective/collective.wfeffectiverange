@@ -8,15 +8,16 @@ from collective.wfeffectiverange.vocabulary import ExpiresTransitionSource
 from DateTime import DateTime
 from plone.app.contenttypes.browser.folder import FolderView
 from plone.app.uuid.utils import uuidToObject
+from plone.app.widgets.utils import get_datetime_options
 from plone.protect.utils import addTokenToUrl
 from plone.uuid.interfaces import IUUID
 from Products.statusmessages.interfaces import IStatusMessage
 from zope.component import getUtility
 from zope.intid.interfaces import IIntIds
-from plone.app.widgets.utils import get_datetime_options
 
 import json
 import plone.api
+
 
 
 class WFTaskOverviewView(FolderView):
@@ -57,20 +58,15 @@ class WFTaskOverviewView(FolderView):
             for it in ret_obj
             if intids.getId(it) not in task_items_ids
             and (
-                (type_ == 'effective' and (
-                    not it.effective()
-                    or it.effective() > DateTime(1970, 1, 2)
-                )) or
-                (type_ == 'expires' and (
-                    not it.expires()
-                    or it.expires() < DateTime(2499, 1, 1)
-                ))
+                not utils.get_pub_date(it, type_)
+                or type_ == 'effective' and utils.get_pub_date(it, type_) > DateTime(1970, 1, 2)  # noqa
+                or type_ == 'expires' and utils.get_pub_date(it, type_) < DateTime(2499, 1, 1)  # noqa
             )
         ]
 
         def _datecomp(x, y):
-            dat_x = getattr(x, 'task_date', getattr(x, type_)())
-            dat_y = getattr(y, 'task_date', getattr(y, type_)())
+            dat_x = getattr(x, 'task_date', utils.get_pub_date(x, type_))
+            dat_y = getattr(y, 'task_date', utils.get_pub_date(y, type_))
             return cmp(dat_x, dat_y) if dat_x and dat_y else -1
 
         # Sort for date
@@ -138,7 +134,7 @@ class WFTaskOverviewView(FolderView):
             'edit_url': addTokenToUrl(
                 it.absolute_url() + '/@@edit'
             ),
-            'transition_date': getattr(it, 'task_date', getattr(it, type_)()),  # noqa
+            'transition_date': getattr(it, 'task_date', utils.get_pub_date(it, type_)),  # noqa
             'transition': getattr(it, 'task_transition', getattr(it, type_ + '_transition', None)),  # noqa
             'state': plone.api.content.get_state(it),
             'uuid': IUUID(it),
