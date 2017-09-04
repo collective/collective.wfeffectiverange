@@ -26,7 +26,7 @@ def get_pub_date(it, type_):
     elif type_ == 'expires':
         date = getattr(it, 'ExpirationDate', None)
 
-    if safe_callable(date):
+    if date and safe_callable(date):
         date = date()
 
-    return DateTime(date) if date else None
+    return DateTime(date) if date and date != 'None' else None
