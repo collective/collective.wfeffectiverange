@@ -15,24 +15,31 @@ $(document).ready(function() {
     // Remove the URL parameters
     history.replaceState({} , '', window.location.href.split('?')[0]);
 
-    $('select[name="transition"]').on('change', function(e) {
-        var val = this.value || undefined;
-        var basic = basic_parameters(this);
+    $(document).one('click', function () {
+        // initialize inputs only when at least one click was made.
+        // pickadate initializes on load and thus would go into a reload loop
+        // if we do not wait for any user interaction first.
+    
+        $('select[name="transition"]').on('change', function(e) {
+            var val = this.value || undefined;
+            var basic = basic_parameters(this);
 
-        window.location.href = basic.actionurl
-            + '&wftype=' + basic.wftype
-            + '&transition=' + val
-            + '&uuid=' + basic.uuid;
-    });
+            window.location.href = basic.actionurl
+                + '&wftype=' + basic.wftype
+                + '&transition=' + val
+                + '&uuid=' + basic.uuid;
+        });
 
-    $('input[name="transition_date"]').on('updated.pickadate.patterns', function(e) {
-        var val = this.value || undefined;
-        var basic = basic_parameters(this);
+        $('input[name="transition_date"]').on('updated.pickadate.patterns', function(e) {
+            var val = this.value || undefined;
+            var basic = basic_parameters(this);
 
-        window.location.href = basic.actionurl
-            + '&wftype=' + basic.wftype
-            + '&transition_date=' + val
-            + '&uuid=' + basic.uuid;
+            window.location.href = basic.actionurl
+                + '&wftype=' + basic.wftype
+                + '&transition_date=' + val
+                + '&uuid=' + basic.uuid;
+        });
+    
     });
 
 });
