@@ -29,4 +29,4 @@ def get_pub_date(it, type_):
     if safe_callable(date):
         date = date()
 
-    return DateTime(date)
+    return DateTime(date) if date else None
