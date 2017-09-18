@@ -67,7 +67,8 @@ class WFTaskOverviewView(FolderView):
         def _datecomp(x, y):
             dat_x = getattr(x, 'task_date', utils.get_pub_date(x, type_))
             dat_y = getattr(y, 'task_date', utils.get_pub_date(y, type_))
-            return cmp(dat_x, dat_y) if dat_x and dat_y else -1
+            _cmp = cmp(DateTime(dat_x), DateTime(dat_y)) if dat_x and dat_y else -1  # noqa
+            return _cmp
 
         # Sort for date
         ret = sorted(ret_tasks + ret_obj, _datecomp)
