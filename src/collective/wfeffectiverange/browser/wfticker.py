@@ -192,10 +192,10 @@ class WFEffectiveRangeTicker(BrowserView):
 
         if not triggered_something:
             logger.info('no autotransition done in this cycle')
-        return u'''Triggered {0} autotransitions.
-
+        return u'''
 Task infos
 ----------
+Triggered {0} autotransitions.
 {1}
 
 Task warnings
