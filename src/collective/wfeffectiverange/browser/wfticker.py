@@ -173,17 +173,36 @@ class WFEffectiveRangeTicker(BrowserView):
                 )
                 triggered_something += 1
 
-        if not triggered_something:
-            logger.info('no autotransition done in this cycle')
-        return 'triggered {0} autotransitions.'.format(triggered_something)
-
         # Run Tasks
         query = {
             'start': {'query': datetime.now(), 'range': 'max'},
             'object_provides': IWFTask.__identifier__
         }
+
+        infos = []
+        warnings = []
+
         for brain in plone.api.content.find(**query):
             task = brain.getObject()
-            run_task(task, include_wfer=False)
+            _infos, _warnings = run_task(task, include_wfer=False)
+            infos += _infos
+            warnings += _warnings
 
         transaction.commit()
+
+        if not triggered_something:
+            logger.info('no autotransition done in this cycle')
+        return u'''Triggered {0} autotransitions.
+
+Task infos
+----------
+{1}
+
+Task warnings
+-------------
+{2}
+'''.format(
+            triggered_something,
+            u'    {0}\n'.join(infos),
+            u'    {0}\n'.join(warnings)
+        )
