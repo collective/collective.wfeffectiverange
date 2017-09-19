@@ -99,7 +99,7 @@
           <ul>
             <li tal:repeat="ob item/task_items">
               <span tal:condition="ob/is_wfeff">● <span i18n:attributes="title title_transition_date" class="pat-moment">${ob/transition_date}</span></span>
-              <span tal:condition="not:ob/is_wfeff">● <span i18n:translate="">Common date will be used</span></span>
+              <span tal:condition="not:ob/is_wfeff">● <span i18n:translate="no_field_for_date">Common date will be used</span></span>
             </li>
           </ul>
 
