@@ -23,7 +23,23 @@
     &.title {
       width: 40%;
       ul {
-        padding-left: 1em;
+        list-style-type: none;
+        padding-left: 0em;
+        margin-top: 0.1em;
+        margin-bottom: 0;
+        line-height: 1.75;
+        li > span {
+          display: block;
+          font-size: 80%;
+          padding-left: 1.25em;
+          text-indent: -1em;
+          .icon {
+            margin-left: 1em;
+            &:last-child {
+              margin-left: 0.75em;
+            }
+          }
+        }
       }
     }
     &.run_now {
@@ -39,8 +55,17 @@
     }
     &.transitions {
       ul {
-        list-style-type: disc;
-        padding-left: 1.5em;
+        margin-top: 1px;
+      }
+    }
+    &.transitions,
+    &.transition_dates {
+      ul {
+        list-style-type: none;
+        padding-left: 0.5em;
+        li > span {
+          font-size: 80%;
+        }
       }
     }
   }
@@ -49,6 +74,7 @@
     padding: 2px 4px;
   }
   .pattern-pickadate-wrapper {
+    margin-bottom: 0;
     input.picker__input {
       height: 1.5em;
       width: 10em;
@@ -68,20 +94,46 @@
   }
 }
 
-.contenttype-wftaskfolder::after,
-.contenttype-wftaskexpires::after,
-.contenttype-wftaskeffective::after {
-  font-family:"Fontello";
-  font-size: 100%;
-  padding: 0;
-  margin:0;
-  position: relative;
-  left: inherit;
-  display: inline-block;
-  color: inherit;
-  width: 20px;
-  height: 20px;
-  text-align: center;
-  margin-right: @plone-padding-base-vertical;
+.listing.log {
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+// .contenttype-wftaskfolder::before,
+// .contenttype-wftaskexpires::before,
+// .contenttype-wftaskeffective::before,
+// .contenttype-wftaskeffective #crud-edit-File-widgets-view_title::before,
+// .contenttype-wftaskexpires #crud-edit-File-widgets-view_title::before,
+// .contenttype-wftaskeffective #crud-edit-File-widgets-view_title::before {
+//     font-family:"Fontello";
+//     // font-size: 100%;
+//     // padding: 0;
+//     // margin:0;
+//     // position: relative;
+//     // left: inherit;
+//     // display: inline-block;
+//     // color: inherit;
+//     // width: 20px;
+//     // height: 20px;
+//     // text-align: center;
+//     // margin-right: @plone-padding-base-vertical;
+//   content: '\e805'!important;
+// }
+
+body#visual-portal-wrapper.pat-plone .outer-wrapper {
+    .contenttype-wftaskfolder:before,
+    .contenttype-wftaskexpires:before,
+    .contenttype-wftaskeffective:before {
   content: '\e805'!important;
+    }
+}
+body#visual-portal-wrapper.pat-plone #edit-zone {
+    .contenttype-wftaskfolder:after,
+    .contenttype-wftaskexpires:after,
+    .contenttype-wftaskeffective:after {
+  content: '\e805'!important;
+    }
 }

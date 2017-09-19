@@ -22,7 +22,23 @@
   width: 40%;
 }
 .template-wftaskoverview #content td.title ul {
-  padding-left: 1em;
+  list-style-type: none;
+  padding-left: 0em;
+  margin-top: 0.1em;
+  margin-bottom: 0;
+  line-height: 1.75;
+}
+.template-wftaskoverview #content td.title ul li > span {
+  display: block;
+  font-size: 80%;
+  padding-left: 1.25em;
+  text-indent: -1em;
+}
+.template-wftaskoverview #content td.title ul li > span .icon {
+  margin-left: 1em;
+}
+.template-wftaskoverview #content td.title ul li > span .icon:last-child {
+  margin-left: 0.75em;
 }
 .template-wftaskoverview #content td.run_now {
   width: 2em;
@@ -36,12 +52,23 @@
   font-size: 1.5em;
 }
 .template-wftaskoverview #content td.transitions ul {
-  list-style-type: disc;
-  padding-left: 1.5em;
+  margin-top: 1px;
+}
+.template-wftaskoverview #content td.transitions ul,
+.template-wftaskoverview #content td.transition_dates ul {
+  list-style-type: none;
+  padding-left: 0.5em;
+}
+.template-wftaskoverview #content td.transitions ul li > span,
+.template-wftaskoverview #content td.transition_dates ul li > span {
+  font-size: 80%;
 }
 .template-wftaskoverview #content select.transition {
   height: 1.5em;
   padding: 2px 4px;
+}
+.template-wftaskoverview #content .pattern-pickadate-wrapper {
+  margin-bottom: 0;
 }
 .template-wftaskoverview #content .pattern-pickadate-wrapper input.picker__input {
   height: 1.5em;
@@ -59,20 +86,18 @@
 .template-wftaskoverview #content .pattern-pickadate-wrapper button.pattern-pickadate-clear .glyphicon-trash:before {
   content: "\e014";
 }
-.contenttype-wftaskfolder::after,
-.contenttype-wftaskexpires::after,
-.contenttype-wftaskeffective::after {
-  font-family: "Fontello";
-  font-size: 100%;
+.listing.log ul {
+  list-style-type: none;
   padding: 0;
   margin: 0;
-  position: relative;
-  left: inherit;
-  display: inline-block;
-  color: inherit;
-  width: 20px;
-  height: 20px;
-  text-align: center;
-  margin-right: 6px;
+}
+body#visual-portal-wrapper.pat-plone .outer-wrapper .contenttype-wftaskfolder:before,
+body#visual-portal-wrapper.pat-plone .outer-wrapper .contenttype-wftaskexpires:before,
+body#visual-portal-wrapper.pat-plone .outer-wrapper .contenttype-wftaskeffective:before {
+  content: '\e805' !important;
+}
+body#visual-portal-wrapper.pat-plone #edit-zone .contenttype-wftaskfolder:after,
+body#visual-portal-wrapper.pat-plone #edit-zone .contenttype-wftaskexpires:after,
+body#visual-portal-wrapper.pat-plone #edit-zone .contenttype-wftaskeffective:after {
   content: '\e805' !important;
 }

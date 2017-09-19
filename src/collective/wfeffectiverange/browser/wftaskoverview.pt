@@ -48,11 +48,13 @@
           <div tal:condition="item/task_items">
             <ul>
               <li tal:repeat="ob item/task_items">
-                <a href="${ob/url}" class="state-${ob/state}" title="${ob/state}">${ob/title}</a>
-                <a href="${ob/edit_url}" class="pat-plone-modal icon glyphicon glyphicon-pencil"
-                   i18n:attributes="title label_edit" title="Edit"></a>
-                <a href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${ob/intid}" class="icon glyphicon glyphicon-remove"
-                   i18n:attributes="title label_remove" title="Remove"></a>
+                <span class="title">
+                  <a href="${ob/url}" class="state-${ob/state}" title="${ob/state}">● ${ob/title}</a>
+                  <a href="${ob/edit_url}" class="pat-plone-modal icon glyphicon glyphicon-pencil"
+                     i18n:attributes="title label_edit" title="Edit"></a>
+                  <a href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${ob/intid}" class="icon glyphicon glyphicon-remove"
+                     i18n:attributes="title label_remove" title="Remove"></a>
+                </span>
               </li>
             </ul>
           </div>
@@ -67,44 +69,37 @@
             </select>
             <span tal:condition="not:transitions" i18n:translate="no_common_transitions">No common transitions available</span>
           </div>
-          <ul>
+          <ul i18n:domain="plone">
             <li tal:condition="not:item/is_task" class="state state-${item/state}">
               <span i18n:attributes="title title_current_state">
-                <tal:i18n i18n:domain="plone" i18n:translate="">
-                  ${item/state}
-                <tal:18n>
+                ● <tal:i18n i18n:translate="">${item/state}</tal:i18n>
               </span>
               <tal:if condition="item/is_wfeff">
-                (<span i18n:attributes="title title_wftransition">
-                  <tal:i18n i18n:domain="plone" i18n:translate="">
-                    ${item/transition}
-                  </tal:i18n>
-                </span>)
+                <span i18n:attributes="title title_wftransition">
+                  (<tal:i18n i18n:translate="">${item/transition}</tal:i18n>)
+                </span>
               </tal:if>
             </li>
             <li tal:repeat="ob item/task_items" class="state state-${ob/state}">
               <span i18n:attributes="title title_current_state">
-                <tal:i18n i18n:domain="plone" i18n:translate="">
-                  ${ob/state}
-                </tal:i18n>
+                ● <tal:i18n i18n:translate="">${ob/state}</tal:i18n>
               </span>
               <tal:if condition="ob/is_wfeff">
-                (<span i18n:attributes="title title_wftransition">
-                  <tal:i18n i18n:domain="plone" i18n:translate="">
-                    ${ob/transition}
-                  </tal:i18n>
-                </span>)
+                <span i18n:attributes="title title_wftransition">
+                  (<tal:i18n i18n:translate="">${ob/transition}</tal:i18n>)
+                </span>
               </tal:if>
             </li>
           </ul>
         </td>
-        <td class="transition_date">
+        <td class="transition_dates">
           <div>
             <input name="transition_date" type="datetime" class="pat-pickadate" data-pat-pickadate="${view/pickadate_options}" value="${item/transition_date}"/>
           </div>
           <ul>
             <li tal:repeat="ob item/task_items">
-              <span tal:condition="ob/is_wfeff" i18n:attributes="title title_transition_date" class="pat-moment">${ob/transition_date}</span>
+              <span tal:condition="ob/is_wfeff">● <span i18n:attributes="title title_transition_date" class="pat-moment">${ob/transition_date}</span></span>
+              <span tal:condition="not:ob/is_wfeff">● <span i18n:translate="">Common date will be used</span></span>
             </li>
           </ul>
 

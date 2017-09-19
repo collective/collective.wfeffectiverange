@@ -14,7 +14,7 @@
 <metal:content-core fill-slot="content-core">
 <metal:block define-macro="content-core">
 
-  <table>
+  <table class="listing log">
     <tr>
       <th i18n:translate="label_run_date">Date</th>
       <th i18n:translate="label_log">Log Messages</th>
@@ -32,15 +32,13 @@
 
       <td>
         <tal:if define="infos msg/infos" condition="infos">
-        <strong>Infos</strong>
         <ul>
-          <li tal:repeat="info infos">${info}</li>
+          <li tal:repeat="info infos"><span class="info" i18n:translate="">Info:</span> ${info}</li>
         </ul>
         </tal:if>
         <tal:if define="warnings msg/warnings" condition="warnings">
-        <strong>Warnings</strong>
         <ul>
-          <li tal:repeat="warning warnings">${warning}</li>
+          <li tal:repeat="warning warnings"><span class="warn" i18n:translate="">Warning:</span>${warning}</li>
         </ul>
         </tal:if>
       </td>
