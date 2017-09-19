@@ -68,12 +68,47 @@
             <span tal:condition="not:transitions" i18n:translate="no_common_transitions">No common transitions available</span>
           </div>
           <ul>
-            <li tal:condition="not:item/is_task" class="state state-${item/state}" i18n:translate="" i18n:domain="plone">${item/state}</li>
-            <li tal:repeat="ob item/task_items" class="state state-${ob/state}" i18n:translate="" i18n:domain="plone">${ob/state}</li>
+            <li tal:condition="not:item/is_task" class="state state-${item/state}">
+              <span i18n:attributes="title title_current_state">
+                <tal:i18n i18n:domain="plone" i18n:translate="">
+                  ${item/state}
+                <tal:18n>
+              </span>
+              <tal:if condition="item/is_wfeff">
+                (<span i18n:attributes="title title_wftransition">
+                  <tal:i18n i18n:domain="plone" i18n:translate="">
+                    ${item/transition}
+                  </tal:i18n>
+                </span>)
+              </tal:if>
+            </li>
+            <li tal:repeat="ob item/task_items" class="state state-${ob/state}">
+              <span i18n:attributes="title title_current_state">
+                <tal:i18n i18n:domain="plone" i18n:translate="">
+                  ${ob/state}
+                </tal:i18n>
+              </span>
+              <tal:if condition="ob/is_wfeff">
+                (<span i18n:attributes="title title_wftransition">
+                  <tal:i18n i18n:domain="plone" i18n:translate="">
+                    ${ob/transition}
+                  </tal:i18n>
+                </span>)
+              </tal:if>
+            </li>
           </ul>
         </td>
         <td class="transition_date">
-          <input name="transition_date" type="datetime" class="pat-pickadate" data-pat-pickadate="${view/pickadate_options}" value="${item/transition_date}"/>
+          <div>
+            <input name="transition_date" type="datetime" class="pat-pickadate" data-pat-pickadate="${view/pickadate_options}" value="${item/transition_date}"/>
+          </div>
+          <ul>
+            <li tal:repeat="ob item/task_items">
+              <span tal:condition="ob/is_wfeff" i18n:attributes="title title_transition_date" class="pat-moment">${ob/transition_date}</span>
+            </li>
+          </ul>
+
+
         </td>
         <td class="run_now">
           <a href="${view/protected_view_url}&run_task=1&uuid=${item/uuid}&wftype=${wftype}" class="icon icon-execute"

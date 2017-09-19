@@ -73,7 +73,7 @@ class WFTaskOverviewView(FolderView):
         # Sort for date
         ret = sorted(ret_tasks + ret_obj, _datecomp)
 
-        def _task_item_info(ref):
+        def _task_item_info(ref, type_):
             ob = ref.to_object
             return {
                 'title': ob.title,
@@ -82,7 +82,15 @@ class WFTaskOverviewView(FolderView):
                     ob.absolute_url() + '/@@edit'
                 ),
                 'state': plone.api.content.get_state(ob),
-                'intid': ref.to_id
+                'intid': ref.to_id,
+                'transition_date': utils.get_pub_date(ob, type_),
+                'transition': getattr(
+                    ob,
+                    type_ + '_transition',
+                    None
+                ) or _('label_no_transition', 'No transition'),
+                'is_task': utils.is_task(ob),
+                'is_wfeff': utils.is_wfeffectiverange(ob),
             }
 
         def _common_transitions(item):
@@ -135,13 +143,26 @@ class WFTaskOverviewView(FolderView):
             'edit_url': addTokenToUrl(
                 it.absolute_url() + '/@@edit'
             ),
-            'transition_date': getattr(it, 'task_date', utils.get_pub_date(it, type_)),  # noqa
-            'transition': getattr(it, 'task_transition', getattr(it, type_ + '_transition', None)),  # noqa
+            'transition_date': getattr(
+                it,
+                'task_date',
+                utils.get_pub_date(it, type_)
+            ),
+            'transition': getattr(
+                it,
+                'task_transition',
+                getattr(
+                    it,
+                    type_ + '_transition',
+                    None
+                )
+            ) or _('label_no_transition', 'No transition'),
             'state': plone.api.content.get_state(it),
             'uuid': IUUID(it),
             'is_task': utils.is_task(it),
+            'is_wfeff': utils.is_wfeffectiverange(it),
             'task_items': [
-                _task_item_info(ref)
+                _task_item_info(ref, type_)
                 for ref in getattr(it, 'task_items', [])
             ],
             'common_transitions': _common_transitions(it)
