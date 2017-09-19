@@ -139,3 +139,5 @@ Contributors
 
 - Peter Holzer <peter.holzer@agitator.com> - use case, development
 
+- Johannes Raggam <office@programmatic.pro> - development
+
