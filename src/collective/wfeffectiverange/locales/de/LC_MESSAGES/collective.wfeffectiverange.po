@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2017-08-29 13:38+0000\n"
+"POT-Creation-Date: 2017-09-19 13:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Peter Holzer <peter.holzer@agitator.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,6 +26,10 @@ msgstr ""
 msgid "Base profile for collective.wfeffectiverange"
 msgstr ""
 
+#: collective/wfeffectiverange/browser/wftaskoverview.pt:100
+msgid "Common date will be used"
+msgstr ""
+
 #: collective/wfeffectiverange/configure.zcml:23
 msgid "Date range (with workflowed effective range)"
 msgstr ""
@@ -40,7 +44,7 @@ msgstr "Bearbeiten"
 msgid "Effective Task"
 msgstr "Freigabeaktion"
 
-#: collective/wfeffectiverange/behaviors.py:45
+#: collective/wfeffectiverange/behaviors.py:46
 msgid "Expiration Transition"
 msgstr "Ablauf Zielaktion"
 
@@ -56,17 +60,9 @@ msgstr ""
 msgid "Extension profile for collective.wfeffectiverange - testing content type provided"
 msgstr ""
 
-#: collective/wfeffectiverange/behaviors.py:69
-msgid "If a expiration date is set, a expiration transition is needed."
-msgstr "Wenn ein Ablaufdatum ausgewählt ist, wird eine Ablauf Zielaktion erforderlich."
-
-#: collective/wfeffectiverange/behaviors.py:61
-msgid "If a publication date is set, a publication transition is needed."
-msgstr "Wenn ein Veröffentlichungsdatum ausgewählt ist, wird eine Freigabe Zielaktion erforderlich."
-
-#: collective/wfeffectiverange/behaviors.py:75
-msgid "If a publication transition is set, a publication date is needed."
-msgstr "Wenn eine Zielaktion zur Veröffentlichung gesetzt ist, ist das Veröffentlichungsdatum erforderlich."
+#: collective/wfeffectiverange/browser/wftasklog.pt:36
+msgid "Info:"
+msgstr "Info:"
 
 #: collective/wfeffectiverange/vocabulary.py:76
 msgid "Multiple workflows are not supported."
@@ -76,15 +72,15 @@ msgstr "Mehrfach-Arbeitsabläufe werden nicht unterstützt"
 msgid "New workflow transition can't be set, because there was already an automatic transition set."
 msgstr "Die neue Zielaktion kann nicht gesetzt werden, da es bereits eine automatische Zielaktion aktiv ist."
 
-#: collective/wfeffectiverange/behaviors.py:36
+#: collective/wfeffectiverange/behaviors.py:37
 msgid "Publication Transition"
 msgstr "Freigabe Zielaktion"
 
-#: collective/wfeffectiverange/behaviors.py:46
+#: collective/wfeffectiverange/behaviors.py:47
 msgid "Required if a expiration date is set"
 msgstr "Erforderlich wenn ein Ablaufdatum ausgewählt ist"
 
-#: collective/wfeffectiverange/behaviors.py:37
+#: collective/wfeffectiverange/behaviors.py:38
 msgid "Required if a publishing date is set"
 msgstr "Erforderlich wenn ein Freigabedatum ausgewählt ist"
 
@@ -94,6 +90,10 @@ msgstr "Erforderlich wenn ein Freigabedatum ausgewählt ist"
 msgid "View"
 msgstr "Anzeigen"
 
+#: collective/wfeffectiverange/browser/wftasklog.pt:41
+msgid "Warning:"
+msgstr "Warnung:"
+
 #: collective/wfeffectiverange/configure.zcml:29
 msgid "Workflow Scheduler Task"
 msgstr ""
@@ -101,6 +101,10 @@ msgstr ""
 #: collective/wfeffectiverange/profiles/base/types/WFTaskFolder.xml
 msgid "Workflow Task Folder"
 msgstr "Workflow-Aktionsordner"
+
+#: collective/wfeffectiverange/browser/configure.zcml:46
+msgid "Workflow Tasks Log"
+msgstr "Workflow Aktionsprotoll"
 
 #: collective/wfeffectiverange/browser/configure.zcml:36
 msgid "Workflow Tasks Overview"
@@ -119,9 +123,14 @@ msgid "Workflowed effective range base profile"
 msgstr ""
 
 #. Default: "Select one or more content objects to be processed."
-#: collective/wfeffectiverange/behaviors.py:106
+#: collective/wfeffectiverange/behaviors.py:107
 msgid "description_task_items"
 msgstr "Auswahl der Objekte auf die die Aktion ausgeführt werden soll."
+
+#. Default: "Task Log"
+#: collective/wfeffectiverange/browser/wftasklog.pt:11
+msgid "heading_log"
+msgstr "Aktionsprotoll"
 
 #. Default: "Task Overview"
 #: collective/wfeffectiverange/browser/wftaskoverview.pt:11
@@ -134,19 +143,49 @@ msgid "help_no_effective_items"
 msgstr "Es sind keine Freigabeaktionen definiert"
 
 #. Default: "There are no expires tasks defined yet."
-#: collective/wfeffectiverange/browser/wftaskoverview.pt:92
+#: collective/wfeffectiverange/browser/wftaskoverview.pt:122
 msgid "help_no_expires_items"
 msgstr "Es sind keine Ablaufaktionen definiert"
 
 #. Default: "Date and time, when the task action should be executed."
-#: collective/wfeffectiverange/behaviors.py:145
+#: collective/wfeffectiverange/behaviors.py:149
 msgid "help_task_date"
 msgstr "Ausführungszeitpunkt auswählen"
 
 #. Default: "Select a workflow transition, which should be applied when the task is executed."
-#: collective/wfeffectiverange/behaviors.py:126
+#: collective/wfeffectiverange/behaviors.py:130
 msgid "help_task_transition"
 msgstr "Workflowaktion für die Ausführung auswählen "
+
+#. Default: "Removed referenced object ${obj_title} from task ${task_title}."
+#: collective/wfeffectiverange/browser/wftaskoverview.py:291
+msgid "info_task_object_removed"
+msgstr "Referenziertes Objekt "${obj_title}" von "${task_title}" entfernt."
+
+#. Default: "Set transition ${transition} on task ${title}."
+#: collective/wfeffectiverange/browser/wftaskoverview.py:256
+msgid "info_task_set_transition"
+msgstr "Aktion "${transition}" auf "${title}" gesetzt."
+
+#. Default: "Set transition date ${transition_date} on task ${title}."
+#: collective/wfeffectiverange/browser/wftaskoverview.py:226
+msgid "info_task_set_transition_date"
+msgstr "Ausführungszeitpunkt "${transition_date}" auf "${title}" gesetzt."
+
+#. Default: "Cleared the ${wftype} date and transition from ${title} and removed it from this list."
+#: collective/wfeffectiverange/browser/wftaskoverview.py:313
+msgid "info_wf_cleared"
+msgstr "Aktion "${wftype}" und Ausführungszeitpunkt von "${title}" entfernt."
+
+#. Default: "Set ${wftype} transition ${transition} on object ${title}."
+#: collective/wfeffectiverange/browser/wftaskoverview.py:272
+msgid "info_wf_set_transition"
+msgstr "Aktion "${transition}" auf "${title}" gesetzt."
+
+#. Default: "Set ${wftype} transition date ${transition_date} on object ${title}."
+#: collective/wfeffectiverange/browser/wftaskoverview.py:242
+msgid "info_wf_set_transition_date"
+msgstr "Ausführungszeitpunkt "${transition_date}" auf "${title}" gesetzt."
 
 #. Default: "Add Task"
 #: collective/wfeffectiverange/browser/wftaskoverview.pt:19
@@ -163,35 +202,55 @@ msgstr "Löschen"
 msgid "label_edit"
 msgstr "Bearbeiten"
 
+#. Default: "Log Messages"
+#: collective/wfeffectiverange/browser/wftasklog.pt:20
+msgid "label_log"
+msgstr "Meldung"
+
+#. Default: "No transition"
+#: collective/wfeffectiverange/browser/wftaskoverview.py:91
+msgid "label_no_transition"
+msgstr "Keine Aktion"
+
 #. Default: "Remove"
 #: collective/wfeffectiverange/browser/wftaskoverview.pt:41
 msgid "label_remove"
 msgstr "Entfernen"
 
+#. Default: "Date"
+#: collective/wfeffectiverange/browser/wftasklog.pt:19
+msgid "label_run_date"
+msgstr "Datum"
+
 #. Default: "Run Now"
-#: collective/wfeffectiverange/browser/wftaskoverview.pt:77
+#: collective/wfeffectiverange/browser/wftaskoverview.pt:107
 msgid "label_run_now"
 msgstr "Jetzt ausführen"
 
 #. Default: "Dates"
-#: collective/wfeffectiverange/behaviors.py:30
+#: collective/wfeffectiverange/behaviors.py:31
 msgid "label_schema_dates"
 msgstr "Aktionsdaten"
 
 #. Default: "Task task date"
-#: collective/wfeffectiverange/behaviors.py:141
+#: collective/wfeffectiverange/behaviors.py:145
 msgid "label_task_date"
 msgstr "Aktionsdatum"
 
 #. Default: "Task items"
-#: collective/wfeffectiverange/behaviors.py:102
+#: collective/wfeffectiverange/behaviors.py:103
 msgid "label_task_items"
 msgstr "Aktionsobjekte"
 
 #. Default: "Task action"
-#: collective/wfeffectiverange/behaviors.py:123
+#: collective/wfeffectiverange/behaviors.py:127
 msgid "label_task_transition"
 msgstr "Aktion"
+
+#. Default: "Task log"
+#: collective/wfeffectiverange/browser/wftaskoverview.pt:45
+msgid "label_tasklog"
+msgstr "Aktionsprotoll"
 
 #. Default: "Effective Tasks"
 #: collective/wfeffectiverange/browser/wftaskoverview.pt:18
@@ -199,16 +258,20 @@ msgid "label_workflow_effective_tasks"
 msgstr "Freigabeaktionen"
 
 #. Default: "Expires Tasks"
-#: collective/wfeffectiverange/browser/wftaskoverview.pt:88
+#: collective/wfeffectiverange/browser/wftaskoverview.pt:118
 msgid "label_workflow_expires_tasks"
 msgstr "Ablaufaktionen"
 
 #. Default: "No common transitions available"
-#: collective/wfeffectiverange/browser/wftaskoverview.pt:66
+#: collective/wfeffectiverange/browser/wftaskoverview.pt:68
 msgid "no_common_transitions"
 msgstr "Keine gemeinsame Aktion verfügbar"
 
 #. Default: "No transition selected"
-#: collective/wfeffectiverange/browser/wftaskoverview.pt:61
+#: collective/wfeffectiverange/browser/wftaskoverview.pt:63
 msgid "option_make_selection"
 msgstr "Keine Aktion ausgewählt"
+
+#: collective/wfeffectiverange/browser/wftaskoverview.pt:99
+msgid "title_transition_date"
+msgstr "Aktionsdatum"
