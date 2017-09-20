@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from collective.wfeffectiverange import _
 from collective.wfeffectiverange import utils
-from collective.wfeffectiverange.behaviors import IWFEffectiveRange
 from collective.wfeffectiverange.browser.wfticker import run_task
 from collective.wfeffectiverange.vocabulary import EffectiveTransitionSource
 from collective.wfeffectiverange.vocabulary import ExpiresTransitionSource
@@ -17,7 +16,6 @@ from zope.intid.interfaces import IIntIds
 
 import json
 import plone.api
-
 
 
 class WFTaskOverviewView(FolderView):
@@ -49,25 +47,18 @@ class WFTaskOverviewView(FolderView):
         })
         # Filter all IWFEffectiveRange objects, which are already related in an
         # IWFTask object.
-        # Plus, filter out effective of 1969,30,12 and expires of 2499,30,12.
-        # Add a little buffer for timezone quirks. You never know...
         # Also, get the object as we need it anyways.
         ret_obj = [it.getObject() for it in ret_obj]
         ret_obj = [
             it
             for it in ret_obj
             if intids.getId(it) not in task_items_ids
-            and (
-                not utils.get_pub_date(it, type_)
-                or type_ == 'effective' and utils.get_pub_date(it, type_) > DateTime(1970, 1, 2)  # noqa
-                or type_ == 'expires' and utils.get_pub_date(it, type_) < DateTime(2499, 1, 1)  # noqa
-            )
         ]
 
         def _datecomp(x, y):
             dat_x = getattr(x, 'task_date', utils.get_pub_date(x, type_))
             dat_y = getattr(y, 'task_date', utils.get_pub_date(y, type_))
-            _cmp = cmp(DateTime(dat_x), DateTime(dat_y)) if dat_x and dat_y else -1  # noqa
+            _cmp = cmp(dat_x, dat_y) if dat_x and dat_y else -1
             return _cmp
 
         # Sort for date
@@ -143,19 +134,12 @@ class WFTaskOverviewView(FolderView):
             'edit_url': addTokenToUrl(
                 it.absolute_url() + '/@@edit'
             ),
-            'transition_date': getattr(
-                it,
-                'task_date',
-                utils.get_pub_date(it, type_)
-            ),
-            'transition': getattr(
-                it,
-                'task_transition',
-                getattr(
-                    it,
-                    type_ + '_transition',
-                    None
-                )
+            'transition_date': getattr(it, 'task_date', None)
+                if utils.is_task(it)
+                else utils.get_pub_date(it, type_),
+            'transition': (getattr(it, 'task_transition', None)
+                if utils.is_task(it)
+                else getattr(it, type_ + '_transition', None)
             ) or _('label_no_transition', 'No transition'),
             'state': plone.api.content.get_state(it),
             'uuid': IUUID(it),
@@ -235,12 +219,7 @@ class WFTaskOverviewView(FolderView):
                         ))
 
                     elif is_wfeffectiverange and wftype:
-                        setattr(
-                            IWFEffectiveRange(item),
-                            wftype,
-                            transition_date
-                        )
-
+                        utils.set_pub_date(item, wftype, transition_date)
                         infos.append(_(
                             'info_wf_set_transition_date',
                             default=u'Set ${wftype} transition date ${transition_date} on object ${url}.',  # noqa
@@ -301,16 +280,8 @@ class WFTaskOverviewView(FolderView):
 
                 elif is_wfeffectiverange and ob_remove == uuid and wftype:
                     # Clear the IWFEffectiveRange date and transition
-                    setattr(
-                        item,
-                        wftype,
-                        None
-                    )
-                    setattr(
-                        item,
-                        wftype + '_transition',
-                        None
-                    )
+                    utils.set_pub_date(item, wftype, None)
+                    setattr(item, wftype + '_transition', None)
 
                     infos.append(_(
                         'info_wf_cleared',

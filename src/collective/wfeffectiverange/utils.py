@@ -20,13 +20,17 @@ def get_pub_date(it, type_):
     """Return the publication date without breaking into pieces.
     Once, expires was None and ExpirationDate returned the correct string.
     """
-    date = None
-    if type_ == 'effective':
-        date = getattr(it, 'EffectiveDate', None)
-    elif type_ == 'expires':
-        date = getattr(it, 'ExpirationDate', None)
+    pub = IWFEffectiveRange(it, None)
+    if not pub:
+        return
+    return getattr(pub, type_, None)
 
-    if date and safe_callable(date):
-        date = date()
 
-    return DateTime(date) if date and date != 'None' else None
+def set_pub_date(it, type_, val):
+    """Return the publication date without breaking into pieces.
+    Once, expires was None and ExpirationDate returned the correct string.
+    """
+    pub = IWFEffectiveRange(it, None)
+    if not pub:
+        return
+    return setattr(pub, type_, val)
