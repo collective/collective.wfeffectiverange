@@ -10,7 +10,7 @@ from plone.indexer import indexer
 def has_effective_transition(context):
     context = aq_base(context)
     if not utils.is_wfeffectiverange(context):
-        return
+        raise AttributeError
     return bool(getattr(context, 'effective_transition', False))
 
 
@@ -18,7 +18,7 @@ def has_effective_transition(context):
 def has_expires_transition(context):
     context = aq_base(context)
     if not utils.is_wfeffectiverange(context):
-        return
+        raise AttributeError
     return bool(getattr(context, 'expires_transition', False))
 
 
