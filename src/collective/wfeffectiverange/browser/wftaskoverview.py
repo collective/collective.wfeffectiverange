@@ -53,7 +53,8 @@ class WFTaskOverviewView(FolderView):
         ret_obj = [
             it
             for it in ret_obj
-            if intids.getId(it) not in task_items_ids
+            if utils.is_wfeffectiverange(it)
+            and intids.getId(it) not in task_items_ids
         ]
 
         def _datecomp(x, y):
