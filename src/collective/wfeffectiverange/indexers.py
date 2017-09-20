@@ -8,15 +8,13 @@ from collective.wfeffectiverange.behaviors import IWFTask
 @indexer(IDexterityContent)
 def has_effective_transition(context):
     context = aq_base(context)
-    return hasattr(context, 'effective_transition')\
-        and bool(context.effective_transition)
+    return bool(getattr(context, 'effective_transition', False))
 
 
 @indexer(IDexterityContent)
 def has_expires_transition(context):
     context = aq_base(context)
-    return hasattr(context, 'expires_transition')\
-        and bool(context.expires_transition)
+    return bool(getattr(context, 'expires_transition', False))
 
 
 @indexer(IWFTask)

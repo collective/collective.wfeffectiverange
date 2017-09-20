@@ -13,6 +13,7 @@ from plone.uuid.interfaces import IUUID
 from Products.statusmessages.interfaces import IStatusMessage
 from zope.component import getUtility
 from zope.intid.interfaces import IIntIds
+from pprint import pprint
 
 import json
 import plone.api
@@ -33,18 +34,18 @@ class WFTaskOverviewView(FolderView):
         intids = getUtility(IIntIds)
         wftool = plone.api.portal.get_tool('portal_workflow')
 
-        ret_tasks = plone.api.content.find(**{
-            'portal_type': 'WFTask' + type_.capitalize()
-        })
+        query = {'portal_type': 'WFTask' + type_.capitalize()}
+        ret_tasks = plone.api.content.find(**query)
         ret_tasks = [it.getObject() for it in ret_tasks]
+
         # Get all task_items ids for IWFEffectiveRange object filtering.
         task_items_ids = []
         for task in ret_tasks:
             task_items_ids += [it.to_id for it in task.task_items]
 
-        ret_obj = plone.api.content.find(**{
-            'has_' + type_ + '_transition': True
-        })
+        query = {'has_' + type_ + '_transition': True}
+        ret_obj = plone.api.content.find(**query)
+
         # Filter all IWFEffectiveRange objects, which are already related in an
         # IWFTask object.
         # Also, get the object as we need it anyways.
