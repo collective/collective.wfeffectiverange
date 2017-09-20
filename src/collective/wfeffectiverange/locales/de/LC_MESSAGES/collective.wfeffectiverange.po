@@ -156,32 +156,32 @@ msgstr "Workflowaktion für die Ausführung auswählen "
 #. Default: "Removed referenced object ${obj_title} from task ${task_title}."
 #: collective/wfeffectiverange/browser/wftaskoverview.py:291
 msgid "info_task_object_removed"
-msgstr "Referenziertes Objekt '${obj_title}' von '${task_title}' entfernt."
+msgstr "Referenziertes Objekt '${obj_url}' von '${task_title}' entfernt."
 
 #. Default: "Set transition ${transition} on task ${title}."
 #: collective/wfeffectiverange/browser/wftaskoverview.py:256
 msgid "info_task_set_transition"
-msgstr "Aktion '${transition}' auf '${title}' gesetzt."
+msgstr "Aktion '${transition}' auf ${url} gesetzt."
 
 #. Default: "Set transition date ${transition_date} on task ${title}."
 #: collective/wfeffectiverange/browser/wftaskoverview.py:226
 msgid "info_task_set_transition_date"
-msgstr "Ausführungszeitpunkt '${transition_date}' auf '${title}' gesetzt."
+msgstr "Ausführungszeitpunkt '${transition_date}' auf ${url} gesetzt."
 
 #. Default: "Cleared the ${wftype} date and transition from ${title} and removed it from this list."
 #: collective/wfeffectiverange/browser/wftaskoverview.py:313
 msgid "info_wf_cleared"
-msgstr "Aktion '${wftype}' und Ausführungszeitpunkt von '${title}' entfernt."
+msgstr "Aktion '${wftype}' und Ausführungszeitpunkt von ${url} entfernt."
 
 #. Default: "Set ${wftype} transition ${transition} on object ${title}."
 #: collective/wfeffectiverange/browser/wftaskoverview.py:272
 msgid "info_wf_set_transition"
-msgstr "Aktion '${transition}' auf '${title}' gesetzt."
+msgstr "Aktion '${transition}' auf ${url} gesetzt."
 
 #. Default: "Set ${wftype} transition date ${transition_date} on object ${title}."
 #: collective/wfeffectiverange/browser/wftaskoverview.py:242
 msgid "info_wf_set_transition_date"
-msgstr "Ausführungszeitpunkt '${transition_date}' auf '${title}' gesetzt."
+msgstr "Ausführungszeitpunkt '${transition_date}' auf ${url} gesetzt."
 
 #. Default: "Add Task"
 #: collective/wfeffectiverange/browser/wftaskoverview.pt:19
