@@ -1,19 +1,24 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_base
-from plone.indexer import indexer
-from plone.dexterity.interfaces import IDexterityContent
+from collective.wfeffectiverange import utils
 from collective.wfeffectiverange.behaviors import IWFTask
+from plone.dexterity.interfaces import IDexterityContent
+from plone.indexer import indexer
 
 
 @indexer(IDexterityContent)
 def has_effective_transition(context):
     context = aq_base(context)
+    if not utils.is_wfeffectiverange(context):
+        return
     return bool(getattr(context, 'effective_transition', False))
 
 
 @indexer(IDexterityContent)
 def has_expires_transition(context):
     context = aq_base(context)
+    if not utils.is_wfeffectiverange(context):
+        return
     return bool(getattr(context, 'expires_transition', False))
 
 
