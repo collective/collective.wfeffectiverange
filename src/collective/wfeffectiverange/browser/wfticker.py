@@ -125,7 +125,7 @@ class WFEffectiveRangeTicker(BrowserView):
         }
         for brain in plone.api.content.find(**query):
             obj = brain.getObject()
-            if getattr(obj, 'effective_transition', None):
+            if utils.is_wfeffectiverange(obj) and getattr(obj, 'effective_transition', None):  # noqa
                 new_transition = obj.effective_transition
                 obj.effective_transition = None
                 obj._v_wfeffectiverange_ignore = True
@@ -160,7 +160,7 @@ class WFEffectiveRangeTicker(BrowserView):
         }
         for brain in plone.api.content.find(**query):
             obj = brain.getObject()
-            if hasattr(obj, 'expires_transition') and obj.expires_transition:
+            if utils.is_wfeffectiverange(obj) and getattr(obj, 'expires_transition', None):  # noqa
                 new_transition = obj.expires_transition
                 obj.expires_transition = None
                 obj._v_wfeffectiverange_ignore = True
