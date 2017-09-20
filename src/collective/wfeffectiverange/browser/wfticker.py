@@ -76,17 +76,18 @@ def run_task(task, include_wfer=False, wftype=None):
                 else:
                     obj.expires_transition = None
             obj.reindexObject()
-            infos.append(u'Task {0} successfully run for object {1}.'.format(
+            infos.append(u'Task "{0}" with transition "{1}" successfully run for object {2}.'.format(  # noqa
                 task.title,
-                obj.title
+                transition,
+                obj.absolute_url()
             ))
             logger.info(infos[-1])
 
         except plone.api.exc.InvalidParameterError:
-            warnings.append(u'Could not apply task {0} with transform {1} for object {2}.'.format(  # noqa
+            warnings.append(u'Could not apply task "{0}" with transition {1} for object {2}.'.format(  # noqa
                 task.title,
                 transition,
-                obj.title
+                obj.absolute_url()
             ))
             logger.warn(warnings[-1])
 
@@ -112,7 +113,9 @@ class WFEffectiveRangeTicker(BrowserView):
 
     def __call__(self):
         alsoProvides(self.request, IDisableCSRFProtection)
-        triggered_something = 0
+
+        infos = []
+        warnings = []
 
         # for effective transition
         query = {
@@ -130,11 +133,17 @@ class WFEffectiveRangeTicker(BrowserView):
                     plone.api.content.transition(
                         obj=obj, transition=new_transition
                     )
-                except plone.api.exc.InvalidParameterError as e:
-                    logger.warn(u'Error on running effective transition on object {0}'.format(  # noqa
+                    infos.append(u'Effective transition "{0}" successfully run for object {1}.'.format(  # noqa
+                        new_transition,
                         obj.absolute_url()
                     ))
-                    raise e
+                    logger.info(infos[-1])
+                except plone.api.exc.InvalidParameterError:
+                    warnings.append(u'Error on running effective transition "{0}" on object {1}'.format(  # noqa
+                        new_transition,
+                        obj.absolute_url()
+                    ))
+                    logger.warn(warnings[-1])
                 obj._v_wfeffectiverange_ignore = False
                 obj.reindexObject()
                 logger.info(
@@ -142,7 +151,6 @@ class WFEffectiveRangeTicker(BrowserView):
                         obj.absolute_url()
                     )
                 )
-                triggered_something += 1
 
         # for expires transition
         query = {
@@ -160,27 +168,29 @@ class WFEffectiveRangeTicker(BrowserView):
                     plone.api.content.transition(
                         obj=obj, transition=new_transition
                     )
-                except plone.api.exc.InvalidParameterError as e:
-                    logger.warn(u'Error on running expires transition on object {0}'.format(  # noqa
+                    infos.append(u'Expires transition "{0}" successfully run for object {1}.'.format(  # noqa
+                        new_transition,
                         obj.absolute_url()
                     ))
-                    raise e
+                    logger.info(infos[-1])
+                except plone.api.exc.InvalidParameterError:
+                    warnings.append(u'Error on running expires transition "{0}" on object {1}'.format(  # noqa
+                        new_transition,
+                        obj.absolute_url()
+                    ))
+                    logger.warn(warnings[-1])
                 obj._v_wfeffectiverange_ignore = False
                 obj.reindexObject()
                 logger.info(
                     'autotransition "expires" for {0}'.format(
                         obj.absolute_url())
                 )
-                triggered_something += 1
 
         # Run Tasks
         query = {
             'start': {'query': datetime.now(), 'range': 'max'},
             'object_provides': IWFTask.__identifier__
         }
-
-        infos = []
-        warnings = []
 
         for brain in plone.api.content.find(**query):
             task = brain.getObject()
@@ -190,19 +200,15 @@ class WFEffectiveRangeTicker(BrowserView):
 
         transaction.commit()
 
-        if not triggered_something:
-            logger.info('no autotransition done in this cycle')
         return u'''
 Task infos
 ----------
-Triggered {0} autotransitions.
-{1}
+{0}
 
 Task warnings
 -------------
-{2}
+{1}
 '''.format(
-            triggered_something,
-            u'    {0}\n'.join(infos),
-            u'    {0}\n'.join(warnings)
+            u'\n'.join(infos),
+            u'\n'.join(warnings)
         )

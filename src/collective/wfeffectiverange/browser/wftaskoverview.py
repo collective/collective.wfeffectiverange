@@ -216,6 +216,8 @@ class WFTaskOverviewView(FolderView):
                 is_task = utils.is_task(item)
                 is_wfeffectiverange = utils.is_wfeffectiverange(item)
 
+                item_url = item.absolute_url()
+
                 if transition_date is not None:
                     # Parse a Python datetime from a string using Zope DateTime
                     # If set, but empty clear the field with None.
@@ -225,10 +227,10 @@ class WFTaskOverviewView(FolderView):
 
                         infos.append(_(
                             'info_task_set_transition_date',
-                            default=u'Set transition date ${transition_date} on task ${title}.',  # noqa
+                            default=u'Set transition date ${transition_date} on task ${url}.',  # noqa
                             mapping={
                                 'transition_date': transition_date,
-                                'title': item.title
+                                'url': item_url
                             }
                         ))
 
@@ -241,11 +243,11 @@ class WFTaskOverviewView(FolderView):
 
                         infos.append(_(
                             'info_wf_set_transition_date',
-                            default=u'Set ${wftype} transition date ${transition_date} on object ${title}.',  # noqa
+                            default=u'Set ${wftype} transition date ${transition_date} on object ${url}.',  # noqa
                             mapping={
                                 'wftype': wftype,
                                 'transition_date': transition_date,
-                                'title': item.title
+                                'url': item_url
                             }
                         ))
 
@@ -255,10 +257,10 @@ class WFTaskOverviewView(FolderView):
 
                         infos.append(_(
                             'info_task_set_transition',
-                            default=u'Set transition ${transition} on task ${title}.',  # noqa
+                            default=u'Set transition "${transition}" on task ${url}.',  # noqa
                             mapping={
                                 'transition': transition,
-                                'title': item.title
+                                'url': item_url
                             }
                         ))
 
@@ -271,11 +273,11 @@ class WFTaskOverviewView(FolderView):
 
                         infos.append(_(
                             'info_wf_set_transition',
-                            default=u'Set ${wftype} transition ${transition} on object ${title}.',  # noqa
+                            default=u'Set ${wftype} transition "${transition}" on object ${url}.',  # noqa
                             mapping={
                                 'wftype': wftype,
                                 'transition': transition,
-                                'title': item.title
+                                'url': item_url
                             }
                         ))
 
@@ -290,9 +292,9 @@ class WFTaskOverviewView(FolderView):
 
                     infos.append(_(
                         'info_task_object_removed',
-                        default=u'Removed referenced object ${obj_title} from task ${task_title}.',  # noqa
+                        default=u'Removed referenced object ${obj_url} from task "${task_title}".',  # noqa
                         mapping={
-                            'obj_title': ob.title,
+                            'ob_url': ob.absolute_url(),
                             'task_title': item.title
                         }
                     ))
@@ -312,10 +314,10 @@ class WFTaskOverviewView(FolderView):
 
                     infos.append(_(
                         'info_wf_cleared',
-                        default=u'Cleared the ${wftype} date and transition from ${title} and removed it from this list.',  # noqa
+                        default=u'Cleared the ${wftype} date and transition from ${url} and removed it from this list.',  # noqa
                         mapping={
                             'wftype': wftype,
-                            'title': item.title
+                            'url': item_url
                         }
                     ))
 
