@@ -1,0 +1,139 @@
+@import url("https://raw.githubusercontent.com/plone/Products.CMFPlone/master/Products/CMFPlone/static/patterns/toolbar/src/css/variables.less");
+@import url("https://raw.githubusercontent.com/plone/plonetheme.barceloneta/master/plonetheme/barceloneta/theme/less/variables.plone.less");
+
+.template-wftaskoverview #content {
+  h2, h3 {
+    display: inline-block;
+  }
+  a {
+    border: 0;
+    text-decoration: none;
+    &:hover {
+      border: 0;
+      text-decoration: none;
+    }
+  }
+  td {
+    h2, h3, h4 {
+      margin-top: 0;
+    }
+    .icon {
+      color: #c4183c;
+    }
+    &.title {
+      width: 40%;
+      ul {
+        list-style-type: none;
+        padding-left: 0em;
+        margin-top: 0.1em;
+        margin-bottom: 0;
+        line-height: 1.75;
+        li > span {
+          display: block;
+          font-size: 80%;
+          padding-left: 1.25em;
+          text-indent: -1em;
+          .icon {
+            margin-left: 1em;
+            &:last-child {
+              margin-left: 0.75em;
+            }
+          }
+        }
+      }
+    }
+    &.run_now {
+      width: 2em;
+      .glyphicon {
+        color: #009000;
+      }
+      .icon-execute::before {
+        content: '\e82a';
+        font-family: "fontello";
+        font-size: 1.5em;
+      }
+    }
+    &.transitions {
+      ul {
+        margin-top: 1px;
+      }
+    }
+    &.transitions,
+    &.transition_dates {
+      ul {
+        list-style-type: none;
+        padding-left: 0.5em;
+        li > span {
+          font-size: 80%;
+        }
+      }
+    }
+  }
+  select.transition {
+    height: 1.5em;
+    padding: 2px 4px;
+  }
+  .pattern-pickadate-wrapper {
+    margin-bottom: 0;
+    input.picker__input {
+      height: 1.5em;
+      width: 10em;
+      padding: 0;
+    }
+    button.pattern-pickadate-now {
+      display: none;
+    }
+    button.pattern-pickadate-clear {
+      padding: 2px 4px;
+      font-size: 13px;
+      line-height: 1;
+      .glyphicon-trash:before {
+        content: "\e014";
+      }
+    }
+  }
+}
+
+.listing.log {
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+// .contenttype-wftaskfolder::before,
+// .contenttype-wftaskexpires::before,
+// .contenttype-wftaskeffective::before,
+// .contenttype-wftaskeffective #crud-edit-File-widgets-view_title::before,
+// .contenttype-wftaskexpires #crud-edit-File-widgets-view_title::before,
+// .contenttype-wftaskeffective #crud-edit-File-widgets-view_title::before {
+//     font-family:"Fontello";
+//     // font-size: 100%;
+//     // padding: 0;
+//     // margin:0;
+//     // position: relative;
+//     // left: inherit;
+//     // display: inline-block;
+//     // color: inherit;
+//     // width: 20px;
+//     // height: 20px;
+//     // text-align: center;
+//     // margin-right: @plone-padding-base-vertical;
+//   content: '\e805'!important;
+// }
+
+body#visual-portal-wrapper.pat-plone .outer-wrapper {
+    .contenttype-wftaskfolder:before,
+    .contenttype-wftaskexpires:before,
+    .contenttype-wftaskeffective:before {
+  content: '\e805'!important;
+    }
+}
+body#visual-portal-wrapper.pat-plone #edit-zone {
+    .contenttype-wftaskfolder:after,
+    .contenttype-wftaskexpires:after,
+    .contenttype-wftaskeffective:after {
+  content: '\e805'!important;
+    }
+}

@@ -1,0 +1,54 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    lang="en"
+    metal:use-macro="context/main_template/macros/master"
+    i18n:domain="collective.wfeffectiverange">
+<body>
+
+<metal:custom_title fill-slot="content-title">
+  <h1 class="documentFirstHeading" i18n:translate="heading_log">Task Log</h1>
+</metal:custom_title>
+
+<metal:content-core fill-slot="content-core">
+<metal:block define-macro="content-core">
+
+  <table class="listing log">
+    <tr>
+      <th i18n:translate="label_run_date">Date</th>
+      <th i18n:translate="label_log">Log Messages</th>
+    </tr>
+    <tal:loop repeat="log view/log">
+    <tr
+      tal:define="date python:log[0];
+                  msg python:log[1];
+                  oddrow repeat/log/odd"
+      tal:attributes="class python:oddrow and 'odd' or 'even'">
+
+      <td class="pat-moment" title="${date}">
+        ${date}
+      </td>
+
+      <td>
+        <tal:if define="infos msg/infos" condition="infos">
+        <ul>
+          <li tal:repeat="info infos"><span class="info" i18n:translate="">Info:</span> ${info}</li>
+        </ul>
+        </tal:if>
+        <tal:if define="warnings msg/warnings" condition="warnings">
+        <ul>
+          <li tal:repeat="warning warnings"><span class="warn" i18n:translate="">Warning:</span>${warning}</li>
+        </ul>
+        </tal:if>
+      </td>
+
+    </tr>
+    </tal:loop>
+  </table>
+
+</metal:block>
+</metal:content-core>
+
+</body>
+</html>

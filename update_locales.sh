@@ -6,7 +6,7 @@ PACKAGENAME="src/collective/wfeffectiverange"
 # Synchronise the templates and scripts with the .pot.
 # All on one line normally:
 ../../bin/i18ndude rebuild-pot --pot `pwd`/${PACKAGENAME}/locales/${I18NDOMAIN}.pot \
-    --create ${I18NDOMAIN} \
+    --create ${I18NDOMAIN} --exclude "node_modules"\
    .
 
 # Synchronise the resulting .pot with all .po files

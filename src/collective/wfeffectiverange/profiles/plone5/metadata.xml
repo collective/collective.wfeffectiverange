@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <metadata>
   <version>2</version>
   <dependencies>
-     <dependency>profile-collective.wfeffectiverange:install-base</dependency>
+    <dependency>profile-collective.wfeffectiverange:install-base</dependency>
   </dependencies>
 </metadata>

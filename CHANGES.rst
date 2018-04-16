@@ -12,7 +12,8 @@ Changes
 ------------------
 
 - Upgrade for Plone5/Plone4 compatibility
-  [agitator]
+  Added task types and task overview
+  [agitator, thet]
 
 
 1.8.2 (unreleased)

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<registry
+    i18n:domain="plone"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+
+  <records
+      interface="plone.app.querystring.interfaces.IQueryField"
+      prefix="plone.app.querystring.field.has_effective_transition">
+    <value key="title" i18n:translate="label_has_effective_transition" i18n:domain="collective.wfeffectiverange">Has effective transition</value>
+    <value key="description" i18n:translate="label_has_effective_transition" i18n:domain="collective.wfeffectiverange">Has an effective transition set.</value>
+    <value key="enabled">True</value>
+    <value key="sortable">False</value>
+    <value key="operations">
+        <element>plone.app.querystring.operation.boolean.isTrue</element>
+        <element>plone.app.querystring.operation.boolean.isFalse</element>
+    </value>
+   <value key="group" i18n:translate="">Metadata</value>
+  </records>
+
+  <records
+      interface="plone.app.querystring.interfaces.IQueryField"
+      prefix="plone.app.querystring.field.has_expires_transition">
+    <value key="title" i18n:translate="label_has_expires_transition" i18n:domain="collective.wfeffectiverange">Has expires transition</value>
+    <value key="description" i18n:translate="label_has_expires_transition" i18n:domain="collective.wfeffectiverange">Has an expires transition set.</value>
+    <value key="enabled">True</value>
+    <value key="sortable">False</value>
+    <value key="operations">
+        <element>plone.app.querystring.operation.boolean.isTrue</element>
+        <element>plone.app.querystring.operation.boolean.isFalse</element>
+    </value>
+   <value key="group" i18n:translate="">Metadata</value>
+  </records>
+
+</registry>

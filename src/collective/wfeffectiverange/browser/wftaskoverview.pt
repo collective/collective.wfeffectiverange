@@ -1,0 +1,137 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    lang="en"
+    metal:use-macro="context/main_template/macros/master"
+    i18n:domain="collective.wfeffectiverange">
+<body>
+
+<metal:custom_title fill-slot="content-title">
+  <h1 class="documentFirstHeading" i18n:translate="heading_overview">Task Overview</h1>
+</metal:custom_title>
+
+<metal:content-core fill-slot="content-core">
+<metal:block define-macro="content-core">
+
+  <section tal:define="items view/items_effective; wftype string:effective" data-wftype="effective" data-actionurl="${view/protected_view_url}">
+    <h2 i18n:translate="label_workflow_effective_tasks">Effective Tasks</h2>
+    <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal icon glyphicon glyphicon-plus"
+       i18n:attributes="title label_add_task" title="Add Task"></a>
+
+    <p tal:condition="not: items" i18n:translate="help_no_effective_items">
+      There are no effective tasks defined yet.
+    </p>
+
+    <metal:macro define-macro="listing">
+    <tal:if condition="items">
+    <table class="listing">
+      <tal:loop repeat="item items">
+      <tr data-uuid="${item/uuid}"
+          tal:define="transitions item/common_transitions;
+                      oddrow      repeat/item/odd;"
+          tal:attributes="class python:oddrow and 'odd' or 'even'">
+        <td class="title">
+          <div>
+            <a tal:omit-tag="item/is_task" href="${item/url}" class="state-${item/state}" title="${item/state}">
+              <strong>${item/title}</strong>
+            </a>
+            <a href="${item/edit_url}" class="pat-plone-modal icon glyphicon glyphicon-pencil"
+               i18n:attributes="title label_edit" title="Edit"></a>
+            <a tal:condition="not:item/is_task" href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${item/uuid}&wftype=${wftype}"
+               i18n:attributes="title label_remove" title="Remove" class="icon glyphicon glyphicon-remove"></a>
+            <a tal:condition="item/is_task" href="${item/delete_url}" class="pat-plone-modal icon glyphicon glyphicon-trash"
+               i18n:attributes="title label_delete" title="Delete"></a>
+            <a tal:condition="item/is_task" href="${item/url}/@@wftasklog" class="pat-plone-modal icon glyphicon glyphicon-th-list"
+               i18n:attributes="title label_tasklog" title="Task log"></a>
+          </div>
+          <div tal:condition="item/task_items">
+            <ul>
+              <li tal:repeat="ob item/task_items">
+                <span class="title">
+                  <a href="${ob/url}" class="state-${ob/state}" title="${ob/state}">● ${ob/title}</a>
+                  <a href="${ob/edit_url}" class="pat-plone-modal icon glyphicon glyphicon-pencil"
+                     i18n:attributes="title label_edit" title="Edit"></a>
+                  <a href="${view/protected_view_url}&uuid=${item/uuid}&ob_remove=${ob/intid}" class="icon glyphicon glyphicon-remove"
+                     i18n:attributes="title label_remove" title="Remove"></a>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </td>
+        <td class="transitions">
+          <div>
+            <select class="transition" name="transition" tal:condition="transitions">
+              <option value="" tal:attributes="selected python:'selected' if not item['transition'] else None" i18n:translate="option_make_selection">No transition selected</option>
+              <tal:loop repeat="transition transitions">
+              <option tal:define="id python:transition[0]; name python:transition[1]"  tal:attributes="selected python:'selected' if id==item['transition'] else None" value="${id}">${name}</option>
+              </tal:loop>
+            </select>
+            <span tal:condition="not:transitions" i18n:translate="no_common_transitions">No common transitions available</span>
+          </div>
+          <ul i18n:domain="plone">
+            <li tal:condition="not:item/is_task" class="state state-${item/state}">
+              <span i18n:attributes="title title_current_state">
+                ● <tal:i18n i18n:translate="">${item/state}</tal:i18n>
+              </span>
+              <tal:if condition="item/is_wfeff">
+                <span i18n:attributes="title title_wftransition">
+                  (<tal:i18n i18n:translate="">${item/transition}</tal:i18n>)
+                </span>
+              </tal:if>
+            </li>
+            <li tal:repeat="ob item/task_items" class="state state-${ob/state}">
+              <span i18n:attributes="title title_current_state">
+                ● <tal:i18n i18n:translate="">${ob/state}</tal:i18n>
+              </span>
+              <tal:if condition="ob/is_wfeff">
+                <span i18n:attributes="title title_wftransition">
+                  (<tal:i18n i18n:translate="">${ob/transition}</tal:i18n>)
+                </span>
+              </tal:if>
+            </li>
+          </ul>
+        </td>
+        <td class="transition_dates">
+          <div>
+            <input name="transition_date" type="datetime" class="pat-pickadate" data-pat-pickadate="${view/pickadate_options}" value="${item/transition_date}"/>
+          </div>
+          <ul>
+            <li tal:repeat="ob item/task_items">
+              <span tal:condition="ob/is_wfeff">● <span i18n:attributes="title title_transition_date" class="pat-moment">${ob/transition_date}</span></span>
+              <span tal:condition="not:ob/is_wfeff">● <span i18n:translate="no_field_for_date">Common date will be used</span></span>
+            </li>
+          </ul>
+
+
+        </td>
+        <td class="run_now">
+          <a href="${view/protected_view_url}&run_task=1&uuid=${item/uuid}&wftype=${wftype}" class="icon icon-execute"
+             i18n:attributes="title label_run_now" title="Run Now"></a>
+        </td>
+      </tr>
+      </tal:loop>
+    </table>
+    </tal:if>
+    </metal:macro>
+  </section>
+
+  <section tal:define="items view/items_expires; wftype string:expires" data-wftype="expires" data-actionurl="${view/protected_view_url}">
+    <h2 i18n:translate="label_workflow_expires_tasks">Expires Tasks</h2>
+    <a href="${context/absolute_url}/++add++WFTaskExpires" class="pat-plone-modal icon glyphicon glyphicon-plus"
+       i18n:attributes="title label_add_task" title="Add Task"></a>
+
+    <p tal:condition="not: items" i18n:translate="help_no_expires_items">
+      There are no expires tasks defined yet.
+    </p>
+
+    <metal:macro use-macro="context/wftaskoverview/macros/listing" />
+  </section>
+
+  <script src="++resource++collective.wfeffectiverange/wfoverview.js" charset="utf-8"></script>
+
+</metal:block>
+</metal:content-core>
+
+</body>
+</html>

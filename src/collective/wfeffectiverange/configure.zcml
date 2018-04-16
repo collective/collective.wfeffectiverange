@@ -1,33 +1,76 @@
 <configure
     i18n_domain="collective.wfeffectiverange"
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:cmf="http://namespaces.zope.org/cmf"
-    xmlns:five="http://namespaces.zope.org/five"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:plone="http://namespaces.plone.org/plone"
     xmlns:zcml="http://namespaces.zope.org/zcml">
+
   <i18n:registerTranslations directory="locales" />
+
   <includeDependencies package="." />
-  <include
-      file="meta.zcml"
-      package="plone.resource"
-  />
+  <include package="Products.GenericSetup" file="meta.zcml" />
   <include package="plone.app.theming" />
+  <include package="plone.resource" file="meta.zcml" />
   <include package=".browser" />
-  <include
-      file="meta.zcml"
-      package="Products.GenericSetup"
+
+  <!-- BEHAVIORS -->
+  <plone:behavior
+      description="Adds effective date and expiration date fields. Executes workflow transition when date was reached."
+      factory=".behaviors.WFEffectiveRange"
+      provides=".behaviors.IWFEffectiveRange"
+      title="Date range (with workflowed effective range)"
+  />
+  <plone:behavior
+      description="Adds a task which is used for scheduled and manual workflow transitions for a series of objects."
+      name="wftask"
+      provides=".behaviors.IWFTask"
+      title="Workflow Scheduler Task"
   />
 
+
+  <!-- INDICES -->
+  <adapter
+      factory=".indexers.has_effective_transition"
+      name="has_effective_transition"
+  />
+  <adapter
+      factory=".indexers.has_expires_transition"
+      name="has_expires_transition"
+  />
+  <adapter
+      factory=".indexers.date_indexer"
+      name="start"
+  />
+
+  <!-- SUBSCRIBER -->
+  <subscriber
+      for="Products.CMFCore.WorkflowCore.ActionWillBeInvokedEvent"
+      handler=".subscribers.handle_workflow_change_before"
+  />
+
+
+  <!-- PERMISSIONS -->
+  <configure zcml:condition="installed AccessControl.security">
+    <permission
+        id="collective.wfeffectiverange.addTaskFolder"
+        title="collective.wfeffectiverange: Add Task Folder"
+        />
+    <permission
+        id="collective.wfeffectiverange.addTask"
+        title="collective.wfeffectiverange: Add Task"
+        />
+  </configure>
+
+
+  <!-- PROFILES -->
   <genericsetup:registerProfile
       zcml:condition="have plone-5"
       description="Extension profile for collective.wfeffectiverange"
       directory="profiles/plone5"
       name="default"
       provides="Products.GenericSetup.interfaces.EXTENSION"
-      title="Workflowed effective range"
+      title="Workflowed Effective Range"
   />
   <genericsetup:registerProfile
       zcml:condition="not-have plone-5"
@@ -35,14 +78,14 @@
       directory="profiles/plone4"
       name="default"
       provides="Products.GenericSetup.interfaces.EXTENSION"
-      title="Workflowed effective range"
+      title="Workflowed Effective Range"
   />
   <genericsetup:registerProfile
       description="Base profile for collective.wfeffectiverange"
       directory="profiles/base"
       name="install-base"
       provides="Products.GenericSetup.interfaces.EXTENSION"
-      title="Workflowed effective range"
+      title="Workflowed effective range base profile"
   />
   <genericsetup:registerProfile
       description="Extension profile for collective.wfeffectiverange - testing content type provided"
@@ -52,28 +95,9 @@
       title="Workflowed effective range - WITH TEST TYPE"
       zcml:condition="installed plone.app.contenttypes"
   />
-  <plone:behavior
-      description="Adds effective date and expiration date fields. Executes workflow transition when date was reached."
-      factory=".behaviors.WFEffectiveRange"
-      for="plone.dexterity.interfaces.IDexterityContent"
-      provides=".behaviors.IWFEffectiveRange"
-      title="Date range (with workflowed effective range)"
-  />
-  <adapter
-      factory=".indexers.has_effective_transition"
-      name="has_effective_transition"
-  />
-  <adapter
-      factory=".indexers.has_expires_transition"
-      name="has_expires_transition"
-  />
-  <subscriber
-      for="Products.CMFCore.WorkflowCore.ActionWillBeInvokedEvent"
-      handler=".subscribers.handle_workflow_change_before"
-  />
-
   <utility
       factory=".setuphandlers.HiddenProfiles"
       name="collective.wfeffectiverange-hiddenprofiles" />
+
 
 </configure>

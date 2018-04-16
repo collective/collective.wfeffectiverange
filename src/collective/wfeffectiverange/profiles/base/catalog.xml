@@ -1,11 +1,9 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <object name="portal_catalog" meta_type="Plone Catalog Tool">
-    <index name="has_effective_transition" meta_type="BooleanIndex">
-        <indexed_attr value="has_effective_transition" />
-    </index>
-
-    <index name="has_expires_transition" meta_type="BooleanIndex">
-        <indexed_attr value="has_expires_transition" />
-    </index>
-
+  <index name="has_effective_transition" meta_type="BooleanIndex">
+    <indexed_attr value="has_effective_transition" />
+  </index>
+  <index name="has_expires_transition" meta_type="BooleanIndex">
+    <indexed_attr value="has_expires_transition" />
+  </index>
 </object>
