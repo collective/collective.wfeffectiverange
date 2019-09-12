@@ -6,8 +6,8 @@ from zope.interface import implementer
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary
 
+import six
 import re
-import urllib
 
 _pmf = MessageFactory('plone')
 
@@ -24,7 +24,7 @@ class BaseTransitionsSource(object):
         from .behaviors import WFEffectiveRange
         if isinstance(context, WFEffectiveRange):
             context = context.context
-        url = urllib.unquote(context.REQUEST.getURL())
+        url = six.moves.urllib.parse.unquote(context.REQUEST.getURL())
         addform = '++add++' in url
         addtranslationform = '++addtranslation++' in url
         self.add = addform or addtranslationform
