@@ -57,14 +57,17 @@ class WFTaskOverviewView(FolderView):
             and intids.getId(it) not in task_items_ids
         ]
 
-        def _datecomp(x, y):
-            dat_x = getattr(x, 'task_date', utils.get_pub_date(x, type_))
-            dat_y = getattr(y, 'task_date', utils.get_pub_date(y, type_))
-            _cmp = cmp(dat_x, dat_y) if dat_x and dat_y else -1
-            return _cmp
+        # def _datecomp(x, y):
+        #     dat_x = getattr(x, 'task_date', utils.get_pub_date(x, type_))
+        #     dat_y = getattr(y, 'task_date', utils.get_pub_date(y, type_))
+        #     _cmp = cmp(dat_x, dat_y) if dat_x and dat_y else -1
+        #     return _cmp
+
+        def _dategetter(x):
+            return getattr(x, 'task_date', utils.get_pub_date(x, type_))
 
         # Sort for date
-        ret = sorted(ret_tasks + ret_obj, _datecomp)
+        ret = sorted(ret_tasks + ret_obj, key=_dategetter)
 
         def _task_item_info(ref, type_):
             ob = ref.to_object
