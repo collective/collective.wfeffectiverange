@@ -16,6 +16,7 @@
 
   <!-- BEHAVIORS -->
   <plone:behavior
+      name="workflowed.effectiverange"
       description="Adds effective date and expiration date fields. Executes workflow transition when date was reached."
       factory=".behaviors.WFEffectiveRange"
       provides=".behaviors.IWFEffectiveRange"
