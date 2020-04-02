@@ -2,7 +2,7 @@
 Workflow transition based on publication and expiration date
 ============================================================
 
-Once one of the effective range dates was reached an automatic workflow transition is executed and changes the workflow state with its managed permissions.
+Once one of the effective range dates is reached an automatic workflow transition is executed and changes the workflow state with its managed permissions. The included content type ``WFTaskFolder`` will show you an overview all the scheduled workflow transitions and allows to create tasks that enables you to group content items that have to be published together at a certain moment or immediatly with an action button.
 
 This is intended as an alternative implementation of the `Dexterity <http://docs.plone.org/external/plone.app.dexterity/docs/index.html>`_ IPublication behavior.
 
@@ -17,6 +17,8 @@ For instance: In default Plone if a contents publication date is not reached, it
 But it can still be accessed directly, by entering its URL, by a json request, or in many other ways. The same is true for expired content.
 
 For contents that need more security, we want proper security handling using zopes access control mechanism and CMF/plones workflow functionality.
+
+
 
 Installation
 ============
@@ -36,8 +38,32 @@ In your content types GenericSetup XML file replace ``<element value="plone.app.
 
 Alternatively - when working TTW - do the same in the ``Dexterity content types`` control panel under the Behavior tab.
 
+
+Configure automatic transitions
+===============================
+
+Zope clock-server
+-----------------
 Configure a clock-server job with @@wfeffectiverange-ticker as method.
 How to setup a clock-server http://docs.plone.org/develop/plone/misc/asyncronoustasks.html
+
+Shell script & Cronjob
+----------------------
+Plone 5.2 with WSGI doesn't have a clock-server. In that case the wfeffectiverange-ticker is invoked with a shell script that is triggered by a cronjob.
+
+Shell script ``wfeffectiverange-ticker.sh``::
+
+  #!/bin/sh
+
+  curl -u adminuser:******** http://127.0.0.1:8088/Plone/@@wfeffectiverange-ticker
+
+Cronjob::
+
+  # m h  dom mon dow   command
+  # runs every 5 minutes
+  */5 * * * * /home/plone/site/wfeffectiverange-ticker.sh
+
+Either way it's always a good idea to configure a dedicated Plone instance for tasks like this.
 
 
 Use cases
@@ -110,10 +136,18 @@ A server-side json view delivers the transitions for the expiration date after a
 In order to make it work, you have to configure a cron job to check if the desired workflow transition date has been met. See install section
 
 
+WFTaskFolder
+============
+
+The ``WFTaskFolder`` allows to create multiple task items as either ``Effective Task`` or ``Expiration Task``. In each task item you select which content items will be transitioned together.
+
+You will also see an overview of all prepared task items with there related content items and all the single content items that are scheduled.
+
+
 Limitations
 ===========
 
-No support if a content type has two workflows.
+Content items within a ``Task`` have to have common workflow transitions to be executed together.
 
 
 Source Code and Contributions
@@ -129,6 +163,7 @@ You can clone it or `get access to the github-collective <http://collective.gith
 
 Maintainer is Jens Klein and the BlueDynamics Alliance developer team. We appreciate any contribution and if a release is needed to be done on pypi,
 please just contact one of us `dev@bluedynamics dot com <mailto:dev@bluedynamics.com>`_
+
 
 Contributors
 ============
