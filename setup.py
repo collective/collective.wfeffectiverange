@@ -5,7 +5,7 @@ from setuptools import setup
 import os
 
 
-version = '2.0.1.dev0'
+version = '2.1.0.dev0'
 shortdesc = 'Workflowed effective range (Plone/Dexterity)'
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 longdesc += open(os.path.join(os.path.dirname(__file__), 'CHANGES.rst')).read()
@@ -23,9 +23,11 @@ setup(
         'Framework :: Plone :: 4.3',
         'Framework :: Plone :: 5.0',
         'Framework :: Plone :: 5.1',
+        'Framework :: Plone :: 5.2',
         'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules',

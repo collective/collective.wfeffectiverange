@@ -14,7 +14,10 @@
 <metal:content-core fill-slot="content-core">
 <metal:block define-macro="content-core">
 
-  <section tal:define="items view/items_effective; wftype string:effective" data-wftype="effective" data-actionurl="${view/protected_view_url}">
+  <section tal:define="items python:view.items_effective();
+                       wftype string:effective"
+            data-wftype="effective"
+            data-actionurl="${view/protected_view_url}">
     <h2 i18n:translate="label_workflow_effective_tasks">Effective Tasks</h2>
     <a href="${context/absolute_url}/++add++WFTaskEffective" class="pat-plone-modal icon glyphicon glyphicon-plus"
        i18n:attributes="title label_add_task" title="Add Task"></a>
@@ -116,7 +119,10 @@
     </metal:macro>
   </section>
 
-  <section tal:define="items view/items_expires; wftype string:expires" data-wftype="expires" data-actionurl="${view/protected_view_url}">
+  <section tal:define="items python:view.items_expires();
+                       wftype string:expires"
+           data-wftype="expires"
+           data-actionurl="${view/protected_view_url}">
     <h2 i18n:translate="label_workflow_expires_tasks">Expires Tasks</h2>
     <a href="${context/absolute_url}/++add++WFTaskExpires" class="pat-plone-modal icon glyphicon glyphicon-plus"
        i18n:attributes="title label_add_task" title="Add Task"></a>
