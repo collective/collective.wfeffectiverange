@@ -2,7 +2,7 @@
 Workflow transition based on publication and expiration date
 ============================================================
 
-Once one of the effective range dates is reached an automatic workflow transition is executed and changes the workflow state with its managed permissions. The included content type ``WFTaskFolder`` will show you an overview all the scheduled workflow transitions and allows to create tasks that enables you to group content items that have to be published together at a certain moment or immediatly with an action button.
+Once one of the effective range dates is reached an automatic workflow transition is executed and changes the workflow state with its managed permissions. The included content type ``Workflow Task Folder`` will show you an overview all the scheduled workflow transitions and allows to create tasks that enables you to group content items that have to be published together at a certain moment or immediatly with an action button.
 
 This is intended as an alternative implementation of the `Dexterity <http://docs.plone.org/external/plone.app.dexterity/docs/index.html>`_ IPublication behavior.
 
@@ -136,10 +136,10 @@ A server-side json view delivers the transitions for the expiration date after a
 In order to make it work, you have to configure a cron job to check if the desired workflow transition date has been met. See install section
 
 
-WFTaskFolder
-============
+Workflow Task Folder
+====================
 
-The ``WFTaskFolder`` allows to create multiple task items as either ``Effective Task`` or ``Expiration Task``. In each task item you select which content items will be transitioned together.
+The ``Workflow Task Folder`` allows to create multiple task items as either ``Effective Task`` or ``Expiration Task``. In each task item you select which content items will be transitioned together.
 
 You will also see an overview of all prepared task items with there related content items and all the single content items that are scheduled.
 
