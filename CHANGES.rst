@@ -2,10 +2,10 @@
 Changes
 =======
 
-2.0.1 (unreleased)
+2.1.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Python 3 compatibility and updated docs
 
 
 2.0.0 (2016-12-08)
